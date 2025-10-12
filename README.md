@@ -1,6 +1,6 @@
-# animeversev2
+# animeverse
 
-A new Flutter project.
+A new Flutter project
 
 ## Getting Started
 

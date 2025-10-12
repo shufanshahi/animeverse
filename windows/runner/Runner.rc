@@ -90,12 +90,12 @@ BEGIN
         BLOCK "040904e4"
         BEGIN
             VALUE "CompanyName", "com.example" "\0"
-            VALUE "FileDescription", "animeversev2" "\0"
+            VALUE "FileDescription", "animeverse" "\0"
             VALUE "FileVersion", VERSION_AS_STRING "\0"
-            VALUE "InternalName", "animeversev2" "\0"
+            VALUE "InternalName", "animeverse" "\0"
             VALUE "LegalCopyright", "Copyright (C) 2025 com.example. All rights reserved." "\0"
-            VALUE "OriginalFilename", "animeversev2.exe" "\0"
-            VALUE "ProductName", "animeversev2" "\0"
+            VALUE "OriginalFilename", "animeverse.exe" "\0"
+            VALUE "ProductName", "animeverse" "\0"
             VALUE "ProductVersion", VERSION_AS_STRING "\0"
         END
     END

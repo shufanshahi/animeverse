@@ -80,9 +80,10 @@ class HomeScreen extends StatelessWidget {
                 padding: const EdgeInsets.all(16),
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
-                    colors: isDarkMode
-                        ? [Colors.purple.shade700, Colors.blue.shade700]
-                        : [Colors.purple.shade400, Colors.blue.shade400],
+                    colors: [
+                      isDarkMode ? Colors.purple.shade700 : Colors.purple.shade400,
+                      isDarkMode ? Colors.blue.shade700 : Colors.blue.shade400,
+                    ],
                   ),
                   borderRadius: BorderRadius.circular(12),
                 ),
