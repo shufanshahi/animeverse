@@ -1,0 +1,1 @@
+export 'anime_detail_repository_impl.dart';

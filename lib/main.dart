@@ -1,6 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'injection_container.dart' as di;
+import 'features/animeDetails/presentation/bloc/anime_detail_bloc.dart';
+import 'features/animeDetails/presentation/screens/anime_detail_screen.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await di.init();
   runApp(const MyApp());
 }
 
@@ -127,40 +133,55 @@ class HomeScreen extends StatelessWidget {
                   scrollDirection: Axis.horizontal,
                   itemCount: 5,
                   itemBuilder: (context, index) {
-                    return Container(
-                      width: 120,
-                      margin: const EdgeInsets.only(right: 12),
-                      decoration: BoxDecoration(
-                        color: isDarkMode
-                            ? Colors.purple.shade900
-                            : Colors.purple.shade100,
-                        borderRadius: BorderRadius.circular(8),
-                        border: Border.all(
-                          color: isDarkMode
-                              ? Colors.purple.shade700
-                              : Colors.purple.shade200,
-                        ),
-                      ),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(
-                            Icons.play_circle,
-                            size: 40,
-                            color: isDarkMode
-                                ? Colors.purple.shade400
-                                : Colors.purple.shade400,
-                          ),
-                          const SizedBox(height: 8),
-                          Text(
-                            'Anime ${index + 1}',
-                            style: const TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 12,
+                    return GestureDetector(
+                      onTap: () {
+                        // Navigate to anime details with different trending anime IDs
+                        final trendingAnimeIds = [5114, 11757, 37779, 43608, 50172]; // Different trending anime
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => BlocProvider(
+                              create: (context) => di.sl<AnimeDetailBloc>()
+                                ..add(GetAnimeDetailEvent(trendingAnimeIds[index])),
+                              child: AnimeDetailScreen(animeId: trendingAnimeIds[index]),
                             ),
-                            textAlign: TextAlign.center,
                           ),
-                        ],
+                        );
+                      },
+                      child: Container(
+                        width: 120,
+                        margin: const EdgeInsets.only(right: 12),
+                        decoration: BoxDecoration(
+                          color: isDarkMode
+                              ? Colors.purple.shade900
+                              : Colors.purple.shade100,
+                          borderRadius: BorderRadius.circular(8),
+                          border: Border.all(
+                            color: isDarkMode
+                                ? Colors.purple.shade700
+                                : Colors.purple.shade200,
+                          ),
+                        ),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(
+                              Icons.play_circle,
+                              size: 40,
+                              color: isDarkMode
+                                  ? Colors.purple.shade400
+                                  : Colors.purple.shade400,
+                            ),
+                            const SizedBox(height: 8),
+                            Text(
+                              'Anime ${index + 1}',
+                              style: const TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 12,
+                              ),
+                              textAlign: TextAlign.center,
+                            ),
+                          ],
+                        ),
                       ),
                     );
                   },
@@ -207,12 +228,15 @@ class HomeScreen extends StatelessWidget {
                       subtitle: const Text('Rating: 9.5/10'),
                       trailing: const Icon(Icons.arrow_forward_ios, size: 16),
                       onTap: () {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            content: Text('Tapped on Anime ${index + 1}'),
-                            backgroundColor: isDarkMode
-                                ? Colors.purple.shade700
-                                : Colors.purple.shade600,
+                        // Navigate to anime details with sample anime IDs
+                        final animeIds = [1, 20, 16498, 38524, 40748]; // Popular anime IDs
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => BlocProvider(
+                              create: (context) => di.sl<AnimeDetailBloc>()
+                                ..add(GetAnimeDetailEvent(animeIds[index])),
+                              child: AnimeDetailScreen(animeId: animeIds[index]),
+                            ),
                           ),
                         );
                       },
