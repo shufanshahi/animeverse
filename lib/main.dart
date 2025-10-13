@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '/config/theme/app_theme.dart'; // ✅ import your custom theme folder
+import '/features/search_screen/presentation/screens/screens.dart'; // <-- Import SearchScreen
 
 void main() {
-  runApp(const MyApp());
+  runApp(const ProviderScope(child: MyApp()));
 }
 
 class MyApp extends StatefulWidget {
@@ -20,19 +22,25 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       title: 'AnimeHub',
       debugShowCheckedModeBanner: false,
-
-      // ✅ Use your new theme setup
       theme: AppTheme.lightTheme(),
       darkTheme: AppTheme.darkTheme(),
       themeMode: isDarkMode ? ThemeMode.dark : ThemeMode.light,
 
-      home: HomeScreen(
-        isDarkMode: isDarkMode,
-        onThemeChanged: (value) {
-          setState(() {
-            isDarkMode = value;
-          });
-        },
+      // home: HomeScreen(
+      //   isDarkMode: isDarkMode,
+      //   onThemeChanged: (value) {
+      //     setState(() {
+      //       isDarkMode = value;
+      //     });
+      //   },
+      // ),
+      home: const SearchScreen(
+        // isDarkMode: isDarkMode,
+        // onThemeChanged: (value) {
+        //   setState(() {
+        //     isDarkMode = value;
+        //   });
+        // },
       ),
     );
   }
