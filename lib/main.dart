@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '/config/theme/app_theme.dart'; // ✅ import your custom theme folder
 
 void main() {
   runApp(const MyApp());
@@ -19,21 +20,12 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       title: 'AnimeHub',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(
-          seedColor: Colors.purple,
-          brightness: Brightness.light,
-        ),
-        useMaterial3: true,
-      ),
-      darkTheme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(
-          seedColor: Colors.purple,
-          brightness: Brightness.dark,
-        ),
-        useMaterial3: true,
-      ),
+
+      // ✅ Use your new theme setup
+      theme: AppTheme.lightTheme(),
+      darkTheme: AppTheme.darkTheme(),
       themeMode: isDarkMode ? ThemeMode.dark : ThemeMode.light,
+
       home: HomeScreen(
         isDarkMode: isDarkMode,
         onThemeChanged: (value) {
@@ -58,6 +50,9 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('AnimeHub'),
@@ -76,14 +71,16 @@ class HomeScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              // =========================
               // Welcome Section
+              // =========================
               Container(
                 padding: const EdgeInsets.all(16),
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
                     colors: [
-                      isDarkMode ? Colors.purple.shade700 : Colors.purple.shade400,
-                      isDarkMode ? Colors.blue.shade700 : Colors.blue.shade400,
+                      colorScheme.primary.withOpacity(0.9),
+                      colorScheme.secondary.withOpacity(0.9),
                     ],
                   ),
                   borderRadius: BorderRadius.circular(12),
@@ -110,15 +107,15 @@ class HomeScreen extends StatelessWidget {
                   ],
                 ),
               ),
+
               const SizedBox(height: 24),
 
+              // =========================
               // Trending Section
-              const Text(
+              // =========================
+              Text(
                 'Trending Now',
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                ),
+                style: theme.textTheme.displayMedium,
               ),
               const SizedBox(height: 12),
               SizedBox(
@@ -131,15 +128,9 @@ class HomeScreen extends StatelessWidget {
                       width: 120,
                       margin: const EdgeInsets.only(right: 12),
                       decoration: BoxDecoration(
-                        color: isDarkMode
-                            ? Colors.purple.shade900
-                            : Colors.purple.shade100,
+                        color: colorScheme.surface,
                         borderRadius: BorderRadius.circular(8),
-                        border: Border.all(
-                          color: isDarkMode
-                              ? Colors.purple.shade700
-                              : Colors.purple.shade200,
-                        ),
+                        border: Border.all(color: colorScheme.outline),
                       ),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -147,17 +138,12 @@ class HomeScreen extends StatelessWidget {
                           Icon(
                             Icons.play_circle,
                             size: 40,
-                            color: isDarkMode
-                                ? Colors.purple.shade400
-                                : Colors.purple.shade400,
+                            color: colorScheme.primary,
                           ),
                           const SizedBox(height: 8),
                           Text(
                             'Anime ${index + 1}',
-                            style: const TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 12,
-                            ),
+                            style: theme.textTheme.bodyMedium,
                             textAlign: TextAlign.center,
                           ),
                         ],
@@ -166,15 +152,15 @@ class HomeScreen extends StatelessWidget {
                   },
                 ),
               ),
+
               const SizedBox(height: 24),
 
+              // =========================
               // Popular Section
-              const Text(
+              // =========================
+              Text(
                 'Popular',
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                ),
+                style: theme.textTheme.displayMedium,
               ),
               const SizedBox(height: 12),
               ListView.builder(
@@ -184,35 +170,29 @@ class HomeScreen extends StatelessWidget {
                 itemBuilder: (context, index) {
                   return Card(
                     margin: const EdgeInsets.only(bottom: 12),
-                    color: isDarkMode
-                        ? Colors.grey.shade900
-                        : Colors.grey.shade50,
                     child: ListTile(
                       leading: Container(
                         width: 50,
                         decoration: BoxDecoration(
-                          color: isDarkMode
-                              ? Colors.purple.shade900
-                              : Colors.purple.shade100,
+                          color: colorScheme.primary.withOpacity(0.15),
                           borderRadius: BorderRadius.circular(4),
                         ),
                         child: Icon(
                           Icons.image,
-                          color: isDarkMode
-                              ? Colors.purple.shade400
-                              : Colors.purple.shade600,
+                          color: colorScheme.primary,
                         ),
                       ),
-                      title: Text('Anime Title ${index + 1}'),
+                      title: Text(
+                        'Anime Title ${index + 1}',
+                        style: theme.textTheme.bodyLarge,
+                      ),
                       subtitle: const Text('Rating: 9.5/10'),
                       trailing: const Icon(Icons.arrow_forward_ios, size: 16),
                       onTap: () {
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
                             content: Text('Tapped on Anime ${index + 1}'),
-                            backgroundColor: isDarkMode
-                                ? Colors.purple.shade700
-                                : Colors.purple.shade600,
+                            backgroundColor: colorScheme.primary,
                           ),
                         );
                       },
@@ -225,23 +205,16 @@ class HomeScreen extends StatelessWidget {
         ),
       ),
       bottomNavigationBar: BottomNavigationBar(
+        currentIndex: 0,
+        onTap: (_) {},
+        selectedItemColor: colorScheme.primary,
+        unselectedItemColor: colorScheme.onSurface.withOpacity(0.6),
+        backgroundColor: colorScheme.surface,
         items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.search),
-            label: 'Search',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.bookmark),
-            label: 'Watchlist',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            label: 'Profile',
-          ),
+          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
+          BottomNavigationBarItem(icon: Icon(Icons.search), label: 'Search'),
+          BottomNavigationBarItem(icon: Icon(Icons.bookmark), label: 'Watchlist'),
+          BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
         ],
       ),
     );
