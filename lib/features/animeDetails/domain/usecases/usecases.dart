@@ -1,0 +1,1 @@
+export 'get_anime_detail.dart';
