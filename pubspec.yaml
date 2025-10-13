@@ -37,6 +37,7 @@ dependencies:
   
   # State Management
   flutter_bloc: ^8.1.6
+  provider: ^6.1.2
   
   # Networking
   http: ^1.2.2
@@ -52,15 +53,26 @@ dependencies:
   # Image Loading & Caching
   cached_network_image: ^3.4.1
   
-  # Date & Time
-  intl: ^0.19.0
-  
   # UI Enhancements
   shimmer: ^3.0.0
   lottie: ^3.1.2
   
   # Functional Programming
   dartz: ^0.10.1
+  
+  # Routing
+  go_router: ^14.6.1
+  
+  # Localization
+  flutter_localizations:
+    sdk: flutter
+  intl: ^0.20.2
+  
+  # URL Launcher for external links
+  url_launcher: ^6.3.1
+  
+  # YouTube Player
+  youtube_player_flutter: ^9.0.3
 
 dev_dependencies:
   flutter_test:
@@ -82,6 +94,7 @@ dev_dependencies:
 
 # The following section is specific to Flutter packages.
 flutter:
+  generate: true
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in

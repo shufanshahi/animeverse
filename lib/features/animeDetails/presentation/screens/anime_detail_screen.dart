@@ -6,6 +6,11 @@ import '../bloc/anime_detail_bloc.dart';
 import '../widgets/anime_detail_info_widget.dart';
 import '../widgets/anime_detail_synopsis_widget.dart';
 import '../widgets/anime_detail_genres_widget.dart';
+import '../widgets/anime_trailer_widget.dart';
+import '../widgets/anime_relations_widget.dart';
+import '../widgets/anime_themes_widget.dart';
+import '../widgets/anime_streaming_widget.dart';
+import '../widgets/anime_external_widget.dart';
 
 class AnimeDetailScreen extends StatelessWidget {
   final int animeId;
@@ -63,9 +68,12 @@ class AnimeDetailScreen extends StatelessWidget {
   }
 
   Widget _buildAnimeDetailContent(BuildContext context, AnimeDetail anime) {
-    final imageUrl = anime.images.isNotEmpty
-        ? anime.images.first.imageUrls.largeImageUrl ??
-            anime.images.first.imageUrls.imageUrl
+    final imageUrl = anime.images.containsKey('jpg')
+        ? anime.images['jpg']?.largeImageUrl ?? 
+          anime.images['jpg']?.imageUrl
+        : anime.images.containsKey('webp')
+        ? anime.images['webp']?.largeImageUrl ?? 
+          anime.images['webp']?.imageUrl
         : null;
 
     return CustomScrollView(
@@ -121,10 +129,31 @@ class AnimeDetailScreen extends StatelessWidget {
           sliver: SliverList(
             delegate: SliverChildListDelegate([
               AnimeDetailInfoWidget(anime: anime),
-              const SizedBox(height: 24),
+              const SizedBox(height: 16),
               AnimeDetailGenresWidget(genres: anime.genres),
-              const SizedBox(height: 24),
+              const SizedBox(height: 16),
+              if (anime.trailer != null) ...[
+                AnimeTrailerWidget(trailer: anime.trailer!),
+                const SizedBox(height: 16),
+              ],
               AnimeDetailSynopsisWidget(synopsis: anime.synopsis ?? 'No synopsis available'),
+              const SizedBox(height: 16),
+              if (anime.relations.isNotEmpty) ...[
+                AnimeRelationsWidget(relations: anime.relations),
+                const SizedBox(height: 16),
+              ],
+              if (anime.theme != null) ...[
+                AnimeThemesWidget(theme: anime.theme),
+                const SizedBox(height: 16),
+              ],
+              if (anime.streaming.isNotEmpty) ...[
+                AnimeStreamingWidget(streaming: anime.streaming),
+                const SizedBox(height: 16),
+              ],
+              if (anime.external.isNotEmpty) ...[
+                AnimeExternalWidget(external: anime.external),
+                const SizedBox(height: 16),
+              ],
               const SizedBox(height: 100), // Extra space at bottom
             ]),
           ),

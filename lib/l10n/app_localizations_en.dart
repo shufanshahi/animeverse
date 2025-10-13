@@ -24,7 +24,22 @@ class AppLocalizationsEn extends AppLocalizations {
   String get popular => 'Popular';
 
   @override
-  String get animeDetails => 'Anime Details';
+  String get home => 'Home';
+
+  @override
+  String get search => 'Search';
+
+  @override
+  String get watchlist => 'Watchlist';
+
+  @override
+  String get profile => 'Profile';
+
+  @override
+  String get lightMode => 'Light Mode';
+
+  @override
+  String get darkMode => 'Dark Mode';
 
   @override
   String get information => 'Information';
@@ -34,27 +49,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get genres => 'Genres';
-
-  @override
-  String get trailer => 'Trailer';
-
-  @override
-  String get relations => 'Relations';
-
-  @override
-  String get themes => 'Themes';
-
-  @override
-  String get streaming => 'Streaming Platforms';
-
-  @override
-  String get external => 'External Links';
-
-  @override
-  String get openingThemes => 'Opening Themes';
-
-  @override
-  String get endingThemes => 'Ending Themes';
 
   @override
   String get type => 'Type';
@@ -93,22 +87,25 @@ class AppLocalizationsEn extends AppLocalizations {
   String get studios => 'Studios';
 
   @override
-  String get rating => 'Rating';
+  String get trailer => 'Trailer';
 
   @override
-  String get season => 'Season';
+  String get relations => 'Relations';
 
   @override
-  String get year => 'Year';
+  String get themes => 'Themes';
 
   @override
-  String get broadcast => 'Broadcast';
+  String get streaming => 'Streaming';
 
   @override
-  String get producers => 'Producers';
+  String get external => 'External Links';
 
   @override
-  String get licensors => 'Licensors';
+  String get openings => 'Opening Themes';
+
+  @override
+  String get endings => 'Ending Themes';
 
   @override
   String get unknown => 'Unknown';
@@ -126,23 +123,18 @@ class AppLocalizationsEn extends AppLocalizations {
   String get loading => 'Loading...';
 
   @override
-  String get home => 'Home';
-
-  @override
-  String get search => 'Search';
-
-  @override
-  String get watchlist => 'Watchlist';
-
-  @override
-  String get profile => 'Profile';
+  String get watchTrailer => 'Watch Trailer';
 
   @override
   String get language => 'Language';
 
   @override
-  String get english => 'English';
+  String rating(String rating) {
+    return 'Rating: $rating';
+  }
 
   @override
-  String get bangla => 'বাংলা';
+  String animeTitle(int number) {
+    return 'Anime Title $number';
+  }
 }

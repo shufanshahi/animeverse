@@ -5,9 +5,6 @@ class AnimeDetailModel extends AnimeDetail {
     required super.malId,
     required super.url,
     required super.images,
-    super.trailer,
-    required super.approved,
-    required super.titles,
     required super.title,
     super.titleEnglish,
     super.titleJapanese,
@@ -38,22 +35,15 @@ class AnimeDetailModel extends AnimeDetail {
     required super.explicitGenres,
     required super.themes,
     required super.demographics,
-    required super.relations,
-    super.theme,
-    required super.external,
-    required super.streaming,
   });
 
   factory AnimeDetailModel.fromJson(Map<String, dynamic> json) {
     return AnimeDetailModel(
       malId: json['mal_id'] as int,
       url: json['url'] as String,
-      images: _parseImages(json['images']),
-      trailer: json['trailer'] != null 
-          ? AnimeTrailerModel.fromJson(json['trailer'])
-          : null,
-      approved: json['approved'] as bool? ?? false,
-      titles: _parseTitles(json['titles']),
+      images: (json['images'] as Map<String, dynamic>).entries
+          .map((e) => AnimeImageModel.fromJson(e.key, e.value))
+          .toList(),
       title: json['title'] as String,
       titleEnglish: json['title_english'] as String?,
       titleJapanese: json['title_japanese'] as String?,
@@ -88,34 +78,7 @@ class AnimeDetailModel extends AnimeDetail {
       explicitGenres: _parseGenreList(json['explicit_genres']),
       themes: _parseGenreList(json['themes']),
       demographics: _parseGenreList(json['demographics']),
-      relations: _parseRelations(json['relations']),
-      theme: json['theme'] != null 
-          ? AnimeThemeModel.fromJson(json['theme'])
-          : null,
-      external: _parseExternal(json['external']),
-      streaming: _parseStreaming(json['streaming']),
     );
-  }
-
-  static Map<String, AnimeImageUrls> _parseImages(dynamic json) {
-    if (json == null) return {};
-    final Map<String, dynamic> imagesMap = json;
-    final Map<String, AnimeImageUrls> result = {};
-    
-    imagesMap.forEach((key, value) {
-      if (value is Map<String, dynamic>) {
-        result[key] = AnimeImageUrlsModel.fromJson(value);
-      }
-    });
-    
-    return result;
-  }
-
-  static List<AnimeTitle> _parseTitles(dynamic json) {
-    if (json == null) return [];
-    return (json as List)
-        .map((item) => AnimeTitleModel.fromJson(item))
-        .toList();
   }
 
   static List<AnimeGenre> _parseGenreList(dynamic json) {
@@ -125,25 +88,59 @@ class AnimeDetailModel extends AnimeDetail {
         .toList();
   }
 
-  static List<AnimeRelation> _parseRelations(dynamic json) {
-    if (json == null) return [];
-    return (json as List)
-        .map((item) => AnimeRelationModel.fromJson(item))
-        .toList();
+  Map<String, dynamic> toJson() {
+    return {
+      'mal_id': malId,
+      'url': url,
+      'images': {
+        for (var image in images)
+          (image as AnimeImageModel).type: (image.imageUrls as AnimeImageUrlsModel).toJson(),
+      },
+      'title': title,
+      'title_english': titleEnglish,
+      'title_japanese': titleJapanese,
+      'title_synonyms': titleSynonyms,
+      'type': type,
+      'source': source,
+      'episodes': episodes,
+      'status': status,
+      'airing': airing,
+      'aired': (aired as AnimeAiredModel?)?.toJson(),
+      'duration': duration,
+      'rating': rating,
+      'score': score,
+      'scored_by': scoredBy,
+      'rank': rank,
+      'popularity': popularity,
+      'members': members,
+      'favorites': favorites,
+      'synopsis': synopsis,
+      'background': background,
+      'season': season,
+      'year': year,
+      'broadcast': (broadcast as AnimeBroadcastModel?)?.toJson(),
+      'producers': producers.map((p) => (p as AnimeGenreModel).toJson()).toList(),
+      'licensors': licensors.map((l) => (l as AnimeGenreModel).toJson()).toList(),
+      'studios': studios.map((s) => (s as AnimeGenreModel).toJson()).toList(),
+      'genres': genres.map((g) => (g as AnimeGenreModel).toJson()).toList(),
+      'explicit_genres': explicitGenres.map((e) => (e as AnimeGenreModel).toJson()).toList(),
+      'themes': themes.map((t) => (t as AnimeGenreModel).toJson()).toList(),
+      'demographics': demographics.map((d) => (d as AnimeGenreModel).toJson()).toList(),
+    };
   }
+}
 
-  static List<AnimeExternal> _parseExternal(dynamic json) {
-    if (json == null) return [];
-    return (json as List)
-        .map((item) => AnimeExternalModel.fromJson(item))
-        .toList();
-  }
+class AnimeImageModel extends AnimeImage {
+  const AnimeImageModel({
+    required super.type,
+    required super.imageUrls,
+  });
 
-  static List<AnimeStreaming> _parseStreaming(dynamic json) {
-    if (json == null) return [];
-    return (json as List)
-        .map((item) => AnimeStreamingModel.fromJson(item))
-        .toList();
+  factory AnimeImageModel.fromJson(String type, Map<String, dynamic> json) {
+    return AnimeImageModel(
+      type: type,
+      imageUrls: AnimeImageUrlsModel.fromJson(json),
+    );
   }
 }
 
@@ -168,60 +165,6 @@ class AnimeImageUrlsModel extends AnimeImageUrls {
       'small_image_url': smallImageUrl,
       'large_image_url': largeImageUrl,
     };
-  }
-}
-
-class AnimeTrailerModel extends AnimeTrailer {
-  const AnimeTrailerModel({
-    super.youtubeId,
-    super.url,
-    super.embedUrl,
-    super.images,
-  });
-
-  factory AnimeTrailerModel.fromJson(Map<String, dynamic> json) {
-    return AnimeTrailerModel(
-      youtubeId: json['youtube_id'] as String?,
-      url: json['url'] as String?,
-      embedUrl: json['embed_url'] as String?,
-      images: json['images'] != null 
-          ? AnimeTrailerImagesModel.fromJson(json['images'])
-          : null,
-    );
-  }
-}
-
-class AnimeTrailerImagesModel extends AnimeTrailerImages {
-  const AnimeTrailerImagesModel({
-    super.imageUrl,
-    super.smallImageUrl,
-    super.mediumImageUrl,
-    super.largeImageUrl,
-    super.maximumImageUrl,
-  });
-
-  factory AnimeTrailerImagesModel.fromJson(Map<String, dynamic> json) {
-    return AnimeTrailerImagesModel(
-      imageUrl: json['image_url'] as String?,
-      smallImageUrl: json['small_image_url'] as String?,
-      mediumImageUrl: json['medium_image_url'] as String?,
-      largeImageUrl: json['large_image_url'] as String?,
-      maximumImageUrl: json['maximum_image_url'] as String?,
-    );
-  }
-}
-
-class AnimeTitleModel extends AnimeTitle {
-  const AnimeTitleModel({
-    required super.type,
-    required super.title,
-  });
-
-  factory AnimeTitleModel.fromJson(Map<String, dynamic> json) {
-    return AnimeTitleModel(
-      type: json['type'] as String,
-      title: json['title'] as String,
-    );
   }
 }
 
@@ -348,81 +291,5 @@ class AnimeGenreModel extends AnimeGenre {
       'name': name,
       'url': url,
     };
-  }
-}
-
-class AnimeRelationModel extends AnimeRelation {
-  const AnimeRelationModel({
-    required super.relation,
-    required super.entry,
-  });
-
-  factory AnimeRelationModel.fromJson(Map<String, dynamic> json) {
-    return AnimeRelationModel(
-      relation: json['relation'] as String,
-      entry: (json['entry'] as List)
-          .map((item) => AnimeRelationEntryModel.fromJson(item))
-          .toList(),
-    );
-  }
-}
-
-class AnimeRelationEntryModel extends AnimeRelationEntry {
-  const AnimeRelationEntryModel({
-    required super.malId,
-    required super.type,
-    required super.name,
-    required super.url,
-  });
-
-  factory AnimeRelationEntryModel.fromJson(Map<String, dynamic> json) {
-    return AnimeRelationEntryModel(
-      malId: json['mal_id'] as int,
-      type: json['type'] as String,
-      name: json['name'] as String,
-      url: json['url'] as String,
-    );
-  }
-}
-
-class AnimeThemeModel extends AnimeTheme {
-  const AnimeThemeModel({
-    required super.openings,
-    required super.endings,
-  });
-
-  factory AnimeThemeModel.fromJson(Map<String, dynamic> json) {
-    return AnimeThemeModel(
-      openings: List<String>.from(json['openings'] ?? []),
-      endings: List<String>.from(json['endings'] ?? []),
-    );
-  }
-}
-
-class AnimeExternalModel extends AnimeExternal {
-  const AnimeExternalModel({
-    required super.name,
-    required super.url,
-  });
-
-  factory AnimeExternalModel.fromJson(Map<String, dynamic> json) {
-    return AnimeExternalModel(
-      name: json['name'] as String,
-      url: json['url'] as String,
-    );
-  }
-}
-
-class AnimeStreamingModel extends AnimeStreaming {
-  const AnimeStreamingModel({
-    required super.name,
-    required super.url,
-  });
-
-  factory AnimeStreamingModel.fromJson(Map<String, dynamic> json) {
-    return AnimeStreamingModel(
-      name: json['name'] as String,
-      url: json['url'] as String,
-    );
   }
 }

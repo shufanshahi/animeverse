@@ -3,7 +3,10 @@ import 'package:equatable/equatable.dart';
 class AnimeDetail extends Equatable {
   final int malId;
   final String url;
-  final List<AnimeImage> images;
+  final Map<String, AnimeImageUrls> images;
+  final AnimeTrailer? trailer;
+  final bool approved;
+  final List<AnimeTitle> titles;
   final String title;
   final String? titleEnglish;
   final String? titleJapanese;
@@ -34,11 +37,18 @@ class AnimeDetail extends Equatable {
   final List<AnimeGenre> explicitGenres;
   final List<AnimeGenre> themes;
   final List<AnimeGenre> demographics;
+  final List<AnimeRelation> relations;
+  final AnimeTheme? theme;
+  final List<AnimeExternal> external;
+  final List<AnimeStreaming> streaming;
 
   const AnimeDetail({
     required this.malId,
     required this.url,
     required this.images,
+    this.trailer,
+    required this.approved,
+    required this.titles,
     required this.title,
     this.titleEnglish,
     this.titleJapanese,
@@ -69,6 +79,10 @@ class AnimeDetail extends Equatable {
     required this.explicitGenres,
     required this.themes,
     required this.demographics,
+    required this.relations,
+    this.theme,
+    required this.external,
+    required this.streaming,
   });
 
   @override
@@ -76,6 +90,9 @@ class AnimeDetail extends Equatable {
         malId,
         url,
         images,
+        trailer,
+        approved,
+        titles,
         title,
         titleEnglish,
         titleJapanese,
@@ -106,21 +123,14 @@ class AnimeDetail extends Equatable {
         explicitGenres,
         themes,
         demographics,
+        relations,
+        theme,
+        external,
+        streaming,
       ];
 }
 
-class AnimeImage extends Equatable {
-  final String type;
-  final AnimeImageUrls imageUrls;
 
-  const AnimeImage({
-    required this.type,
-    required this.imageUrls,
-  });
-
-  @override
-  List<Object?> get props => [type, imageUrls];
-}
 
 class AnimeImageUrls extends Equatable {
   final String? imageUrl;
@@ -214,4 +224,122 @@ class AnimeGenre extends Equatable {
 
   @override
   List<Object?> get props => [malId, type, name, url];
+}
+
+class AnimeTrailer extends Equatable {
+  final String? youtubeId;
+  final String? url;
+  final String? embedUrl;
+  final AnimeTrailerImages? images;
+
+  const AnimeTrailer({
+    this.youtubeId,
+    this.url,
+    this.embedUrl,
+    this.images,
+  });
+
+  @override
+  List<Object?> get props => [youtubeId, url, embedUrl, images];
+}
+
+class AnimeTrailerImages extends Equatable {
+  final String? imageUrl;
+  final String? smallImageUrl;
+  final String? mediumImageUrl;
+  final String? largeImageUrl;
+  final String? maximumImageUrl;
+
+  const AnimeTrailerImages({
+    this.imageUrl,
+    this.smallImageUrl,
+    this.mediumImageUrl,
+    this.largeImageUrl,
+    this.maximumImageUrl,
+  });
+
+  @override
+  List<Object?> get props => [imageUrl, smallImageUrl, mediumImageUrl, largeImageUrl, maximumImageUrl];
+}
+
+class AnimeTitle extends Equatable {
+  final String type;
+  final String title;
+
+  const AnimeTitle({
+    required this.type,
+    required this.title,
+  });
+
+  @override
+  List<Object?> get props => [type, title];
+}
+
+class AnimeRelation extends Equatable {
+  final String relation;
+  final List<AnimeRelationEntry> entry;
+
+  const AnimeRelation({
+    required this.relation,
+    required this.entry,
+  });
+
+  @override
+  List<Object?> get props => [relation, entry];
+}
+
+class AnimeRelationEntry extends Equatable {
+  final int malId;
+  final String type;
+  final String name;
+  final String url;
+
+  const AnimeRelationEntry({
+    required this.malId,
+    required this.type,
+    required this.name,
+    required this.url,
+  });
+
+  @override
+  List<Object?> get props => [malId, type, name, url];
+}
+
+class AnimeTheme extends Equatable {
+  final List<String> openings;
+  final List<String> endings;
+
+  const AnimeTheme({
+    required this.openings,
+    required this.endings,
+  });
+
+  @override
+  List<Object?> get props => [openings, endings];
+}
+
+class AnimeExternal extends Equatable {
+  final String name;
+  final String url;
+
+  const AnimeExternal({
+    required this.name,
+    required this.url,
+  });
+
+  @override
+  List<Object?> get props => [name, url];
+}
+
+class AnimeStreaming extends Equatable {
+  final String name;
+  final String url;
+
+  const AnimeStreaming({
+    required this.name,
+    required this.url,
+  });
+
+  @override
+  List<Object?> get props => [name, url];
 }

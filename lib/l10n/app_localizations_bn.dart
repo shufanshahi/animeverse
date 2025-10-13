@@ -9,13 +9,13 @@ class AppLocalizationsBn extends AppLocalizations {
   AppLocalizationsBn([String locale = 'bn']) : super(locale);
 
   @override
-  String get appTitle => 'এনিমেহাব';
+  String get appTitle => 'অ্যানিমেহাব';
 
   @override
-  String get welcomeTitle => 'এনিমেহাব এ স্বাগতম';
+  String get welcomeTitle => 'অ্যানিমেহাব এ স্বাগতম';
 
   @override
-  String get welcomeSubtitle => 'আপনার এনিমে আবিষ্কারের প্ল্যাটফর্ম';
+  String get welcomeSubtitle => 'আপনার অ্যানিমে আবিষ্কারের প্ল্যাটফর্ম';
 
   @override
   String get trendingNow => 'এখন ট্রেন্ডিং';
@@ -24,40 +24,34 @@ class AppLocalizationsBn extends AppLocalizations {
   String get popular => 'জনপ্রিয়';
 
   @override
-  String get animeDetails => 'এনিমে বিস্তারিত';
+  String get home => 'হোম';
+
+  @override
+  String get search => 'খুঁজুন';
+
+  @override
+  String get watchlist => 'ওয়াচলিস্ট';
+
+  @override
+  String get profile => 'প্রোফাইল';
+
+  @override
+  String get lightMode => 'লাইট মোড';
+
+  @override
+  String get darkMode => 'ডার্ক মোড';
 
   @override
   String get information => 'তথ্য';
 
   @override
-  String get synopsis => 'সারসংক্ষেপ';
+  String get synopsis => 'সংক্ষিপ্ত বিবরণ';
 
   @override
   String get genres => 'ধরন';
 
   @override
-  String get trailer => 'ট্রেইলার';
-
-  @override
-  String get relations => 'সম্পর্ক';
-
-  @override
-  String get themes => 'থিম';
-
-  @override
-  String get streaming => 'স্ট্রিমিং প্ল্যাটফর্ম';
-
-  @override
-  String get external => 'বাহ্যিক লিঙ্ক';
-
-  @override
-  String get openingThemes => 'শুরুর থিম';
-
-  @override
-  String get endingThemes => 'শেষের থিম';
-
-  @override
-  String get type => 'ধরন';
+  String get type => 'প্রকার';
 
   @override
   String get episodes => 'পর্ব';
@@ -66,7 +60,7 @@ class AppLocalizationsBn extends AppLocalizations {
   String get status => 'অবস্থা';
 
   @override
-  String get aired => 'সম্প্রচার';
+  String get aired => 'প্রচারিত';
 
   @override
   String get source => 'উৎস';
@@ -87,62 +81,60 @@ class AppLocalizationsBn extends AppLocalizations {
   String get members => 'সদস্য';
 
   @override
-  String get favorites => 'পছন্দের';
+  String get favorites => 'প্রিয়';
 
   @override
   String get studios => 'স্টুডিও';
 
   @override
-  String get rating => 'রেটিং';
+  String get trailer => 'ট্রেইলার';
 
   @override
-  String get season => 'সিজন';
+  String get relations => 'সম্পর্ক';
 
   @override
-  String get year => 'বছর';
+  String get themes => 'থিম';
 
   @override
-  String get broadcast => 'সম্প্রচার';
+  String get streaming => 'স্ট্রিমিং';
 
   @override
-  String get producers => 'প্রযোজক';
+  String get external => 'বাহ্যিক লিংক';
 
   @override
-  String get licensors => 'লাইসেন্সধারী';
+  String get openings => 'ওপেনিং থিম';
+
+  @override
+  String get endings => 'এন্ডিং থিম';
 
   @override
   String get unknown => 'অজানা';
 
   @override
-  String get noSynopsisAvailable => 'কোনো সারসংক্ষেপ নেই';
+  String get noSynopsisAvailable => 'কোন সংক্ষিপ্ত বিবরণ উপলব্ধ নেই';
 
   @override
   String get error => 'ত্রুটি';
 
   @override
-  String get retry => 'পুনরায় চেষ্টা করুন';
+  String get retry => 'আবার চেষ্টা করুন';
 
   @override
   String get loading => 'লোড হচ্ছে...';
 
   @override
-  String get home => 'হোম';
-
-  @override
-  String get search => 'খুঁজুন';
-
-  @override
-  String get watchlist => 'দেখার তালিকা';
-
-  @override
-  String get profile => 'প্রোফাইল';
+  String get watchTrailer => 'ট্রেইলার দেখুন';
 
   @override
   String get language => 'ভাষা';
 
   @override
-  String get english => 'English';
+  String rating(String rating) {
+    return 'রেটিং: $rating';
+  }
 
   @override
-  String get bangla => 'বাংলা';
+  String animeTitle(int number) {
+    return 'অ্যানিমে শিরোনাম $number';
+  }
 }

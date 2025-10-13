@@ -98,281 +98,257 @@ abstract class AppLocalizations {
     Locale('en'),
   ];
 
-  /// No description provided for @appTitle.
+  /// The title of the application
   ///
   /// In en, this message translates to:
   /// **'AnimeHub'**
   String get appTitle;
 
-  /// No description provided for @welcomeTitle.
+  /// Welcome message title
   ///
   /// In en, this message translates to:
   /// **'Welcome to AnimeHub'**
   String get welcomeTitle;
 
-  /// No description provided for @welcomeSubtitle.
+  /// Welcome message subtitle
   ///
   /// In en, this message translates to:
   /// **'Your anime discovery platform'**
   String get welcomeSubtitle;
 
-  /// No description provided for @trendingNow.
+  /// Trending section title
   ///
   /// In en, this message translates to:
   /// **'Trending Now'**
   String get trendingNow;
 
-  /// No description provided for @popular.
+  /// Popular section title
   ///
   /// In en, this message translates to:
   /// **'Popular'**
   String get popular;
 
-  /// No description provided for @animeDetails.
-  ///
-  /// In en, this message translates to:
-  /// **'Anime Details'**
-  String get animeDetails;
-
-  /// No description provided for @information.
-  ///
-  /// In en, this message translates to:
-  /// **'Information'**
-  String get information;
-
-  /// No description provided for @synopsis.
-  ///
-  /// In en, this message translates to:
-  /// **'Synopsis'**
-  String get synopsis;
-
-  /// No description provided for @genres.
-  ///
-  /// In en, this message translates to:
-  /// **'Genres'**
-  String get genres;
-
-  /// No description provided for @trailer.
-  ///
-  /// In en, this message translates to:
-  /// **'Trailer'**
-  String get trailer;
-
-  /// No description provided for @relations.
-  ///
-  /// In en, this message translates to:
-  /// **'Relations'**
-  String get relations;
-
-  /// No description provided for @themes.
-  ///
-  /// In en, this message translates to:
-  /// **'Themes'**
-  String get themes;
-
-  /// No description provided for @streaming.
-  ///
-  /// In en, this message translates to:
-  /// **'Streaming Platforms'**
-  String get streaming;
-
-  /// No description provided for @external.
-  ///
-  /// In en, this message translates to:
-  /// **'External Links'**
-  String get external;
-
-  /// No description provided for @openingThemes.
-  ///
-  /// In en, this message translates to:
-  /// **'Opening Themes'**
-  String get openingThemes;
-
-  /// No description provided for @endingThemes.
-  ///
-  /// In en, this message translates to:
-  /// **'Ending Themes'**
-  String get endingThemes;
-
-  /// No description provided for @type.
-  ///
-  /// In en, this message translates to:
-  /// **'Type'**
-  String get type;
-
-  /// No description provided for @episodes.
-  ///
-  /// In en, this message translates to:
-  /// **'Episodes'**
-  String get episodes;
-
-  /// No description provided for @status.
-  ///
-  /// In en, this message translates to:
-  /// **'Status'**
-  String get status;
-
-  /// No description provided for @aired.
-  ///
-  /// In en, this message translates to:
-  /// **'Aired'**
-  String get aired;
-
-  /// No description provided for @source.
-  ///
-  /// In en, this message translates to:
-  /// **'Source'**
-  String get source;
-
-  /// No description provided for @duration.
-  ///
-  /// In en, this message translates to:
-  /// **'Duration'**
-  String get duration;
-
-  /// No description provided for @score.
-  ///
-  /// In en, this message translates to:
-  /// **'Score'**
-  String get score;
-
-  /// No description provided for @rank.
-  ///
-  /// In en, this message translates to:
-  /// **'Rank'**
-  String get rank;
-
-  /// No description provided for @popularity.
-  ///
-  /// In en, this message translates to:
-  /// **'Popularity'**
-  String get popularity;
-
-  /// No description provided for @members.
-  ///
-  /// In en, this message translates to:
-  /// **'Members'**
-  String get members;
-
-  /// No description provided for @favorites.
-  ///
-  /// In en, this message translates to:
-  /// **'Favorites'**
-  String get favorites;
-
-  /// No description provided for @studios.
-  ///
-  /// In en, this message translates to:
-  /// **'Studios'**
-  String get studios;
-
-  /// No description provided for @rating.
-  ///
-  /// In en, this message translates to:
-  /// **'Rating'**
-  String get rating;
-
-  /// No description provided for @season.
-  ///
-  /// In en, this message translates to:
-  /// **'Season'**
-  String get season;
-
-  /// No description provided for @year.
-  ///
-  /// In en, this message translates to:
-  /// **'Year'**
-  String get year;
-
-  /// No description provided for @broadcast.
-  ///
-  /// In en, this message translates to:
-  /// **'Broadcast'**
-  String get broadcast;
-
-  /// No description provided for @producers.
-  ///
-  /// In en, this message translates to:
-  /// **'Producers'**
-  String get producers;
-
-  /// No description provided for @licensors.
-  ///
-  /// In en, this message translates to:
-  /// **'Licensors'**
-  String get licensors;
-
-  /// No description provided for @unknown.
-  ///
-  /// In en, this message translates to:
-  /// **'Unknown'**
-  String get unknown;
-
-  /// No description provided for @noSynopsisAvailable.
-  ///
-  /// In en, this message translates to:
-  /// **'No synopsis available'**
-  String get noSynopsisAvailable;
-
-  /// No description provided for @error.
-  ///
-  /// In en, this message translates to:
-  /// **'Error'**
-  String get error;
-
-  /// No description provided for @retry.
-  ///
-  /// In en, this message translates to:
-  /// **'Retry'**
-  String get retry;
-
-  /// No description provided for @loading.
-  ///
-  /// In en, this message translates to:
-  /// **'Loading...'**
-  String get loading;
-
-  /// No description provided for @home.
+  /// Home tab label
   ///
   /// In en, this message translates to:
   /// **'Home'**
   String get home;
 
-  /// No description provided for @search.
+  /// Search tab label
   ///
   /// In en, this message translates to:
   /// **'Search'**
   String get search;
 
-  /// No description provided for @watchlist.
+  /// Watchlist tab label
   ///
   /// In en, this message translates to:
   /// **'Watchlist'**
   String get watchlist;
 
-  /// No description provided for @profile.
+  /// Profile tab label
   ///
   /// In en, this message translates to:
   /// **'Profile'**
   String get profile;
 
-  /// No description provided for @language.
+  /// Light mode tooltip
+  ///
+  /// In en, this message translates to:
+  /// **'Light Mode'**
+  String get lightMode;
+
+  /// Dark mode tooltip
+  ///
+  /// In en, this message translates to:
+  /// **'Dark Mode'**
+  String get darkMode;
+
+  /// Information section title
+  ///
+  /// In en, this message translates to:
+  /// **'Information'**
+  String get information;
+
+  /// Synopsis section title
+  ///
+  /// In en, this message translates to:
+  /// **'Synopsis'**
+  String get synopsis;
+
+  /// Genres section title
+  ///
+  /// In en, this message translates to:
+  /// **'Genres'**
+  String get genres;
+
+  /// Anime type label
+  ///
+  /// In en, this message translates to:
+  /// **'Type'**
+  String get type;
+
+  /// Episodes label
+  ///
+  /// In en, this message translates to:
+  /// **'Episodes'**
+  String get episodes;
+
+  /// Status label
+  ///
+  /// In en, this message translates to:
+  /// **'Status'**
+  String get status;
+
+  /// Aired label
+  ///
+  /// In en, this message translates to:
+  /// **'Aired'**
+  String get aired;
+
+  /// Source label
+  ///
+  /// In en, this message translates to:
+  /// **'Source'**
+  String get source;
+
+  /// Duration label
+  ///
+  /// In en, this message translates to:
+  /// **'Duration'**
+  String get duration;
+
+  /// Score label
+  ///
+  /// In en, this message translates to:
+  /// **'Score'**
+  String get score;
+
+  /// Rank label
+  ///
+  /// In en, this message translates to:
+  /// **'Rank'**
+  String get rank;
+
+  /// Popularity label
+  ///
+  /// In en, this message translates to:
+  /// **'Popularity'**
+  String get popularity;
+
+  /// Members label
+  ///
+  /// In en, this message translates to:
+  /// **'Members'**
+  String get members;
+
+  /// Favorites label
+  ///
+  /// In en, this message translates to:
+  /// **'Favorites'**
+  String get favorites;
+
+  /// Studios label
+  ///
+  /// In en, this message translates to:
+  /// **'Studios'**
+  String get studios;
+
+  /// Trailer section title
+  ///
+  /// In en, this message translates to:
+  /// **'Trailer'**
+  String get trailer;
+
+  /// Relations section title
+  ///
+  /// In en, this message translates to:
+  /// **'Relations'**
+  String get relations;
+
+  /// Theme songs section title
+  ///
+  /// In en, this message translates to:
+  /// **'Themes'**
+  String get themes;
+
+  /// Streaming platforms section title
+  ///
+  /// In en, this message translates to:
+  /// **'Streaming'**
+  String get streaming;
+
+  /// External links section title
+  ///
+  /// In en, this message translates to:
+  /// **'External Links'**
+  String get external;
+
+  /// Opening themes label
+  ///
+  /// In en, this message translates to:
+  /// **'Opening Themes'**
+  String get openings;
+
+  /// Ending themes label
+  ///
+  /// In en, this message translates to:
+  /// **'Ending Themes'**
+  String get endings;
+
+  /// Unknown value placeholder
+  ///
+  /// In en, this message translates to:
+  /// **'Unknown'**
+  String get unknown;
+
+  /// Message when synopsis is not available
+  ///
+  /// In en, this message translates to:
+  /// **'No synopsis available'**
+  String get noSynopsisAvailable;
+
+  /// Error message title
+  ///
+  /// In en, this message translates to:
+  /// **'Error'**
+  String get error;
+
+  /// Retry button text
+  ///
+  /// In en, this message translates to:
+  /// **'Retry'**
+  String get retry;
+
+  /// Loading message
+  ///
+  /// In en, this message translates to:
+  /// **'Loading...'**
+  String get loading;
+
+  /// Watch trailer button text
+  ///
+  /// In en, this message translates to:
+  /// **'Watch Trailer'**
+  String get watchTrailer;
+
+  /// Language label
   ///
   /// In en, this message translates to:
   /// **'Language'**
   String get language;
 
-  /// No description provided for @english.
+  /// Rating with placeholder
   ///
   /// In en, this message translates to:
-  /// **'English'**
-  String get english;
+  /// **'Rating: {rating}'**
+  String rating(String rating);
 
-  /// No description provided for @bangla.
+  /// Anime title with number placeholder
   ///
   /// In en, this message translates to:
-  /// **'বাংলা'**
-  String get bangla;
+  /// **'Anime Title {number}'**
+  String animeTitle(int number);
 }
 
 class _AppLocalizationsDelegate
