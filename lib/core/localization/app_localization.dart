@@ -1,0 +1,68 @@
+// lib/core/localization/app_localizations.dart
+
+class AppLocalizations {
+  static Map<String, Map<String, String>> translations = {
+    'en': {
+      'app_name': 'Anime Verse',
+      'welcome_back': 'Welcome Back!',
+      'create_account': 'Create Account',
+      'email': 'Email',
+      'password': 'Password',
+      'full_name': 'Full Name',
+      'confirm_password': 'Confirm Password',
+      'login': 'Login',
+      'signup': 'Sign Up',
+      'forgot_password': 'Forgot Password?',
+      'dont_have_account': "Don't have an account?",
+      'already_have_account': 'Already have an account?',
+      'reset_password': 'Reset Password',
+      'send_reset_link': 'Send Reset Link',
+      'back_to_login': 'Back to Login',
+      'reset_instructions': 'Enter your email address and we\'ll send you a link to reset your password.',
+      'reset_email_sent': 'Password reset email sent! Check your inbox.',
+      'login_success': 'Login successful!',
+      'signup_success': 'Account created successfully!',
+      'error': 'Error',
+      'loading': 'Loading...',
+      'or': 'OR',
+      'enter_email': 'Enter your email',
+      'enter_password': 'Enter your password',
+      'enter_name': 'Enter your full name',
+      'sign_in_to_continue': 'Sign in to discover amazing anime!',
+      'join_us': 'Join us to get personalized anime suggestions',
+    },
+    'bn': {
+      'app_name': 'এনিমে ভার্স',
+      'welcome_back': 'স্বাগতম!',
+      'create_account': 'অ্যাকাউন্ট তৈরি করুন',
+      'email': 'ইমেইল',
+      'password': 'পাসওয়ার্ড',
+      'full_name': 'পূর্ণ নাম',
+      'confirm_password': 'পাসওয়ার্ড নিশ্চিত করুন',
+      'login': 'লগইন',
+      'signup': 'সাইন আপ',
+      'forgot_password': 'পাসওয়ার্ড ভুলে গেছেন?',
+      'dont_have_account': 'অ্যাকাউন্ট নেই?',
+      'already_have_account': 'ইতিমধ্যে অ্যাকাউন্ট আছে?',
+      'reset_password': 'পাসওয়ার্ড রিসেট করুন',
+      'send_reset_link': 'রিসেট লিঙ্ক পাঠান',
+      'back_to_login': 'লগইনে ফিরে যান',
+      'reset_instructions': 'আপনার ইমেইল ঠিকানা লিখুন এবং আমরা আপনাকে পাসওয়ার্ড রিসেট করার জন্য একটি লিঙ্ক পাঠাব।',
+      'reset_email_sent': 'পাসওয়ার্ড রিসেট ইমেইল পাঠানো হয়েছে! আপনার ইনবক্স চেক করুন।',
+      'login_success': 'লগইন সফল হয়েছে!',
+      'signup_success': 'অ্যাকাউন্ট সফলভাবে তৈরি হয়েছে!',
+      'error': 'ত্রুটি',
+      'loading': 'লোড হচ্ছে...',
+      'or': 'অথবা',
+      'enter_email': 'আপনার ইমেইল লিখুন',
+      'enter_password': 'আপনার পাসওয়ার্ড লিখুন',
+      'enter_name': 'আপনার পূর্ণ নাম লিখুন',
+      'sign_in_to_continue': 'অসাধারণ এনিমে আবিষ্কার করতে সাইন ইন করুন!',
+      'join_us': 'ব্যক্তিগত এনিমে সাজেশন পেতে আমাদের সাথে যোগ দিন',
+    },
+  };
+
+  static String translate(String key, String locale) {
+    return translations[locale]?[key] ?? translations['en']![key]!;
+  }
+}
