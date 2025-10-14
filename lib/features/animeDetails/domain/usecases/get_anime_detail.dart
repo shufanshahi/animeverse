@@ -5,6 +5,15 @@ import '../../../../core/usecases/usecase.dart';
 import '../entities/anime_detail.dart';
 import '../repositories/anime_detail_repository.dart';
 
+class GetAnimeDetailParams extends Equatable {
+  final int id;
+
+  const GetAnimeDetailParams({required this.id});
+
+  @override
+  List<Object> get props => [id];
+}
+
 class GetAnimeDetail implements UseCase<AnimeDetail, GetAnimeDetailParams> {
   final AnimeDetailRepository repository;
 
@@ -12,15 +21,6 @@ class GetAnimeDetail implements UseCase<AnimeDetail, GetAnimeDetailParams> {
 
   @override
   Future<Either<Failure, AnimeDetail>> call(GetAnimeDetailParams params) async {
-    return await repository.getAnimeDetail(params.animeId);
+    return await repository.getAnimeDetail(params.id);
   }
-}
-
-class GetAnimeDetailParams extends Equatable {
-  final int animeId;
-
-  const GetAnimeDetailParams({required this.animeId});
-
-  @override
-  List<Object> get props => [animeId];
 }

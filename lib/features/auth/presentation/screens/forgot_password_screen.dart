@@ -2,10 +2,13 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../../core/localization/app_localization.dart';
-import '../providers/auth_provider.dart';
-import '../providers/theme_provider.dart';
+import '../../../../core/providers/locale_provider.dart';
+import '../../../../core/providers/theme_provider.dart';
+import '../riverpod/auth_provider.dart';
+import '../state/auth_state.dart';
 import '../widgets/custom_button.dart';
 import '../widgets/custom_text_field.dart';
 import '../widgets/language_toggle.dart';
@@ -29,7 +32,7 @@ class _ForgotPasswordScreenState extends ConsumerState<ForgotPasswordScreen> {
 
   void _handleResetPassword() async {
     await ref.read(authProvider.notifier).forgotPassword(
-          _emailController.text.trim(),
+          email: _emailController.text.trim(),
         );
 
     final authState = ref.read(authProvider);
@@ -147,7 +150,7 @@ class _ForgotPasswordScreenState extends ConsumerState<ForgotPasswordScreen> {
                 Center(
                   child: ElevatedButton(
                     onPressed: () {
-                      Navigator.pop(context);
+                      context.pushReplacementNamed('login');
                     },
                     child: Text(AppLocalizations.translate('back_to_login', lang)),
                   ),

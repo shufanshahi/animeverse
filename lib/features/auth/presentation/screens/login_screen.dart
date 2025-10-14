@@ -2,15 +2,16 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../../core/localization/app_localization.dart';
-import '../providers/auth_provider.dart';
-import '../providers/theme_provider.dart';
+import '../../../../core/providers/locale_provider.dart';
+import '../../../../core/providers/theme_provider.dart';
+import '../riverpod/auth_provider.dart';
+import '../state/auth_state.dart';
 import '../widgets/custom_button.dart';
 import '../widgets/custom_text_field.dart';
 import '../widgets/language_toggle.dart';
-import 'forgot_password_screen.dart';
-import 'signup_screen.dart';
 
 class LoginScreen extends ConsumerStatefulWidget {
   const LoginScreen({super.key});
@@ -32,8 +33,8 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
 
   void _handleLogin() {
     ref.read(authProvider.notifier).login(
-          _emailController.text.trim(),
-          _passwordController.text,
+          email: _emailController.text.trim(),
+          password: _passwordController.text,
         );
   }
 
@@ -60,8 +61,8 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
             backgroundColor: Colors.green,
           ),
         );
-        // Navigate to home screen
-        // Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => HomeScreen()));
+        // Our router will automatically handle the navigation to home
+        context.go('/');
       }
     });
 
@@ -148,12 +149,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                 alignment: Alignment.centerRight,
                 child: TextButton(
                   onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (_) => const ForgotPasswordScreen(),
-                      ),
-                    );
+                    context.pushNamed('forgotPassword');
                   },
                   child: Text(
                     AppLocalizations.translate('forgot_password', lang),
@@ -201,12 +197,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                     ),
                     TextButton(
                       onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (_) => const SignupScreen(),
-                          ),
-                        );
+                        context.pushNamed('signup');
                       },
                       child: Text(
                         AppLocalizations.translate('signup', lang),

@@ -3,7 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../providers/theme_provider.dart';
+import '../../../../core/providers/locale_provider.dart';
 
 class LanguageToggle extends ConsumerWidget {
   const LanguageToggle({Key? key}) : super(key: key);
@@ -17,7 +17,7 @@ class LanguageToggle extends ConsumerWidget {
         color: Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.circular(8),
         border: Border.all(
-          color: Theme.of(context).colorScheme.primary.withOpacity(0.3),
+          color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.3),
         ),
       ),
       child: Row(
@@ -35,7 +35,7 @@ class LanguageToggle extends ConsumerWidget {
           Container(
             width: 1,
             height: 30,
-            color: Theme.of(context).colorScheme.primary.withOpacity(0.3),
+            color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.3),
           ),
           _LanguageButton(
             text: 'বাং',

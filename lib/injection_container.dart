@@ -6,29 +6,16 @@ import 'features/animeDetails/data/datasources/anime_detail_remote_data_source.d
 import 'features/animeDetails/data/repositories/anime_detail_repository_impl.dart';
 import 'features/animeDetails/domain/repositories/anime_detail_repository.dart';
 import 'features/animeDetails/domain/usecases/get_anime_detail.dart';
-import 'features/animeDetails/presentation/bloc/anime_detail_bloc.dart';
-
 // Features - Home
 import 'features/home/data/datasources/datasources.dart';
 import 'features/home/data/repositories/repositories.dart';
 import 'features/home/domain/repositories/repositories.dart';
 import 'features/home/domain/usecases/usecases.dart';
-import 'features/home/presentation/bloc/home_bloc.dart';
 
 final sl = GetIt.instance;
 
 Future<void> init() async {
   //! Features - Home
-  // Bloc
-  sl.registerFactory(
-    () => HomeBloc(
-      getTopAnime: sl(),
-      getAnimeByGenre: sl(),
-      getSeasonalAnime: sl(),
-      getAiringAnime: sl(),
-    ),
-  );
-
   // Use cases
   sl.registerLazySingleton(() => GetTopAnime(sl()));
   sl.registerLazySingleton(() => GetAnimeByGenre(sl()));
@@ -50,13 +37,6 @@ Future<void> init() async {
   );
 
   //! Features - AnimeDetails
-  // Bloc
-  sl.registerFactory(
-    () => AnimeDetailBloc(
-      getAnimeDetail: sl(),
-    ),
-  );
-
   // Use cases
   sl.registerLazySingleton(() => GetAnimeDetail(sl()));
 

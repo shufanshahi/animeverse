@@ -1,5 +1,7 @@
 // lib/features/auth/domain/usecases/forgot_password_usecase.dart
 
+import 'package:fpdart/fpdart.dart';
+
 import '../repositories/auth_repository.dart';
 
 class ForgotPasswordUseCase {
@@ -7,13 +9,13 @@ class ForgotPasswordUseCase {
 
   ForgotPasswordUseCase(this.repository);
 
-  Future<void> call(String email) async {
+  Future<Either<String, Unit>> call({required String email}) async {
     if (email.isEmpty) {
-      throw Exception('Email cannot be empty');
+      return left('Email cannot be empty');
     }
     
     if (!_isValidEmail(email)) {
-      throw Exception('Please enter a valid email address');
+      return left('Please enter a valid email address');
     }
     
     return await repository.forgotPassword(email);

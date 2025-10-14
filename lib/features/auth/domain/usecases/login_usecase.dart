@@ -1,4 +1,4 @@
-// lib/features/auth/domain/usecases/login_usecase.dart
+import 'package:fpdart/fpdart.dart';
 
 import '../entities/user_entity.dart';
 import '../repositories/auth_repository.dart';
@@ -8,16 +8,23 @@ class LoginUseCase {
 
   LoginUseCase(this.repository);
 
-  Future<UserEntity> call(String email, String password) async {
-    if (email.isEmpty || password.isEmpty) {
-      throw Exception('Email and password cannot be empty');
-    }
+  Future<Either<String, UserEntity>> call({
+    required String email,
+    required String password,
+  }) async {
+    try {
+      if (email.isEmpty || password.isEmpty) {
+        return Left('Email and password cannot be empty');
+      }
     
-    if (!_isValidEmail(email)) {
-      throw Exception('Please enter a valid email address');
-    }
+      if (!_isValidEmail(email)) {
+        return Left('Please enter a valid email address');
+      }
     
-    return await repository.login(email, password);
+      return await repository.login(email, password);
+    } catch (e) {
+      return Left(e.toString());
+    }
   }
 
   bool _isValidEmail(String email) {

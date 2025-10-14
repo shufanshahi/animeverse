@@ -1,5 +1,7 @@
 // lib/features/auth/domain/usecases/signup_usecase.dart
 
+import 'package:fpdart/fpdart.dart';
+
 import '../entities/user_entity.dart';
 import '../repositories/auth_repository.dart';
 
@@ -8,19 +10,25 @@ class SignupUseCase {
 
   SignupUseCase(this.repository);
 
-  Future<UserEntity> call(String email, String password, String displayName) async {
+  Future<Either<String, UserEntity>> call({
+    required String email,
+    required String password,
+    required String displayName,
+  }) async {
+    // Validate input
     if (email.isEmpty || password.isEmpty || displayName.isEmpty) {
-      throw Exception('All fields are required');
+      return left('All fields are required');
     }
     
     if (!_isValidEmail(email)) {
-      throw Exception('Please enter a valid email address');
+      return left('Please enter a valid email address');
     }
     
     if (password.length < 6) {
-      throw Exception('Password must be at least 6 characters long');
+      return left('Password must be at least 6 characters long');
     }
     
+    // Proceed with signup
     return await repository.signup(email, password, displayName);
   }
 

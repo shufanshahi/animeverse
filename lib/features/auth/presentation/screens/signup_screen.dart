@@ -2,10 +2,13 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../../core/localization/app_localization.dart';
-import '../providers/auth_provider.dart';
-import '../providers/theme_provider.dart';
+import '../../../../core/providers/locale_provider.dart';
+import '../../../../core/providers/theme_provider.dart';
+import '../riverpod/auth_provider.dart';
+import '../state/auth_state.dart';
 import '../widgets/custom_button.dart';
 import '../widgets/custom_text_field.dart';
 import '../widgets/language_toggle.dart';
@@ -44,9 +47,9 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
     }
 
     ref.read(authProvider.notifier).signup(
-          _emailController.text.trim(),
-          _passwordController.text,
-          _nameController.text.trim(),
+          email: _emailController.text.trim(),
+          password: _passwordController.text,
+          displayName: _nameController.text.trim(),
         );
   }
 
@@ -213,7 +216,7 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
                     ),
                     TextButton(
                       onPressed: () {
-                        Navigator.pop(context);
+                        context.pushReplacementNamed('login');
                       },
                       child: Text(
                         AppLocalizations.translate('login', lang),

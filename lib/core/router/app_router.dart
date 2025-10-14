@@ -1,54 +1,50 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../features/animeDetails/presentation/screens/anime_detail_screen.dart';
 import '../../features/auth/presentation/riverpod/auth_provider.dart';
 import '../../features/auth/presentation/screens/forgot_password_screen.dart';
 import '../../features/auth/presentation/screens/login_screen.dart';
 import '../../features/auth/presentation/screens/signup_screen.dart';
 import '../../features/home/presentation/screens/home_screen.dart';
 
-final goRouterProvider = Provider<GoRouter>((ref) {
+final routerProvider = Provider<GoRouter>((ref) {
+  final authState = ref.watch(authProvider);
+
   return GoRouter(
     initialLocation: '/login',
     redirect: (context, state) {
-      final authState = ref.read(authProvider);
       final isLoggedIn = authState.user != null;
-      final isLoggingIn = state.fullPath == '/login';
+      final isLoggingIn = state.matchedLocation == '/login';
+      final isSigningUp = state.matchedLocation == '/signup';
+      final isForgotPassword = state.matchedLocation == '/forgot-password';
 
-      if (!isLoggedIn && !isLoggingIn) return '/login';
-      if (isLoggedIn && isLoggingIn) return '/';
+      // If not logged in, allow access to auth-related pages only
+      if (!isLoggedIn) {
+        if (isLoggingIn || isSigningUp || isForgotPassword) return null;
+        return '/login';
+      }
+
+      // If logged in and trying to access auth pages, redirect to home
+      if (isLoggingIn || isSigningUp || isForgotPassword) return '/';
 
       return null;
     },
     routes: [
       GoRoute(
         path: '/login',
-        name: 'login',
         builder: (context, state) => const LoginScreen(),
       ),
       GoRoute(
         path: '/signup',
-        name: 'signup',
         builder: (context, state) => const SignupScreen(),
       ),
       GoRoute(
         path: '/forgot-password',
-        name: 'forgotPassword',
         builder: (context, state) => const ForgotPasswordScreen(),
       ),
       GoRoute(
         path: '/',
-        name: 'home',
         builder: (context, state) => const HomeScreen(),
-      ),
-      GoRoute(
-        path: '/anime/:id',
-        name: 'animeDetail',
-        builder: (context, state) {
-          final animeId = int.parse(state.pathParameters['id']!);
-          return AnimeDetailScreen(animeId: animeId);
-        },
       ),
     ],
   );
