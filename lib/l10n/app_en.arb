@@ -1,0 +1,183 @@
+{
+  "@@locale": "en",
+  "appTitle": "AnimeHub",
+  "@appTitle": {
+    "description": "The title of the application"
+  },
+  "welcomeTitle": "Welcome to AnimeHub",
+  "@welcomeTitle": {
+    "description": "Welcome message title"
+  },
+  "welcomeSubtitle": "Your anime discovery platform",
+  "@welcomeSubtitle": {
+    "description": "Welcome message subtitle"
+  },
+  "trendingNow": "Trending Now",
+  "@trendingNow": {
+    "description": "Trending section title"
+  },
+  "popular": "Popular",
+  "@popular": {
+    "description": "Popular section title"
+  },
+  "home": "Home",
+  "@home": {
+    "description": "Home tab label"
+  },
+  "search": "Search",
+  "@search": {
+    "description": "Search tab label"
+  },
+  "watchlist": "Watchlist",
+  "@watchlist": {
+    "description": "Watchlist tab label"
+  },
+  "profile": "Profile",
+  "@profile": {
+    "description": "Profile tab label"
+  },
+  "lightMode": "Light Mode",
+  "@lightMode": {
+    "description": "Light mode tooltip"
+  },
+  "darkMode": "Dark Mode",
+  "@darkMode": {
+    "description": "Dark mode tooltip"
+  },
+  "information": "Information",
+  "@information": {
+    "description": "Information section title"
+  },
+  "synopsis": "Synopsis",
+  "@synopsis": {
+    "description": "Synopsis section title"
+  },
+  "genres": "Genres",
+  "@genres": {
+    "description": "Genres section title"
+  },
+  "type": "Type",
+  "@type": {
+    "description": "Anime type label"
+  },
+  "episodes": "Episodes",
+  "@episodes": {
+    "description": "Episodes label"
+  },
+  "status": "Status",
+  "@status": {
+    "description": "Status label"
+  },
+  "aired": "Aired",
+  "@aired": {
+    "description": "Aired label"
+  },
+  "source": "Source",
+  "@source": {
+    "description": "Source label"
+  },
+  "duration": "Duration",
+  "@duration": {
+    "description": "Duration label"
+  },
+  "score": "Score",
+  "@score": {
+    "description": "Score label"
+  },
+  "rank": "Rank",
+  "@rank": {
+    "description": "Rank label"
+  },
+  "popularity": "Popularity",
+  "@popularity": {
+    "description": "Popularity label"
+  },
+  "members": "Members",
+  "@members": {
+    "description": "Members label"
+  },
+  "favorites": "Favorites",
+  "@favorites": {
+    "description": "Favorites label"
+  },
+  "studios": "Studios",
+  "@studios": {
+    "description": "Studios label"
+  },
+  "trailer": "Trailer",
+  "@trailer": {
+    "description": "Trailer section title"
+  },
+  "relations": "Relations",
+  "@relations": {
+    "description": "Relations section title"
+  },
+  "themes": "Themes",
+  "@themes": {
+    "description": "Theme songs section title"
+  },
+  "streaming": "Streaming",
+  "@streaming": {
+    "description": "Streaming platforms section title"
+  },
+  "external": "External Links",
+  "@external": {
+    "description": "External links section title"
+  },
+  "openings": "Opening Themes",
+  "@openings": {
+    "description": "Opening themes label"
+  },
+  "endings": "Ending Themes",
+  "@endings": {
+    "description": "Ending themes label"
+  },
+  "unknown": "Unknown",
+  "@unknown": {
+    "description": "Unknown value placeholder"
+  },
+  "noSynopsisAvailable": "No synopsis available",
+  "@noSynopsisAvailable": {
+    "description": "Message when synopsis is not available"
+  },
+  "error": "Error",
+  "@error": {
+    "description": "Error message title"
+  },
+  "retry": "Retry",
+  "@retry": {
+    "description": "Retry button text"
+  },
+  "loading": "Loading...",
+  "@loading": {
+    "description": "Loading message"
+  },
+  "watchTrailer": "Watch Trailer",
+  "@watchTrailer": {
+    "description": "Watch trailer button text"
+  },
+  "language": "Language",
+  "@language": {
+    "description": "Language label"
+  },
+  "rating": "Rating: {rating}",
+  "@rating": {
+    "description": "Rating with placeholder",
+    "placeholders": {
+      "rating": {
+        "type": "String",
+        "example": "9.5/10"
+      }
+    }
+  },
+  "animeTitle": "Anime Title {number}",
+  "@animeTitle": {
+    "description": "Anime title with number placeholder",
+    "placeholders": {
+      "number": {
+        "type": "int",
+        "example": "1"
+      }
+    }
+  }
+}

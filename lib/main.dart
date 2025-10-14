@@ -1,5 +1,6 @@
 import 'package:animeverse/features/auth/presentation/screens/login_screen.dart';
 import 'package:flutter/material.dart';
+<<<<<<< HEAD
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:firebase_core/firebase_core.dart';
 
@@ -18,20 +19,28 @@ Future<void> main() async {
       child: MyApp(),
     ),
   );
+=======
+import 'package:provider/provider.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'injection_container.dart' as di;
+import 'config/theme/app_theme.dart';
+import 'config/routes/app_router.dart';
+import 'providers/app_provider.dart';
+import 'l10n/app_localizations.dart';
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await di.init();
+  runApp(const MyApp());
+>>>>>>> origin/dev
 }
 
-class MyApp extends StatefulWidget {
+class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
   @override
-  State<MyApp> createState() => _MyAppState();
-}
-
-class _MyAppState extends State<MyApp> {
-  bool isDarkMode = false;
-
-  @override
   Widget build(BuildContext context) {
+<<<<<<< HEAD
     return MaterialApp(
       title: 'AnimeHub',
       debugShowCheckedModeBanner: false,
@@ -54,3 +63,40 @@ class _MyAppState extends State<MyApp> {
     );
   }
 }
+=======
+    return ChangeNotifierProvider(
+      create: (_) => AppProvider(),
+      child: Consumer<AppProvider>(
+        builder: (context, appProvider, child) {
+          return MaterialApp.router(
+            title: 'AnimeHub',
+            debugShowCheckedModeBanner: false,
+            
+            // Localization setup
+            localizationsDelegates: const [
+              AppLocalizations.delegate,
+              GlobalMaterialLocalizations.delegate,
+              GlobalWidgetsLocalizations.delegate,
+              GlobalCupertinoLocalizations.delegate,
+            ],
+            supportedLocales: const [
+              Locale('en'),
+              Locale('bn'),
+            ],
+            locale: appProvider.locale,
+
+            // Theme setup
+            theme: AppTheme.lightTheme(),
+            darkTheme: AppTheme.darkTheme(),
+            themeMode: appProvider.isDarkMode ? ThemeMode.dark : ThemeMode.light,
+
+            // Router setup
+            routerConfig: AppRouter.router,
+          );
+        },
+      ),
+    );
+  }
+}
+
+>>>>>>> origin/dev

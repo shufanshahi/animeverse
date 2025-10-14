@@ -1,0 +1,1 @@
+export '../bloc/anime_detail_bloc.dart';
