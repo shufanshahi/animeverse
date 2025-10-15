@@ -7,6 +7,7 @@ import '../../features/auth/presentation/screens/forgot_password_screen.dart';
 import '../../features/auth/presentation/screens/login_screen.dart';
 import '../../features/auth/presentation/screens/signup_screen.dart';
 import '../../features/home/presentation/screens/home_screen.dart';
+import '../../features/main_screen.dart';
 
 final goRouterProvider = Provider<GoRouter>((ref) {
   return GoRouter(
@@ -59,8 +60,8 @@ final goRouterProvider = Provider<GoRouter>((ref) {
       ),
       GoRoute(
         path: '/',
-        name: 'home',
-        builder: (context, state) => const HomeScreen(),
+        name: 'main',
+        builder: (context, state) => const MainScreen(),
       ),
       GoRoute(
         path: '/anime/:id',
