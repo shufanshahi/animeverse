@@ -23,6 +23,7 @@ class LMStudioService {
         maxTokens: maxTokens,
       );
 
+      print('Sending request to LM Studio...');
       final response = await httpClient.post(
         Uri.parse('$baseUrl/chat/completions'),
         headers: {
@@ -34,18 +35,26 @@ class LMStudioService {
         },
         body: jsonEncode(request.toJson()),
       ).timeout(
-        const Duration(seconds: 30),
+        const Duration(minutes: 3), // 3 minutes timeout for AI responses
         onTimeout: () {
-          throw Exception('Request timed out. Make sure LM Studio server is running and responsive.');
+          print('Request timed out after 3 minutes');
+          throw Exception('Request timed out after 3 minutes. This can happen with complex queries or slow models. Try a shorter message or check if your model is responsive.');
         },
       );
 
       print('LM Studio Response Status: ${response.statusCode}');
-      print('LM Studio Response Body: ${response.body}');
+      print('LM Studio Response Body (first 200 chars): ${response.body.length > 200 ? response.body.substring(0, 200) + '...' : response.body}');
 
       if (response.statusCode == 200) {
-        final jsonResponse = jsonDecode(response.body) as Map<String, dynamic>;
-        return LMStudioResponseModel.fromJson(jsonResponse);
+        try {
+          final jsonResponse = jsonDecode(response.body) as Map<String, dynamic>;
+          final result = LMStudioResponseModel.fromJson(jsonResponse);
+          print('Successfully parsed LM Studio response');
+          return result;
+        } catch (parseError) {
+          print('Failed to parse LM Studio response: $parseError');
+          throw Exception('Failed to parse response from LM Studio: $parseError');
+        }
       } else if (response.statusCode == 0) {
         throw Exception('Cannot connect to LM Studio. CORS issue detected. Please run Flutter with --web-browser-flag "--disable-web-security" or use desktop app.');
       } else {
@@ -55,6 +64,10 @@ class LMStudioService {
       print('LM Studio Service Error: $e');
       if (e.toString().contains('XMLHttpRequest')) {
         throw Exception('CORS error: Run Flutter with --web-browser-flag "--disable-web-security" or use desktop app.');
+      } else if (e.toString().contains('timed out') || e.toString().contains('TimeoutException')) {
+        throw Exception('Request timed out. The AI model might be taking longer than expected. Please try again with a shorter message.');
+      } else if (e.toString().contains('Connection refused') || e.toString().contains('SocketException')) {
+        throw Exception('Cannot connect to LM Studio. Make sure it\'s running on localhost:1234');
       }
       rethrow;
     }

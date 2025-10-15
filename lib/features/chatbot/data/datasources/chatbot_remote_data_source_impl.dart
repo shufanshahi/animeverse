@@ -45,18 +45,24 @@ When users ask about anime, provide details like release year, studio, genre, pl
     ));
 
     try {
+      print('ChatbotRemoteDataSource: Calling LM Studio service...');
       final response = await lmStudioService.sendChatCompletion(
         messages: messages,
         temperature: 0.7,
         maxTokens: 1000,
       );
 
+      print('ChatbotRemoteDataSource: Got response from LM Studio');
       if (response.choices.isNotEmpty) {
-        return response.choices.first.message.content;
+        final content = response.choices.first.message.content;
+        print('ChatbotRemoteDataSource: Returning content (${content.length} chars)');
+        return content;
       } else {
+        print('ChatbotRemoteDataSource: No choices in response');
         throw Exception('No response generated');
       }
     } catch (e) {
+      print('ChatbotRemoteDataSource: Exception caught: $e');
       throw Exception('Failed to send message: $e');
     }
   }

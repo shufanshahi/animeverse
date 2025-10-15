@@ -67,7 +67,7 @@ class ChatbotNotifier extends StateNotifier<ChatbotState> {
     // Add loading message for assistant
     final loadingMessage = MessageEntity(
       id: _uuid.v4(),
-      content: '...',
+      content: 'Processing your request... This may take up to 2 minutes for complex questions.',
       type: MessageType.assistant,
       timestamp: DateTime.now(),
       isLoading: true,
@@ -99,13 +99,17 @@ class ChatbotNotifier extends StateNotifier<ChatbotState> {
           if (failure.message.contains('No models loaded')) {
             errorMessage = '🤖 No model loaded in LM Studio. Please load a model first!';
           } else if (failure.message.contains('CORS')) {
-            errorMessage = 'CORS error detected. Please run: flutter run -d chrome --web-browser-flag "--disable-web-security"';
-          } else if (failure.message.contains('Connection refused') || failure.message.contains('timed out')) {
-            errorMessage = 'Cannot connect to LM Studio. Make sure it\'s running on localhost:1234';
+            errorMessage = '🌐 CORS error detected. Please run: flutter run -d chrome --web-browser-flag "--disable-web-security"';
+          } else if (failure.message.contains('Connection refused') || failure.message.contains('SocketException')) {
+            errorMessage = '🔌 Cannot connect to LM Studio. Make sure it\'s running on localhost:1234';
           } else if (failure.message.contains('404')) {
             errorMessage = '⚠️ LM Studio server is running but no model is loaded. Please load a model!';
+          } else if (failure.message.contains('timed out')) {
+            errorMessage = '⏱️ Request timed out. The model might be processing a complex response. Try a simpler question or check if your model is responsive.';
+          } else if (failure.message.contains('TimeoutException')) {
+            errorMessage = '⏱️ Response took too long. Try breaking down your question into smaller parts or use a faster model.';
           } else {
-            errorMessage = failure.message;
+            errorMessage = '❌ ${failure.message}';
           }
         }
         

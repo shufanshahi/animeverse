@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../providers/providers.dart';
+import '../providers/chatbot_notifier.dart';
+import '../state/chatbot_state.dart';
 import 'message_bubble.dart';
 
 class ChatbotOverlay extends ConsumerStatefulWidget {
@@ -56,6 +58,21 @@ class _ChatbotOverlayState extends ConsumerState<ChatbotOverlay>
         );
       }
     });
+  }
+
+  void _sendMessage(ChatbotNotifier chatbotNotifier) {
+    final message = _messageController.text.trim();
+    if (message.isNotEmpty) {
+      chatbotNotifier.sendMessage(message);
+      _messageController.clear();
+      setState(() {}); // Update UI state
+    }
+  }
+
+  bool _canSendMessage(ChatbotState chatbotState) {
+    return chatbotState.isConnected && 
+           !chatbotState.isLoading && 
+           _messageController.text.trim().isNotEmpty;
   }
 
   @override
@@ -277,11 +294,14 @@ class _ChatbotOverlayState extends ConsumerState<ChatbotOverlay>
                             ),
                             maxLines: null,
                             textInputAction: TextInputAction.send,
+                            onChanged: (value) {
+                              // Trigger rebuild to update send button state
+                              setState(() {});
+                            },
                             onSubmitted: chatbotState.isConnected && !chatbotState.isLoading
                                 ? (value) {
                                     if (value.trim().isNotEmpty) {
-                                      chatbotNotifier.sendMessage(value);
-                                      _messageController.clear();
+                                      _sendMessage(chatbotNotifier);
                                     }
                                   }
                                 : null,
@@ -289,20 +309,13 @@ class _ChatbotOverlayState extends ConsumerState<ChatbotOverlay>
                         ),
                         const SizedBox(width: 8),
                         GestureDetector(
-                          onTap: chatbotState.isConnected && 
-                                  !chatbotState.isLoading &&
-                                  _messageController.text.trim().isNotEmpty
-                              ? () {
-                                  chatbotNotifier.sendMessage(_messageController.text);
-                                  _messageController.clear();
-                                }
+                          onTap: _canSendMessage(chatbotState)
+                              ? () => _sendMessage(chatbotNotifier)
                               : null,
                           child: Container(
                             padding: const EdgeInsets.all(8),
                             decoration: BoxDecoration(
-                              color: chatbotState.isConnected && 
-                                      !chatbotState.isLoading &&
-                                      _messageController.text.trim().isNotEmpty
+                              color: _canSendMessage(chatbotState)
                                   ? Theme.of(context).primaryColor
                                   : Theme.of(context).colorScheme.outline,
                               shape: BoxShape.circle,
