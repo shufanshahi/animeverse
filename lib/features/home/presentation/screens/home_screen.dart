@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../../core/localization/app_localization.dart';
 import '../../../../core/providers/locale_provider.dart';
@@ -15,6 +16,9 @@ class HomeScreen extends ConsumerStatefulWidget {
 }
 
 class _HomeScreenState extends ConsumerState<HomeScreen> {
+  final _searchController = TextEditingController();
+  bool _showSearchBar = false;
+
   @override
   void initState() {
     super.initState();
@@ -26,6 +30,12 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     });
   }
 
+  @override
+  void dispose() {
+    _searchController.dispose();
+    super.dispose();
+  }
+
   void _onGenreSelected(String genre) {
     final homeNotifier = ref.read(homeProvider.notifier);
     if (ref.read(homeProvider).selectedGenres.contains(genre)) {
@@ -33,6 +43,12 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     } else {
       homeNotifier.loadAnimeByGenre(genre);
     }
+  }
+
+  void _submitSearch() {
+    final q = _searchController.text.trim();
+    if (q.isEmpty) return;
+    context.push('/search?q=${Uri.encodeComponent(q)}');
   }
 
   @override
@@ -46,7 +62,23 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
       appBar: AppBar(
         title: Text(AppLocalizations.translate('app_title', lang)),
         elevation: 0,
+        leading: Navigator.of(context).canPop()
+            ? IconButton(
+                icon: const Icon(Icons.arrow_back),
+                onPressed: () => context.pop(),
+              )
+            : null,
         actions: [
+          // Search toggle
+          IconButton(
+            icon: const Icon(Icons.search),
+            tooltip: 'Search',
+            onPressed: () {
+              setState(() {
+                _showSearchBar = !_showSearchBar;
+              });
+            },
+          ),
           // Language Switcher
           IconButton(
             icon: const Icon(Icons.language),
@@ -62,6 +94,43 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
             tooltip: themeMode == ThemeMode.dark ? 'Light Mode' : 'Dark Mode',
           ),
         ],
+        bottom: _showSearchBar
+            ? PreferredSize(
+                preferredSize: const Size.fromHeight(52),
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(16, 0, 16, 12),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: TextField(
+                          controller: _searchController,
+                          decoration: InputDecoration(
+                            hintText: 'Search anime...',
+                            contentPadding: const EdgeInsets.symmetric(horizontal: 12),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            isDense: true,
+                            prefixIcon: const Icon(Icons.search),
+                          ),
+                          onSubmitted: (_) => _submitSearch(),
+                          textInputAction: TextInputAction.search,
+                        ),
+                      ),
+                      const SizedBox(width: 8),
+                      ElevatedButton.icon(
+                        onPressed: _submitSearch,
+                        icon: const Icon(Icons.arrow_forward, size: 16),
+                        label: const Text('Go'),
+                        style: ElevatedButton.styleFrom(
+                          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              )
+            : null,
       ),
       body: homeState.error != null
           ? Center(
@@ -82,8 +151,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                   Text(
                     homeState.error!,
                     style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                      color: Colors.grey[600],
-                    ),
+                          color: Colors.grey[600],
+                        ),
                     textAlign: TextAlign.center,
                   ),
                   const SizedBox(height: 24),

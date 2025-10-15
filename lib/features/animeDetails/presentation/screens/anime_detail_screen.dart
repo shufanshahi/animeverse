@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../domain/entities/anime_detail.dart';
 import '../../domain/usecases/get_anime_detail.dart';
@@ -45,10 +46,12 @@ class _AnimeDetailScreenState extends ConsumerState<AnimeDetailScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text(state.animeDetail?.title ?? 'Anime Details'),
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          onPressed: () => Navigator.of(context).pop(),
-        ),
+        leading: context.canPop()
+            ? IconButton(
+                icon: const Icon(Icons.arrow_back),
+                onPressed: () => context.pop(),
+              )
+            : null,
       ),
       body: SafeArea(
         child: state.isLoading
