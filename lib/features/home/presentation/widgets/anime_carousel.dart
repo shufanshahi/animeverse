@@ -51,7 +51,7 @@ class AnimeCarousel extends StatelessWidget {
             return Builder(
               builder: (BuildContext context) {
                 return GestureDetector(
-                  onTap: () => context.go('/anime/${anime.malId}'),
+                  onTap: () => context.push('/anime/${anime.malId}'),
                   child: Container(
                     width: MediaQuery.of(context).size.width,
                     margin: const EdgeInsets.symmetric(horizontal: 5.0),

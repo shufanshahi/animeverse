@@ -14,7 +14,7 @@ class AnimeCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => context.go('/anime/${anime.malId}'),
+      onTap: () => context.push('/anime/${anime.malId}'),
       child: Container(
         width: 120,
         margin: const EdgeInsets.only(right: 12),

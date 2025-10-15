@@ -1,86 +1,100 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../features/animeDetails/presentation/screens/anime_detail_screen.dart';
 import '../../features/auth/presentation/riverpod/auth_provider.dart';
-import '../../features/auth/presentation/screens/forgot_password_screen.dart';
 import '../../features/auth/presentation/screens/login_screen.dart';
 import '../../features/auth/presentation/screens/signup_screen.dart';
+import '../../features/auth/presentation/screens/forgot_password_screen.dart';
 import '../../features/home/presentation/screens/home_screen.dart';
+import '../../features/animeDetails/presentation/screens/anime_detail_screen.dart';
+import '../../features/search_screen/presentation/screens/screens.dart';
+
+final _rootNavigatorKey = GlobalKey<NavigatorState>();
+
+class AppRouteName {
+  static const splash = 'splash';
+  static const login = 'login';
+  static const signup = 'signup';
+  static const forgotPassword = 'forgotPassword';
+  static const home = 'home';
+  static const animeDetail = 'animeDetail';
+  static const search = 'search';
+}
 
 final goRouterProvider = Provider<GoRouter>((ref) {
+  final auth = ref.watch(authProvider);
+  final isLoggedIn = auth.user != null;
+
   return GoRouter(
-    initialLocation: '/login',
-    redirect: (context, state) {
-      try {
-        final authState = ref.read(authProvider);
-        final isLoggedIn = authState.user != null;
-        final currentPath = state.matchedLocation;
-        
-        // Allow access to auth-related pages when not logged in
-        if (!isLoggedIn) {
-          if (currentPath == '/login' || 
-              currentPath == '/signup' || 
-              currentPath == '/forgot-password') {
-            return null;
-          }
-          return '/login';
-        }
-
-        // Redirect to home if logged in and trying to access auth pages
-        if (isLoggedIn && (currentPath == '/login' || 
-                          currentPath == '/signup' || 
-                          currentPath == '/forgot-password')) {
-          return '/';
-        }
-
-        return null;
-      } catch (e) {
-        // If there's an error reading auth state, default to login
-        print('Router redirect error: $e');
-        return '/login';
-      }
-    },
+    navigatorKey: _rootNavigatorKey,
+    initialLocation: '/',
     routes: [
       GoRoute(
+        path: '/',
+        name: AppRouteName.splash,
+        builder: (context, state) => const _SplashGate(),
+      ),
+      GoRoute(
         path: '/login',
-        name: 'login',
+        name: AppRouteName.login,
         builder: (context, state) => const LoginScreen(),
       ),
       GoRoute(
         path: '/signup',
-        name: 'signup',
+        name: AppRouteName.signup,
         builder: (context, state) => const SignupScreen(),
       ),
       GoRoute(
         path: '/forgot-password',
-        name: 'forgotPassword',
+        name: AppRouteName.forgotPassword,
         builder: (context, state) => const ForgotPasswordScreen(),
       ),
       GoRoute(
-        path: '/',
-        name: 'home',
+        path: '/home',
+        name: AppRouteName.home,
         builder: (context, state) => const HomeScreen(),
       ),
       GoRoute(
         path: '/anime/:id',
-        name: 'animeDetail',
+        name: AppRouteName.animeDetail,
         builder: (context, state) {
-          final idParam = state.pathParameters['id'];
-          if (idParam == null) {
-            // Redirect to home if no ID provided
-            return const HomeScreen();
-          }
-          
-          final animeId = int.tryParse(idParam);
-          if (animeId == null) {
-            // Redirect to home if ID is not a valid integer
-            return const HomeScreen();
-          }
-          
-          return AnimeDetailScreen(animeId: animeId);
+          final idStr = state.pathParameters['id'] ?? '0';
+          final id = int.tryParse(idStr) ?? 0;
+          return AnimeDetailScreen(animeId: id);
+        },
+      ),
+      GoRoute(
+        path: '/search',
+        name: AppRouteName.search,
+        builder: (context, state) {
+          final q = state.uri.queryParameters['q'];
+          return SearchScreen(initialQuery: q);
         },
       ),
     ],
+    redirect: (context, state) {
+      final atAuth = state.matchedLocation == '/login' ||
+          state.matchedLocation == '/signup' ||
+          state.matchedLocation == '/forgot-password';
+
+      if (!isLoggedIn) {
+        return atAuth ? null : '/login';
+      }
+      if (atAuth || state.matchedLocation == '/') {
+        return '/home';
+      }
+      return null;
+    },
   );
 });
+
+class _SplashGate extends ConsumerWidget {
+  const _SplashGate({super.key});
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    return const Scaffold(
+      body: Center(child: CircularProgressIndicator()),
+    );
+  }
+}

@@ -4,7 +4,8 @@ import '../providers/providers.dart';
 import '../widgets/widgets.dart';
 
 class SearchScreen extends ConsumerStatefulWidget {
-  const SearchScreen({Key? key}) : super(key: key);
+  final String? initialQuery;
+  const SearchScreen({Key? key, this.initialQuery}) : super(key: key);
 
   @override
   ConsumerState<SearchScreen> createState() => _SearchScreenState();
@@ -16,6 +17,22 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
   void _onSearch() {
     final query = _controller.text.trim();
     ref.read(searchStateProvider.notifier).search(query);
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    if ((widget.initialQuery ?? '').isNotEmpty) {
+      _controller.text = widget.initialQuery!;
+      // Run search on first frame to avoid setState during build
+      WidgetsBinding.instance.addPostFrameCallback((_) => _onSearch());
+    }
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
   }
 
   @override
