@@ -2,7 +2,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get_it/get_it.dart';
 
 import '../../../../core/error/failure.dart';
-import '../../../../core/usecases/usecase.dart';
 import '../../domain/entities/anime_entity.dart';
 import '../../domain/usecases/get_airing_anime.dart';
 import '../../domain/usecases/get_anime_by_genre.dart';
@@ -103,9 +102,13 @@ class HomeNotifier extends StateNotifier<HomeState> {
   Future<void> loadHomeData() async {
     state = state.copyWith(isLoading: true, error: null);
     try {
-      final airingResult = await _getAiringAnime(const NoParams() as GetAiringAnimeParams);
-      final seasonalResult = await _getSeasonalAnime(const NoParams() as GetSeasonalAnimeParams);
-      final topResult = await _getTopAnime(const NoParams() as GetTopAnimeParams);
+      final airingResult = await _getAiringAnime(GetAiringAnimeParams(page: 1));
+      final seasonalResult = await _getSeasonalAnime(GetSeasonalAnimeParams(
+        year: DateTime.now().year.toString(),
+        season: _getCurrentSeason(),
+        page: 1,
+      ));
+      final topResult = await _getTopAnime(GetTopAnimeParams(page: 1));
       
       airingResult.fold(
         (failure) => state = state.copyWith(
@@ -162,6 +165,21 @@ class HomeNotifier extends StateNotifier<HomeState> {
         isLoading: false,
         error: e.toString(),
       );
+    }
+  }
+
+  String _getCurrentSeason() {
+    final now = DateTime.now();
+    final month = now.month;
+    
+    if (month >= 3 && month <= 5) {
+      return 'spring';
+    } else if (month >= 6 && month <= 8) {
+      return 'summer';
+    } else if (month >= 9 && month <= 11) {
+      return 'fall';
+    } else {
+      return 'winter';
     }
   }
 

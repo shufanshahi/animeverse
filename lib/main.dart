@@ -3,30 +3,36 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import 'config/routes/app_router.dart';
 import 'config/theme/app_theme.dart';
 import 'core/providers/locale_provider.dart';
 import 'core/providers/theme_provider.dart';
-import 'core/router/app_router.dart';
 import 'firebase_options.dart';
 import 'injection_container.dart' as di;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   
-  // Initialize Firebase
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
-  
-  // Initialize dependency injection
-  await di.init();
-  
-  // Run app with ProviderScope at the root
-  runApp(
-    const ProviderScope(
-      child: MyApp(),
-    ),
-  );
+  try {
+    // Initialize Firebase
+    await Firebase.initializeApp(
+      options: DefaultFirebaseOptions.currentPlatform,
+    );
+    
+    // Initialize dependency injection
+    await di.init();
+    
+    // Run app with ProviderScope at the root
+    runApp(
+      const ProviderScope(
+        child: MyApp(),
+      ),
+    );
+  } catch (e) {
+    // Handle initialization errors
+    print('Error initializing app: $e');
+    rethrow;
+  }
 }
 
 class MyApp extends ConsumerWidget {
@@ -34,7 +40,7 @@ class MyApp extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final router = ref.watch(routerProvider);
+    final router = ref.watch(goRouterProvider);
     final themeMode = ref.watch(themeProvider);
     final locale = ref.watch(localeProvider);
     

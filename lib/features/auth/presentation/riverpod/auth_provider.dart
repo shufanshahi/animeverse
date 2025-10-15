@@ -39,7 +39,7 @@ class AuthNotifier extends StateNotifier<AuthState> {
 
   void _initializeAuthState() {
     final currentUser = FirebaseAuth.instance.currentUser;
-    if (currentUser != null) {
+    if (currentUser != null && currentUser.email != null) {
       state = state.copyWith(
         user: UserEntity(
           uid: currentUser.uid,
@@ -51,7 +51,7 @@ class AuthNotifier extends StateNotifier<AuthState> {
 
     // Listen to auth state changes
     FirebaseAuth.instance.authStateChanges().listen((firebaseUser) {
-      if (firebaseUser == null) {
+      if (firebaseUser == null || firebaseUser.email == null) {
         state = const AuthState();
       } else {
         state = state.copyWith(

@@ -4,6 +4,8 @@ class AppLocalizations {
   static Map<String, Map<String, String>> translations = {
     'en': {
       'app_name': 'Anime Verse',
+      'app_title': 'Anime Verse',
+      'language': 'Language',
       'welcome_back': 'Welcome Back!',
       'create_account': 'Create Account',
       'email': 'Email',
@@ -30,9 +32,15 @@ class AppLocalizations {
       'enter_name': 'Enter your full name',
       'sign_in_to_continue': 'Sign in to discover amazing anime!',
       'join_us': 'Join us to get personalized anime suggestions',
+      'featured_anime': 'Featured Anime',
+      'currently_airing': 'Currently Airing',
+      'seasonal_anime': 'Seasonal Anime',
+      'top_anime': 'Top Anime',
     },
     'bn': {
       'app_name': 'এনিমে ভার্স',
+      'app_title': 'এনিমে ভার্স',
+      'language': 'ভাষা',
       'welcome_back': 'স্বাগতম!',
       'create_account': 'অ্যাকাউন্ট তৈরি করুন',
       'email': 'ইমেইল',
@@ -59,10 +67,16 @@ class AppLocalizations {
       'enter_name': 'আপনার পূর্ণ নাম লিখুন',
       'sign_in_to_continue': 'অসাধারণ এনিমে আবিষ্কার করতে সাইন ইন করুন!',
       'join_us': 'ব্যক্তিগত এনিমে সাজেশন পেতে আমাদের সাথে যোগ দিন',
+      'featured_anime': 'ফিচার্ড এনিমে',
+      'currently_airing': 'বর্তমানে প্রচারিত',
+      'seasonal_anime': 'সিজনাল এনিমে',
+      'top_anime': 'শীর্ষ এনিমে',
     },
   };
 
   static String translate(String key, String locale) {
-    return translations[locale]?[key] ?? translations['en']![key]!;
+    return translations[locale]?[key] ?? 
+           translations['en']?[key] ?? 
+           key; // Return the key itself if translation not found
   }
 }

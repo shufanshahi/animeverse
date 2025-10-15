@@ -12,14 +12,34 @@ final goRouterProvider = Provider<GoRouter>((ref) {
   return GoRouter(
     initialLocation: '/login',
     redirect: (context, state) {
-      final authState = ref.read(authProvider);
-      final isLoggedIn = authState.user != null;
-      final isLoggingIn = state.fullPath == '/login';
+      try {
+        final authState = ref.read(authProvider);
+        final isLoggedIn = authState.user != null;
+        final currentPath = state.matchedLocation;
+        
+        // Allow access to auth-related pages when not logged in
+        if (!isLoggedIn) {
+          if (currentPath == '/login' || 
+              currentPath == '/signup' || 
+              currentPath == '/forgot-password') {
+            return null;
+          }
+          return '/login';
+        }
 
-      if (!isLoggedIn && !isLoggingIn) return '/login';
-      if (isLoggedIn && isLoggingIn) return '/';
+        // Redirect to home if logged in and trying to access auth pages
+        if (isLoggedIn && (currentPath == '/login' || 
+                          currentPath == '/signup' || 
+                          currentPath == '/forgot-password')) {
+          return '/';
+        }
 
-      return null;
+        return null;
+      } catch (e) {
+        // If there's an error reading auth state, default to login
+        print('Router redirect error: $e');
+        return '/login';
+      }
     },
     routes: [
       GoRoute(
@@ -46,7 +66,18 @@ final goRouterProvider = Provider<GoRouter>((ref) {
         path: '/anime/:id',
         name: 'animeDetail',
         builder: (context, state) {
-          final animeId = int.parse(state.pathParameters['id']!);
+          final idParam = state.pathParameters['id'];
+          if (idParam == null) {
+            // Redirect to home if no ID provided
+            return const HomeScreen();
+          }
+          
+          final animeId = int.tryParse(idParam);
+          if (animeId == null) {
+            // Redirect to home if ID is not a valid integer
+            return const HomeScreen();
+          }
+          
           return AnimeDetailScreen(animeId: animeId);
         },
       ),
