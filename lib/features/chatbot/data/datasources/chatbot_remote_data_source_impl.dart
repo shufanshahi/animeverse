@@ -5,8 +5,12 @@ import '../services/services.dart';
 
 class ChatbotRemoteDataSourceImpl implements ChatbotRemoteDataSource {
   final LMStudioService lmStudioService;
+  final JikanApiService jikanApiService;
 
-  ChatbotRemoteDataSourceImpl({required this.lmStudioService});
+  ChatbotRemoteDataSourceImpl({
+    required this.lmStudioService,
+    required this.jikanApiService,
+  });
 
   @override
   Future<String> sendMessage({
@@ -25,7 +29,9 @@ Your responses should be:
 - Include specific details when possible
 - Offer recommendations when appropriate
 
-When users ask about anime, provide details like release year, studio, genre, plot summary, main characters, and why it's notable. For recommendations, consider the user's preferences and suggest similar anime with brief explanations.''',
+When users ask about anime, provide details like release year, studio, genre, plot summary, main characters, and why it's notable. For recommendations, consider the user's preferences and suggest similar anime with brief explanations.
+
+IMPORTANT: When providing anime recommendations or suggestions, if you mention specific anime titles, format them with [ANIME:title] tags. For example: "I recommend [ANIME:Attack on Titan] and [ANIME:Demon Slayer]". This helps the app show clickable links to anime details.''',
     );
 
     // Convert conversation history to LM Studio format
@@ -56,7 +62,10 @@ When users ask about anime, provide details like release year, studio, genre, pl
       if (response.choices.isNotEmpty) {
         final content = response.choices.first.message.content;
         print('ChatbotRemoteDataSource: Returning content (${content.length} chars)');
-        return content;
+        
+        // Check for anime suggestions in the response and replace with formatted suggestions
+        final processedContent = await _processAnimeReferences(content);
+        return processedContent;
       } else {
         print('ChatbotRemoteDataSource: No choices in response');
         throw Exception('No response generated');
@@ -74,5 +83,106 @@ When users ask about anime, provide details like release year, studio, genre, pl
     } catch (e) {
       return false;
     }
+  }
+
+  @override
+  Future<List<AnimeSuggestionEntity>> searchAnime({
+    required String query,
+    int limit = 10,
+  }) async {
+    try {
+      final results = await jikanApiService.searchAnime(
+        query: query,
+        limit: limit,
+      );
+      return results.map((model) => _mapToEntity(model)).toList();
+    } catch (e) {
+      throw Exception('Failed to search anime: $e');
+    }
+  }
+
+  @override
+  Future<List<AnimeSuggestionEntity>> getTopAnime({
+    String? genre,
+    int limit = 10,
+  }) async {
+    try {
+      final results = await jikanApiService.getTopAnime(
+        genre: genre,
+        limit: limit,
+      );
+      return results.map((model) => _mapToEntity(model)).toList();
+    } catch (e) {
+      throw Exception('Failed to get top anime: $e');
+    }
+  }
+
+  @override
+  Future<List<AnimeSuggestionEntity>> getRecommendations({
+    required int animeId,
+    int limit = 5,
+  }) async {
+    try {
+      final results = await jikanApiService.getRecommendations(
+        animeId: animeId,
+        limit: limit,
+      );
+      return results.map((model) => _mapToEntity(model)).toList();
+    } catch (e) {
+      throw Exception('Failed to get recommendations: $e');
+    }
+  }
+
+  AnimeSuggestionEntity _mapToEntity(AnimeSuggestionModel model) {
+    return AnimeSuggestionEntity(
+      id: model.id,
+      title: model.title,
+      imageUrl: model.imageUrl,
+      score: model.score,
+      synopsis: model.synopsis,
+      status: model.status,
+      year: model.year,
+    );
+  }
+
+  Future<String> _processAnimeReferences(String content) async {
+    // Look for [ANIME:title] patterns in the response
+    final animePattern = RegExp(r'\[ANIME:(.*?)\]');
+    final matches = animePattern.allMatches(content);
+    
+    if (matches.isEmpty) {
+      return content;
+    }
+
+    String processedContent = content;
+    
+    for (final match in matches) {
+      final animeTitle = match.group(1);
+      if (animeTitle != null) {
+        try {
+          // Search for the anime to get its ID
+          final searchResults = await jikanApiService.searchAnime(
+            query: animeTitle,
+            limit: 1,
+          );
+          
+          if (searchResults.isNotEmpty) {
+            final anime = searchResults.first;
+            // Replace [ANIME:title] with a clickable format
+            final replacement = '**${anime.title}** (Click to view details)';
+            processedContent = processedContent.replaceAll(match.group(0)!, replacement);
+          } else {
+            // Just remove the tags if anime not found
+            processedContent = processedContent.replaceAll(match.group(0)!, animeTitle);
+          }
+        } catch (e) {
+          print('Error processing anime reference $animeTitle: $e');
+          // Just remove the tags if there's an error
+          processedContent = processedContent.replaceAll(match.group(0)!, animeTitle);
+        }
+      }
+    }
+    
+    return processedContent;
   }
 }

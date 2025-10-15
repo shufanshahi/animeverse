@@ -64,6 +64,9 @@ Future<void> init() async {
   // Use cases
   sl.registerLazySingleton(() => SendMessageUseCase(sl()));
   sl.registerLazySingleton(() => CheckConnectionUseCase(sl()));
+  sl.registerLazySingleton(() => SearchAnimeUseCase(sl()));
+  sl.registerLazySingleton(() => GetTopAnimeUseCase(sl()));
+  sl.registerLazySingleton(() => GetRecommendationsUseCase(sl()));
 
   // Repository
   sl.registerLazySingleton<chatbot_repo.ChatbotRepository>(
@@ -76,11 +79,13 @@ Future<void> init() async {
   sl.registerLazySingleton<ChatbotRemoteDataSourceImpl>(
     () => ChatbotRemoteDataSourceImpl(
       lmStudioService: sl(),
+      jikanApiService: sl(),
     ),
   );
 
   // Services
   sl.registerLazySingleton(() => LMStudioService());
+  sl.registerLazySingleton(() => JikanApiService());
 
   //! Core
   sl.registerLazySingleton(() => http.Client());

@@ -34,4 +34,52 @@ class ChatbotRepositoryImpl implements ChatbotRepository {
       return Left(ServerFailure('Failed to check connection: $e'));
     }
   }
+
+  @override
+  Future<Either<Failure, List<AnimeSuggestionEntity>>> searchAnime({
+    required String query,
+    int limit = 10,
+  }) async {
+    try {
+      final results = await remoteDataSource.searchAnime(
+        query: query,
+        limit: limit,
+      );
+      return Right(results);
+    } catch (e) {
+      return Left(ServerFailure('Failed to search anime: $e'));
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<AnimeSuggestionEntity>>> getTopAnime({
+    String? genre,
+    int limit = 10,
+  }) async {
+    try {
+      final results = await remoteDataSource.getTopAnime(
+        genre: genre,
+        limit: limit,
+      );
+      return Right(results);
+    } catch (e) {
+      return Left(ServerFailure('Failed to get top anime: $e'));
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<AnimeSuggestionEntity>>> getRecommendations({
+    required int animeId,
+    int limit = 5,
+  }) async {
+    try {
+      final results = await remoteDataSource.getRecommendations(
+        animeId: animeId,
+        limit: limit,
+      );
+      return Right(results);
+    } catch (e) {
+      return Left(ServerFailure('Failed to get recommendations: $e'));
+    }
+  }
 }

@@ -18,3 +18,27 @@ final checkConnectionUseCaseProvider = Provider<CheckConnectionUseCase>((ref) {
     throw StateError('CheckConnectionUseCase not initialized. Did you call init()?');
   }
 });
+
+final searchAnimeUseCaseProvider = Provider<SearchAnimeUseCase>((ref) {
+  try {
+    return GetIt.instance<SearchAnimeUseCase>();
+  } catch (e) {
+    throw StateError('SearchAnimeUseCase not initialized. Did you call init()?');
+  }
+});
+
+final getTopAnimeUseCaseProvider = Provider<GetTopAnimeUseCase>((ref) {
+  try {
+    return GetIt.instance<GetTopAnimeUseCase>();
+  } catch (e) {
+    throw StateError('GetTopAnimeUseCase not initialized. Did you call init()?');
+  }
+});
+
+final getRecommendationsUseCaseProvider = Provider<GetRecommendationsUseCase>((ref) {
+  try {
+    return GetIt.instance<GetRecommendationsUseCase>();
+  } catch (e) {
+    throw StateError('GetRecommendationsUseCase not initialized. Did you call init()?');
+  }
+});

@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'anime_suggestion_entity.dart';
 
 enum MessageType { user, assistant }
 
@@ -8,6 +9,7 @@ class MessageEntity extends Equatable {
   final MessageType type;
   final DateTime timestamp;
   final bool isLoading;
+  final List<AnimeSuggestionEntity>? animeSuggestions;
 
   const MessageEntity({
     required this.id,
@@ -15,6 +17,7 @@ class MessageEntity extends Equatable {
     required this.type,
     required this.timestamp,
     this.isLoading = false,
+    this.animeSuggestions,
   });
 
   MessageEntity copyWith({
@@ -23,6 +26,7 @@ class MessageEntity extends Equatable {
     MessageType? type,
     DateTime? timestamp,
     bool? isLoading,
+    List<AnimeSuggestionEntity>? animeSuggestions,
   }) {
     return MessageEntity(
       id: id ?? this.id,
@@ -30,9 +34,10 @@ class MessageEntity extends Equatable {
       type: type ?? this.type,
       timestamp: timestamp ?? this.timestamp,
       isLoading: isLoading ?? this.isLoading,
+      animeSuggestions: animeSuggestions ?? this.animeSuggestions,
     );
   }
 
   @override
-  List<Object?> get props => [id, content, type, timestamp, isLoading];
+  List<Object?> get props => [id, content, type, timestamp, isLoading, animeSuggestions];
 }

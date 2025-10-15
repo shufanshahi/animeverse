@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import '../../domain/entities/entities.dart';
+import 'anime_suggestion_card.dart';
 
 class MessageBubble extends StatelessWidget {
   final MessageEntity message;
@@ -77,60 +78,91 @@ class MessageBubble extends StatelessWidget {
                     ),
                 ],
               )
-            : isUser
-                ? Text(
-                    message.content,
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 14,
+            : Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // Message content
+                  isUser
+                      ? Text(
+                          message.content,
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 14,
+                          ),
+                        )
+                      : MarkdownBody(
+                          data: message.content,
+                          styleSheet: MarkdownStyleSheet(
+                            p: TextStyle(
+                              color: theme.colorScheme.onSurface,
+                              fontSize: 14,
+                            ),
+                            code: TextStyle(
+                              backgroundColor: theme.colorScheme.surfaceVariant,
+                              color: theme.colorScheme.onSurfaceVariant,
+                              fontSize: 13,
+                            ),
+                            codeblockDecoration: BoxDecoration(
+                              color: theme.colorScheme.surfaceVariant,
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            blockquote: TextStyle(
+                              color: theme.colorScheme.onSurface.withOpacity(0.7),
+                              fontStyle: FontStyle.italic,
+                            ),
+                            h1: TextStyle(
+                              color: theme.colorScheme.onSurface,
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                            ),
+                            h2: TextStyle(
+                              color: theme.colorScheme.onSurface,
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                            ),
+                            h3: TextStyle(
+                              color: theme.colorScheme.onSurface,
+                              fontSize: 14,
+                              fontWeight: FontWeight.bold,
+                            ),
+                            strong: TextStyle(
+                              color: theme.colorScheme.onSurface,
+                              fontWeight: FontWeight.bold,
+                            ),
+                            em: TextStyle(
+                              color: theme.colorScheme.onSurface,
+                              fontStyle: FontStyle.italic,
+                            ),
+                          ),
+                          selectable: true,
+                        ),
+                  // Anime suggestions
+                  if (message.animeSuggestions != null && message.animeSuggestions!.isNotEmpty) ...[
+                    const SizedBox(height: 12),
+                    Text(
+                      'Suggested Anime:',
+                      style: TextStyle(
+                        color: isUser ? Colors.white.withOpacity(0.9) : theme.colorScheme.onSurface,
+                        fontSize: 12,
+                        fontWeight: FontWeight.w600,
+                      ),
                     ),
-                  )
-                : MarkdownBody(
-                    data: message.content,
-                    styleSheet: MarkdownStyleSheet(
-                      p: TextStyle(
-                        color: theme.colorScheme.onSurface,
-                        fontSize: 14,
-                      ),
-                      code: TextStyle(
-                        backgroundColor: theme.colorScheme.surfaceVariant,
-                        color: theme.colorScheme.onSurfaceVariant,
-                        fontSize: 13,
-                      ),
-                      codeblockDecoration: BoxDecoration(
-                        color: theme.colorScheme.surfaceVariant,
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      blockquote: TextStyle(
-                        color: theme.colorScheme.onSurface.withOpacity(0.7),
-                        fontStyle: FontStyle.italic,
-                      ),
-                      h1: TextStyle(
-                        color: theme.colorScheme.onSurface,
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                      ),
-                      h2: TextStyle(
-                        color: theme.colorScheme.onSurface,
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                      ),
-                      h3: TextStyle(
-                        color: theme.colorScheme.onSurface,
-                        fontSize: 14,
-                        fontWeight: FontWeight.bold,
-                      ),
-                      strong: TextStyle(
-                        color: theme.colorScheme.onSurface,
-                        fontWeight: FontWeight.bold,
-                      ),
-                      em: TextStyle(
-                        color: theme.colorScheme.onSurface,
-                        fontStyle: FontStyle.italic,
+                    const SizedBox(height: 8),
+                    SizedBox(
+                      height: 160,
+                      child: ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        itemCount: message.animeSuggestions!.length,
+                        itemBuilder: (context, index) {
+                          return AnimeSuggestionCard(
+                            anime: message.animeSuggestions![index],
+                          );
+                        },
                       ),
                     ),
-                    selectable: true,
-                  ),
+                  ],
+                ],
+              ),
       ),
     );
   }

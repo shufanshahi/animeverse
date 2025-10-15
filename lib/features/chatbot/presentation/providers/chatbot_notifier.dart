@@ -10,13 +10,19 @@ import 'chatbot_providers.dart';
 class ChatbotNotifier extends StateNotifier<ChatbotState> {
   final SendMessageUseCase _sendMessageUseCase;
   final CheckConnectionUseCase _checkConnectionUseCase;
+  final SearchAnimeUseCase _searchAnimeUseCase;
+  final GetTopAnimeUseCase _getTopAnimeUseCase;
   final Uuid _uuid = const Uuid();
 
   ChatbotNotifier({
     required SendMessageUseCase sendMessageUseCase,
     required CheckConnectionUseCase checkConnectionUseCase,
+    required SearchAnimeUseCase searchAnimeUseCase,
+    required GetTopAnimeUseCase getTopAnimeUseCase,
   })  : _sendMessageUseCase = sendMessageUseCase,
         _checkConnectionUseCase = checkConnectionUseCase,
+        _searchAnimeUseCase = searchAnimeUseCase,
+        _getTopAnimeUseCase = getTopAnimeUseCase,
         super(const ChatbotState()) {
     _initializeConnection();
   }
@@ -119,17 +125,28 @@ class ChatbotNotifier extends StateNotifier<ChatbotState> {
           error: errorMessage,
         );
       },
-      (response) {
+      (response) async {
         // Replace loading message with actual response
         final messagesWithoutLoading = state.messages
             .where((msg) => !msg.isLoading)
             .toList();
+
+        // Extract anime titles from the AI response and fetch suggestions
+        List<AnimeSuggestionEntity>? animeSuggestions;
+        if (_isRecommendationRequest(content.trim()) || _containsAnimeTitles(response)) {
+          animeSuggestions = await _extractAndFetchAnimeFromResponse(response);
+          if (animeSuggestions.isEmpty) {
+            // Fallback to general search if no specific titles were found
+            animeSuggestions = await _fetchAnimeSuggestions(content.trim());
+          }
+        }
 
         final assistantMessage = MessageEntity(
           id: _uuid.v4(),
           content: response,
           type: MessageType.assistant,
           timestamp: DateTime.now(),
+          animeSuggestions: animeSuggestions,
         );
 
         state = state.copyWith(
@@ -162,6 +179,160 @@ class ChatbotNotifier extends StateNotifier<ChatbotState> {
   void clearError() {
     state = state.copyWith(error: null);
   }
+
+  bool _isRecommendationRequest(String message) {
+    final lowercaseMessage = message.toLowerCase();
+    final recommendationKeywords = [
+      'recommend',
+      'suggestion',
+      'suggest',
+      'what should i watch',
+      'anime like',
+      'similar to',
+      'top anime',
+      'best anime',
+      'good anime',
+      'popular anime',
+    ];
+    
+    return recommendationKeywords.any((keyword) => lowercaseMessage.contains(keyword));
+  }
+
+  Future<List<AnimeSuggestionEntity>> _fetchAnimeSuggestions(String message) async {
+    try {
+      final lowercaseMessage = message.toLowerCase();
+      
+      // Try to extract anime titles or genres from the message
+      if (lowercaseMessage.contains('top') || lowercaseMessage.contains('popular') || lowercaseMessage.contains('best')) {
+        // Get top anime
+        final result = await _getTopAnimeUseCase(GetTopAnimeParams(limit: 6));
+        return result.fold(
+          (failure) => [],
+          (suggestions) => suggestions,
+        );
+      } else {
+        // Search for anime based on the message content
+        String searchQuery = message;
+        
+        // Extract potential anime title from phrases like "anime like Naruto"
+        final likePattern = RegExp(r'(?:anime )?(?:like|similar to) ([^.!?]+)', caseSensitive: false);
+        final match = likePattern.firstMatch(message);
+        if (match != null) {
+          searchQuery = match.group(1)?.trim() ?? message;
+        }
+        
+        final result = await _searchAnimeUseCase(SearchAnimeParams(query: searchQuery, limit: 6));
+        return result.fold(
+          (failure) => [],
+          (suggestions) => suggestions,
+        );
+      }
+    } catch (e) {
+      print('Error fetching anime suggestions: $e');
+      return [];
+    }
+  }
+
+  bool _containsAnimeTitles(String response) {
+    // Look for patterns that suggest anime titles are mentioned
+    final patterns = [
+      RegExp(r'\*\*([^*]+)\*\*.*\(20\d{2}', caseSensitive: false), // **Title** (year)
+      RegExp(r'\d+\.\s+\*\*([^*]+)\*\*', caseSensitive: false), // 1. **Title**
+      RegExp(r'(Attack on Titan|Demon Slayer|Your Name|Spirited Away|Fruits Basket)', caseSensitive: false), // Common anime titles
+    ];
+    
+    return patterns.any((pattern) => pattern.hasMatch(response));
+  }
+
+  Future<List<AnimeSuggestionEntity>> _extractAndFetchAnimeFromResponse(String response) async {
+    try {
+      final List<AnimeSuggestionEntity> suggestions = [];
+      final Set<String> processedTitles = {}; // Avoid duplicates
+      
+      // More specific patterns to avoid extracting descriptions
+      final patterns = [
+        RegExp(r'\d+\.\s+\*\*([^*]{1,50}?)\*\*\s*\(20\d{2}', caseSensitive: false), // 1. **Title** (year) - limited length
+        RegExp(r'\*\*([^*]{1,50}?)\*\*\s*\(20\d{2}', caseSensitive: false), // **Title** (year) - limited length
+        RegExp(r'\d+\.\s+\*\*([^*]{3,40}?)\*\*(?!\s*[-–—])', caseSensitive: false), // 1. **Title** not followed by dash (description)
+      ];
+      
+      // Also look for well-known anime titles
+      final knownAnimeTitles = [
+        'Attack on Titan', 'Demon Slayer', 'Your Name', 'Spirited Away', 'Fruits Basket',
+        'Steins;Gate', 'Ghost in the Shell', 'K-On!', 'My Hero Academia', 'One Piece',
+        'Naruto', 'Dragon Ball', 'Death Note', 'Fullmetal Alchemist', 'Tokyo Ghoul',
+        'Chainsaw Man', 'Jujutsu Kaisen', 'Spy x Family', 'The Promised Neverland',
+        'School Days'
+      ];
+      
+      // First, check for known anime titles in the response
+      for (final animeTitle in knownAnimeTitles) {
+        if (response.toLowerCase().contains(animeTitle.toLowerCase()) && 
+            !processedTitles.contains(animeTitle.toLowerCase())) {
+          processedTitles.add(animeTitle.toLowerCase());
+          
+          // Search for this anime with delay to respect rate limits
+          await Future.delayed(const Duration(milliseconds: 500)); // Small delay
+          final result = await _searchAnimeUseCase(SearchAnimeParams(query: animeTitle, limit: 1));
+          final animeList = result.fold(
+            (failure) => <AnimeSuggestionEntity>[],
+            (animeList) => animeList,
+          );
+          
+          if (animeList.isNotEmpty) {
+            suggestions.add(animeList.first);
+          }
+          
+          // Limit to avoid too many API calls
+          if (suggestions.length >= 3) break; // Reduced limit for known titles
+        }
+      }
+      
+      // Then use patterns for titles we might have missed
+      if (suggestions.length < 6) {
+        for (final pattern in patterns) {
+          final matches = pattern.allMatches(response);
+          
+          for (final match in matches) {
+            final title = match.group(1)?.trim();
+            if (title != null && 
+                title.length >= 3 && 
+                title.length <= 40 && // Reasonable title length
+                !title.contains('–') && // Avoid descriptions with dashes
+                !title.contains('Genre:') && // Avoid genre descriptions
+                !title.contains('Why?') && // Avoid explanation text
+                !processedTitles.contains(title.toLowerCase())) {
+              
+              processedTitles.add(title.toLowerCase());
+              
+              // Search for this anime with delay to respect rate limits
+              await Future.delayed(const Duration(milliseconds: 500));
+              final result = await _searchAnimeUseCase(SearchAnimeParams(query: title, limit: 1));
+              final animeList = result.fold(
+                (failure) => <AnimeSuggestionEntity>[],
+                (animeList) => animeList,
+              );
+              
+              if (animeList.isNotEmpty) {
+                suggestions.add(animeList.first);
+              }
+              
+              // Limit to avoid too many API calls
+              if (suggestions.length >= 6) break;
+            }
+          }
+          
+          if (suggestions.length >= 6) break;
+        }
+      }
+      
+      print('Extracted ${suggestions.length} anime suggestions from AI response');
+      return suggestions;
+    } catch (e) {
+      print('Error extracting anime from response: $e');
+      return [];
+    }
+  }
 }
 
 // Global provider for chatbot state
@@ -169,5 +340,7 @@ final chatbotProvider = StateNotifierProvider<ChatbotNotifier, ChatbotState>((re
   return ChatbotNotifier(
     sendMessageUseCase: ref.watch(sendMessageUseCaseProvider),
     checkConnectionUseCase: ref.watch(checkConnectionUseCaseProvider),
+    searchAnimeUseCase: ref.watch(searchAnimeUseCaseProvider),
+    getTopAnimeUseCase: ref.watch(getTopAnimeUseCaseProvider),
   );
 });

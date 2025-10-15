@@ -9,4 +9,19 @@ abstract class ChatbotRepository {
   });
   
   Future<Either<Failure, bool>> checkConnection();
+  
+  Future<Either<Failure, List<AnimeSuggestionEntity>>> searchAnime({
+    required String query,
+    int limit = 10,
+  });
+  
+  Future<Either<Failure, List<AnimeSuggestionEntity>>> getTopAnime({
+    String? genre,
+    int limit = 10,
+  });
+  
+  Future<Either<Failure, List<AnimeSuggestionEntity>>> getRecommendations({
+    required int animeId,
+    int limit = 5,
+  });
 }
