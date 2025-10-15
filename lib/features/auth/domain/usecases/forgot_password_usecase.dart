@@ -10,15 +10,17 @@ class ForgotPasswordUseCase {
   ForgotPasswordUseCase(this.repository);
 
   Future<Either<String, Unit>> call({required String email}) async {
-    if (email.isEmpty) {
-      return left('Email cannot be empty');
+    final trimmedEmail = email.trim();
+    
+    if (trimmedEmail.isEmpty) {
+      return left('Please enter your email address');
     }
     
-    if (!_isValidEmail(email)) {
+    if (!_isValidEmail(trimmedEmail)) {
       return left('Please enter a valid email address');
     }
     
-    return await repository.forgotPassword(email);
+    return await repository.forgotPassword(trimmedEmail);
   }
 
   bool _isValidEmail(String email) {

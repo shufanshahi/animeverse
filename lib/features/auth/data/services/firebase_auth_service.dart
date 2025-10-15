@@ -65,21 +65,29 @@ class FirebaseAuthService {
   String _handleFirebaseAuthException(FirebaseAuthException e) {
     switch (e.code) {
       case 'user-not-found':
-        return 'No user found with this email.';
+        return 'No user found with this email. Please check the email address or create a new account.';
       case 'wrong-password':
         return 'Incorrect password.';
       case 'email-already-in-use':
         return 'An account already exists with this email.';
       case 'invalid-email':
-        return 'Invalid email address.';
+        return 'Please enter a valid email address.';
       case 'weak-password':
-        return 'Password is too weak.';
+        return 'Password is too weak. Please use a stronger password.';
       case 'user-disabled':
-        return 'This account has been disabled.';
+        return 'This account has been disabled. Please contact support.';
       case 'too-many-requests':
-        return 'Too many requests. Please try again later.';
+        return 'Too many attempts. Please try again later.';
+      case 'missing-email':
+        return 'Please enter your email address.';
+      case 'network-request-failed':
+        return 'Network error. Please check your internet connection and try again.';
+      case 'expired-action-code':
+        return 'The password reset link has expired. Please request a new one.';
+      case 'invalid-action-code':
+        return 'The password reset link is invalid. Please request a new one.';
       default:
-        return 'Authentication failed. Please try again.';
+        return e.message ?? 'Authentication failed. Please try again.';
     }
   }
 }

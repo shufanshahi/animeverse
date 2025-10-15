@@ -113,11 +113,21 @@ class AuthNotifier extends StateNotifier<AuthState> {
     try {
       final result = await _forgotPasswordUseCase(email: email);
       result.fold(
-        (error) => state = state.copyWith(isLoading: false, error: error),
+        (error) {
+          state = state.copyWith(
+            isLoading: false,
+            error: error.contains('firebase_auth') 
+              ? 'Failed to send reset email. Please try again.'
+              : error,
+          );
+        },
         (_) => state = state.copyWith(isLoading: false),
       );
     } catch (e) {
-      state = state.copyWith(isLoading: false, error: e.toString());
+      state = state.copyWith(
+        isLoading: false,
+        error: 'An unexpected error occurred. Please try again.',
+      );
     }
   }
 
