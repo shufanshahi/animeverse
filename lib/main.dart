@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter/foundation.dart';
 
 import 'config/routes/app_router.dart';
 import 'config/theme/app_theme.dart';
@@ -9,20 +10,23 @@ import 'core/providers/locale_provider.dart';
 import 'core/providers/theme_provider.dart';
 import 'firebase_options.dart';
 import 'injection_container.dart' as di;
+import 'l10n/app_localizations.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   
   try {
-    // Initialize Firebase
-    await Firebase.initializeApp(
-      options: DefaultFirebaseOptions.currentPlatform,
-    );
-    
+    // Initialize Firebase (skip on desktop Linux where options are missing)
+    final isLinux = !kIsWeb && defaultTargetPlatform == TargetPlatform.linux;
+    if (!isLinux) {
+      await Firebase.initializeApp(
+        options: DefaultFirebaseOptions.currentPlatform,
+      );
+    }
+
     // Initialize dependency injection
     await di.init();
-    
-    // Run app with ProviderScope at the root
+
     runApp(
       const ProviderScope(
         child: MyApp(),
@@ -51,15 +55,8 @@ class MyApp extends ConsumerWidget {
       darkTheme: AppTheme.darkTheme(),
       themeMode: themeMode,
       routerConfig: router,
-      localizationsDelegates: const [
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
-      ],
-      supportedLocales: const [
-        Locale('en'),
-        Locale('bn'),
-      ],
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      supportedLocales: AppLocalizations.supportedLocales,
       locale: locale,
     );
   }

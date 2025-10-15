@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import '../../domain/domain.dart';
 
 class SearchBox extends StatelessWidget {
@@ -45,9 +46,7 @@ class AnimeCard extends StatelessWidget {
       elevation: 4,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
       child: InkWell(
-        onTap: () {
-          // TODO: Navigate to detail screen
-        },
+        onTap: () => context.push('/anime/${anime.malId}'),
         child: Row(
           children: [
             ClipRRect(
@@ -90,7 +89,7 @@ class AnimeCard extends StatelessWidget {
                     const SizedBox(height: 8),
                     Row(
                       children: [
-                        Icon(Icons.star, color: Colors.amber, size: 18),
+                        const Icon(Icons.star, color: Colors.amber, size: 18),
                         const SizedBox(width: 4),
                         Text('${anime.score}', style: theme.textTheme.bodyMedium),
                       ],
