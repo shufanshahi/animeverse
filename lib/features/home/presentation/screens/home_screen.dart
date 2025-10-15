@@ -1,86 +1,70 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:provider/provider.dart';
-import '../../../../l10n/app_localizations.dart';
-import '../../../../providers/app_provider.dart';
-import '../bloc/home_bloc.dart';
-import '../bloc/home_event.dart';
-import '../bloc/home_state.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+import '../../../../core/localization/app_localization.dart';
+import '../../../../core/providers/locale_provider.dart';
+import '../../../../core/providers/theme_provider.dart';
+import '../providers/home_provider.dart';
 import '../widgets/widgets.dart';
 
-class HomeScreen extends StatefulWidget {
+class HomeScreen extends ConsumerStatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  ConsumerState<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
-  final List<String> _selectedGenres = [];
-
+class _HomeScreenState extends ConsumerState<HomeScreen> {
   @override
   void initState() {
     super.initState();
-    context.read<HomeBloc>().add(const LoadHomeData());
-  }
-
-  void _onGenreSelected(String genre) {
-    setState(() {
-      if (_selectedGenres.contains(genre)) {
-        _selectedGenres.remove(genre);
-      } else {
-        _selectedGenres.clear();
-        _selectedGenres.add(genre);
-        context.read<HomeBloc>().add(LoadAnimeByGenre(genre: genre));
+    // Load home data when screen initializes
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted) {
+        ref.read(homeProvider.notifier).loadHomeData();
       }
     });
   }
 
+  void _onGenreSelected(String genre) {
+    final homeNotifier = ref.read(homeProvider.notifier);
+    if (ref.read(homeProvider).selectedGenres.contains(genre)) {
+      homeNotifier.clearGenreSelection();
+    } else {
+      homeNotifier.loadAnimeByGenre(genre);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final appProvider = Provider.of<AppProvider>(context);
-    final localizations = AppLocalizations.of(context)!;
+    final homeState = ref.watch(homeProvider);
+    final locale = ref.watch(localeProvider);
+    final themeMode = ref.watch(themeProvider);
+    final lang = locale.languageCode;
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(localizations.appTitle),
+        title: Text(AppLocalizations.translate('app_title', lang)),
         elevation: 0,
         actions: [
           // Language Switcher
           IconButton(
             icon: const Icon(Icons.language),
-            onPressed: () => appProvider.toggleLanguage(),
-            tooltip: localizations.language,
+            onPressed: () => ref.read(localeProvider.notifier).toggleLanguage(),
+            tooltip: AppLocalizations.translate('language', lang),
           ),
           // Theme Switcher
           IconButton(
-            icon: Icon(appProvider.isDarkMode ? Icons.light_mode : Icons.dark_mode),
-            onPressed: () => appProvider.toggleTheme(),
-            tooltip: appProvider.isDarkMode ? 'Light Mode' : 'Dark Mode',
+            icon: Icon(
+              themeMode == ThemeMode.dark ? Icons.light_mode : Icons.dark_mode,
+            ),
+            onPressed: () => ref.read(themeProvider.notifier).toggleTheme(),
+            tooltip: themeMode == ThemeMode.dark ? 'Light Mode' : 'Dark Mode',
           ),
         ],
       ),
-      body: BlocConsumer<HomeBloc, HomeState>(
-        listener: (context, state) {
-          if (state is HomeError) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text(state.message),
-                backgroundColor: Colors.red,
-              ),
-            );
-          }
-        },
-        builder: (context, state) {
-          if (state is HomeLoading) {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          }
-
-          if (state is HomeError) {
-            return Center(
+      body: homeState.error != null
+          ? Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -92,111 +76,124 @@ class _HomeScreenState extends State<HomeScreen> {
                   const SizedBox(height: 16),
                   Text(
                     'Something went wrong',
-                    style: theme.textTheme.headlineSmall,
+                    style: Theme.of(context).textTheme.headlineSmall,
                   ),
                   const SizedBox(height: 8),
                   Text(
-                    state.message,
-                    style: theme.textTheme.bodyMedium?.copyWith(
+                    homeState.error!,
+                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                       color: Colors.grey[600],
                     ),
                     textAlign: TextAlign.center,
                   ),
                   const SizedBox(height: 24),
                   ElevatedButton(
-                    onPressed: () {
-                      context.read<HomeBloc>().add(const RefreshHomeData());
-                    },
+                    onPressed: () => ref.read(homeProvider.notifier).loadHomeData(),
                     child: const Text('Try Again'),
                   ),
                 ],
               ),
-            );
-          }
+            )
+          : homeState.isLoading
+              ? const Center(child: CircularProgressIndicator())
+              : RefreshIndicator(
+                  onRefresh: () async {
+                    ref.read(homeProvider.notifier).loadHomeData();
+                  },
+                  child: SingleChildScrollView(
+                    physics: const AlwaysScrollableScrollPhysics(),
+                    child: Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          // Top Anime Carousel
+                          if (homeState.topAnime.isNotEmpty) ...[
+                            AnimeCarousel(
+                              animeList: homeState.topAnime,
+                              title: AppLocalizations.translate('featured_anime', lang),
+                            ),
+                            const SizedBox(height: 24),
+                          ],
 
-          if (state is HomeLoaded) {
-            return RefreshIndicator(
-              onRefresh: () async {
-                context.read<HomeBloc>().add(const RefreshHomeData());
-              },
-              child: SingleChildScrollView(
-                physics: const AlwaysScrollableScrollPhysics(),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    // Featured Carousel
-                    if (state.topAnime.isNotEmpty) ...[
-                      AnimeCarousel(
-                        animeList: state.topAnime,
-                        title: 'Featured Anime',
-                      ),
-                      const SizedBox(height: 16),
-                    ],
-
-                    // Genre Selection
-                    GenreChips(
-                      selectedGenres: _selectedGenres,
-                      onGenreSelected: _onGenreSelected,
-                    ),
-                    const SizedBox(height: 16),
-
-                    // Genre-based Anime Lists
-                    if (_selectedGenres.isNotEmpty) ...[
-                      for (final genre in _selectedGenres)
-                        if (state.genreAnime.containsKey(genre)) ...[
-                          AnimeList(
-                            animeList: state.genreAnime[genre]!,
-                            title: '$genre Anime',
-                            isLoading: state.genreLoading[genre] ?? false,
-                            onLoadMore: () {
-                              final currentPage = state.genrePages[genre] ?? 1;
-                              context.read<HomeBloc>().add(
-                                LoadMoreAnimeByGenre(
-                                  genre: genre,
-                                  page: currentPage + 1,
-                                ),
-                              );
-                            },
+                          // Genre Selection
+                          GenreChips(
+                            selectedGenres: homeState.selectedGenres,
+                            onGenreSelected: _onGenreSelected,
                           ),
-                          const SizedBox(height: 16),
+                          const SizedBox(height: 24),
+
+                          // Genre-based Anime
+                          if (homeState.selectedGenres.isNotEmpty) ...[
+                            Text(
+                              '${homeState.selectedGenres.first} Anime',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .headlineSmall
+                                  ?.copyWith(fontWeight: FontWeight.bold),
+                            ),
+                            const SizedBox(height: 16),
+                            AnimeList(
+                              animeList: homeState.genreAnime,
+                              title: '${homeState.selectedGenres.first} Anime',
+                            ),
+                            const SizedBox(height: 24),
+                          ],
+
+                          // Currently Airing
+                          if (homeState.airingAnime.isNotEmpty) ...[
+                            Text(
+                              AppLocalizations.translate('currently_airing', lang),
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .headlineSmall
+                                  ?.copyWith(fontWeight: FontWeight.bold),
+                            ),
+                            const SizedBox(height: 16),
+                            AnimeList(
+                              animeList: homeState.airingAnime,
+                              title: AppLocalizations.translate('currently_airing', lang),
+                            ),
+                            const SizedBox(height: 24),
+                          ],
+
+                          // Seasonal Anime
+                          if (homeState.seasonalAnime.isNotEmpty) ...[
+                            Text(
+                              AppLocalizations.translate('seasonal_anime', lang),
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .headlineSmall
+                                  ?.copyWith(fontWeight: FontWeight.bold),
+                            ),
+                            const SizedBox(height: 16),
+                            AnimeList(
+                              animeList: homeState.seasonalAnime,
+                              title: AppLocalizations.translate('seasonal_anime', lang),
+                            ),
+                            const SizedBox(height: 24),
+                          ],
+
+                          // Top Anime
+                          if (homeState.topAnime.isNotEmpty) ...[
+                            Text(
+                              AppLocalizations.translate('top_anime', lang),
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .headlineSmall
+                                  ?.copyWith(fontWeight: FontWeight.bold),
+                            ),
+                            const SizedBox(height: 16),
+                            AnimeList(
+                              animeList: homeState.topAnime,
+                              title: AppLocalizations.translate('top_anime', lang),
+                            ),
+                          ],
                         ],
-                    ],
-
-                    // Currently Airing
-                    if (state.airingAnime.isNotEmpty) ...[
-                      AnimeList(
-                        animeList: state.airingAnime,
-                        title: 'Currently Airing',
                       ),
-                      const SizedBox(height: 16),
-                    ],
-
-                    // Seasonal Anime
-                    if (state.seasonalAnime.isNotEmpty) ...[
-                      AnimeList(
-                        animeList: state.seasonalAnime,
-                        title: 'This Season',
-                      ),
-                      const SizedBox(height: 16),
-                    ],
-
-                    // Top Anime List
-                    if (state.topAnime.isNotEmpty) ...[
-                      AnimeList(
-                        animeList: state.topAnime,
-                        title: 'Top Rated',
-                      ),
-                      const SizedBox(height: 32),
-                    ],
-                  ],
+                    ),
+                  ),
                 ),
-              ),
-            );
-          }
-
-          return const SizedBox.shrink();
-        },
-      ),
     );
   }
 }
