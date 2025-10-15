@@ -31,15 +31,49 @@ class _ForgotPasswordScreenState extends ConsumerState<ForgotPasswordScreen> {
   }
 
   void _handleResetPassword() async {
-    await ref.read(authProvider.notifier).forgotPassword(
-          email: _emailController.text.trim(),
-        );
+    final email = _emailController.text.trim();
+    
+    // Clear any previous errors
+    ref.read(authProvider.notifier).clearError();
+
+    // Basic validation
+    if (email.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Please enter your email address'),
+          backgroundColor: Colors.red,
+        ),
+      );
+      return;
+    }
+
+    if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$').hasMatch(email)) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Please enter a valid email address'),
+          backgroundColor: Colors.red,
+        ),
+      );
+      return;
+    }
+
+    await ref.read(authProvider.notifier).forgotPassword(email: email);
 
     final authState = ref.read(authProvider);
     if (authState.error == null) {
       setState(() {
         _emailSent = true;
       });
+      
+      // Show success message
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Password reset email has been sent'),
+            backgroundColor: Colors.green,
+          ),
+        );
+      }
     }
   }
 
