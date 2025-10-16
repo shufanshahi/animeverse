@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../core/providers/bottom_nav_provider.dart';
+import 'anime_wishlist/presentation/screens/anime_wishlist_screen.dart';
 import 'chatbot/presentation/screens/chatbot_screen.dart';
 import 'home/presentation/screens/home_screen.dart';
 import 'profile/presentation/screens/profile_screen.dart';
-import 'shop/presentation/screens/shop_screen.dart';
 
 class MainScreen extends ConsumerWidget {
   const MainScreen({super.key});
@@ -28,7 +28,7 @@ class MainScreen extends ConsumerWidget {
           children: const [
             HomeScreen(),
             ProfileScreen(),
-            ShopScreen(),
+            AnimeWishlistScreen(),
             ChatbotScreen(),
           ],
         ),
@@ -63,9 +63,9 @@ class MainScreen extends ConsumerWidget {
                 label: 'Profile',
               ),
               BottomNavigationBarItem(
-                icon: Icon(Icons.shopping_bag_outlined),
-                activeIcon: Icon(Icons.shopping_bag),
-                label: 'Shop',
+                icon: Icon(Icons.bookmark_border_outlined),
+                activeIcon: Icon(Icons.bookmark),
+                label: 'Wishlist',
               ),
               BottomNavigationBarItem(
                 icon: Icon(Icons.chat_bubble_outline),
