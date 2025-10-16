@@ -249,20 +249,33 @@ class ChatbotNotifier extends StateNotifier<ChatbotState> {
       final List<AnimeSuggestionEntity> suggestions = [];
       final Set<String> processedTitles = {}; // Avoid duplicates
       
-      // More specific patterns to avoid extracting descriptions
+      // Comprehensive patterns to extract anime titles
       final patterns = [
-        RegExp(r'\d+\.\s+\*\*([^*]{1,50}?)\*\*\s*\(20\d{2}', caseSensitive: false), // 1. **Title** (year) - limited length
-        RegExp(r'\*\*([^*]{1,50}?)\*\*\s*\(20\d{2}', caseSensitive: false), // **Title** (year) - limited length
-        RegExp(r'\d+\.\s+\*\*([^*]{3,40}?)\*\*(?!\s*[-–—])', caseSensitive: false), // 1. **Title** not followed by dash (description)
+        // Numbered lists with years: "1. **Title** (2020)"
+        RegExp(r'\d+\.\s*\*\*([^*]{3,40}?)\*\*\s*\(20\d{2}\)', caseSensitive: false),
+        // Bold titles with years: "**Title** (2020)"
+        RegExp(r'\*\*([^*]{3,40}?)\*\*\s*\(20\d{2}\)', caseSensitive: false),
+        // Numbered lists without years: "1. **Title**"
+        RegExp(r'\d+\.\s*\*\*([^*]{3,40}?)\*\*(?!\s*[-–—(])', caseSensitive: false),
+        // Simple bold titles: "**Title**" (not followed by description indicators)
+        RegExp(r'\*\*([^*]{3,40}?)\*\*(?!\s*[-–—:(\*])', caseSensitive: false),
+        // Title with colon format: "Title:" or "Title -"
+        RegExp(r'^([A-Z][^:\n-]{2,39}?)(?:\s*[-:]|\s*\(20\d{2}\))', caseSensitive: false, multiLine: true),
       ];
       
-      // Also look for well-known anime titles
+      // Expanded list of well-known anime titles
       final knownAnimeTitles = [
         'Attack on Titan', 'Demon Slayer', 'Your Name', 'Spirited Away', 'Fruits Basket',
         'Steins;Gate', 'Ghost in the Shell', 'K-On!', 'My Hero Academia', 'One Piece',
         'Naruto', 'Dragon Ball', 'Death Note', 'Fullmetal Alchemist', 'Tokyo Ghoul',
         'Chainsaw Man', 'Jujutsu Kaisen', 'Spy x Family', 'The Promised Neverland',
-        'School Days'
+        'School Days', 'Cowboy Bebop', 'One Punch Man', 'Hunter x Hunter', 'Bleach',
+        'Mob Psycho 100', 'Violet Evergarden', 'Princess Mononoke', 'Totoro', 'Akira',
+        'Evangelion', 'Code Geass', 'JoJo', 'Overlord', 'Re:Zero', 'Konosuba',
+        'Dr. Stone', 'Fire Force', 'Black Clover', 'Fairy Tail', 'Seven Deadly Sins',
+        'Toradora', 'Clannad', 'Angel Beats', 'Your Lie in April', 'A Silent Voice',
+        'Weathering with You', 'Perfect Blue', 'Castle in the Sky', 'Kiki\'s Delivery Service',
+        'Howl\'s Moving Castle', 'The Wind Rises', 'Ponyo', 'Grave of the Fireflies'
       ];
       
       // First, check for known anime titles in the response
@@ -272,7 +285,7 @@ class ChatbotNotifier extends StateNotifier<ChatbotState> {
           processedTitles.add(animeTitle.toLowerCase());
           
           // Search for this anime with delay to respect rate limits
-          await Future.delayed(const Duration(milliseconds: 500)); // Small delay
+          await Future.delayed(const Duration(milliseconds: 300)); // Reduced delay
           final result = await _searchAnimeUseCase(SearchAnimeParams(query: animeTitle, limit: 1));
           final animeList = result.fold(
             (failure) => <AnimeSuggestionEntity>[],
@@ -284,7 +297,7 @@ class ChatbotNotifier extends StateNotifier<ChatbotState> {
           }
           
           // Limit to avoid too many API calls
-          if (suggestions.length >= 3) break; // Reduced limit for known titles
+          if (suggestions.length >= 6) break; // Allow more suggestions
         }
       }
       
@@ -306,7 +319,7 @@ class ChatbotNotifier extends StateNotifier<ChatbotState> {
               processedTitles.add(title.toLowerCase());
               
               // Search for this anime with delay to respect rate limits
-              await Future.delayed(const Duration(milliseconds: 500));
+              await Future.delayed(const Duration(milliseconds: 300));
               final result = await _searchAnimeUseCase(SearchAnimeParams(query: title, limit: 1));
               final animeList = result.fold(
                 (failure) => <AnimeSuggestionEntity>[],

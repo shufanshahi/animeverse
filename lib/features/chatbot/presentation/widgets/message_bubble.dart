@@ -149,9 +149,10 @@ class MessageBubble extends StatelessWidget {
                     ),
                     const SizedBox(height: 8),
                     SizedBox(
-                      height: 160,
+                      height: 140, // Further reduced to match the card height
                       child: ListView.builder(
                         scrollDirection: Axis.horizontal,
+                        padding: const EdgeInsets.symmetric(horizontal: 4),
                         itemCount: message.animeSuggestions!.length,
                         itemBuilder: (context, index) {
                           return AnimeSuggestionCard(

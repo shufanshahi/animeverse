@@ -22,7 +22,8 @@ class AnimeSuggestionCard extends ConsumerWidget {
         context.pushNamed('animeDetail', pathParameters: {'id': anime.id.toString()});
       },
       child: Container(
-        width: 140,
+        width: 130, // Reduced width to fit better
+        height: 140, // Set explicit height to prevent overflow
         margin: const EdgeInsets.only(right: 8),
         decoration: BoxDecoration(
           color: theme.colorScheme.surface,
@@ -50,57 +51,64 @@ class AnimeSuggestionCard extends ConsumerWidget {
               ),
               child: CachedNetworkImage(
                 imageUrl: anime.imageUrl,
-                height: 100,
+                height: 80, // Further reduced height
                 width: double.infinity,
                 fit: BoxFit.cover,
                 placeholder: (context, url) => Container(
-                  height: 100,
+                  height: 80,
                   color: theme.colorScheme.surfaceVariant,
                   child: const Center(
                     child: CircularProgressIndicator(strokeWidth: 2),
                   ),
                 ),
                 errorWidget: (context, url, error) => Container(
-                  height: 100,
+                  height: 80,
                   color: theme.colorScheme.surfaceVariant,
                   child: Icon(
                     Icons.broken_image,
                     color: theme.colorScheme.onSurfaceVariant,
+                    size: 20,
                   ),
                 ),
               ),
             ),
-            // Anime Info
-            Padding(
-              padding: const EdgeInsets.all(8),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    anime.title,
-                    style: TextStyle(
-                      color: theme.colorScheme.onSurface,
-                      fontSize: 12,
-                      fontWeight: FontWeight.w600,
+            // Anime Info - Use Expanded to prevent overflow
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.all(4), // Further reduced padding
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                  Flexible(
+                    child: Text(
+                      anime.title,
+                      style: TextStyle(
+                        color: theme.colorScheme.onSurface,
+                        fontSize: 11, // Reduced font size
+                        fontWeight: FontWeight.w600,
+                        height: 1.2, // Reduced line height
+                      ),
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
                     ),
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
                   ),
-                  const SizedBox(height: 4),
+                  const SizedBox(height: 2), // Reduced spacing
                   if (anime.score != null)
                     Row(
+                      mainAxisSize: MainAxisSize.min,
                       children: [
                         Icon(
                           Icons.star,
-                          size: 12,
+                          size: 10, // Smaller icon
                           color: Colors.amber,
                         ),
-                        const SizedBox(width: 2),
+                        const SizedBox(width: 1),
                         Text(
                           '${anime.score!.toStringAsFixed(1)}',
                           style: TextStyle(
                             color: theme.colorScheme.onSurface.withOpacity(0.7),
-                            fontSize: 10,
+                            fontSize: 9, // Smaller text
                           ),
                         ),
                       ],
@@ -110,10 +118,11 @@ class AnimeSuggestionCard extends ConsumerWidget {
                       '${anime.year}',
                       style: TextStyle(
                         color: theme.colorScheme.onSurface.withOpacity(0.5),
-                        fontSize: 10,
+                        fontSize: 9, // Smaller text
                       ),
                     ),
-                ],
+                  ],
+                ),
               ),
             ),
           ],
