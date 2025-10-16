@@ -210,6 +210,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                             AnimeList(
                               animeList: homeState.genreAnime,
                               title: '${AppLocalizations.translateGenre(homeState.selectedGenres.first, lang)} ${AppLocalizations.translate('anime', lang)}',
+                              isLoadingMore: homeState.isLoadingMoreGenre,
+                              onLoadMore: () => ref.read(homeProvider.notifier).loadMoreGenreAnime(),
                             ),
                             const SizedBox(height: 24),
                           ],
@@ -227,6 +229,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                             AnimeList(
                               animeList: homeState.airingAnime,
                               title: AppLocalizations.translate('currently_airing', lang),
+                              isLoadingMore: homeState.isLoadingMoreAiring,
+                              onLoadMore: () => ref.read(homeProvider.notifier).loadMoreAiringAnime(),
                             ),
                             const SizedBox(height: 24),
                           ],
@@ -244,6 +248,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                             AnimeList(
                               animeList: homeState.seasonalAnime,
                               title: AppLocalizations.translate('seasonal_anime', lang),
+                              isLoadingMore: homeState.isLoadingMoreSeasonal,
+                              onLoadMore: () => ref.read(homeProvider.notifier).loadMoreSeasonalAnime(),
                             ),
                             const SizedBox(height: 24),
                           ],
@@ -261,6 +267,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                             AnimeList(
                               animeList: homeState.topAnime,
                               title: AppLocalizations.translate('top_anime', lang),
+                              isLoadingMore: homeState.isLoadingMoreTop,
+                              onLoadMore: () => ref.read(homeProvider.notifier).loadMoreTopAnime(),
                             ),
                           ],
                         ],
