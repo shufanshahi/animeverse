@@ -70,11 +70,11 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
             : null,
         actions: [
           // Wishlist button
-          IconButton(
-            icon: const Icon(Icons.bookmark_border),
-            tooltip: 'Wishlist',
-            onPressed: () => context.push('/wishlist'),
-          ),
+          // IconButton(
+          //   icon: const Icon(Icons.bookmark_border),
+          //   tooltip: 'Wishlist',
+          //   onPressed: () => context.push('/wishlist'),
+          // ),
           // Search toggle
           IconButton(
             icon: const Icon(Icons.search),
