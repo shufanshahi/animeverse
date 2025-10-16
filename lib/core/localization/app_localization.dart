@@ -36,6 +36,27 @@ class AppLocalizations {
       'currently_airing': 'Currently Airing',
       'seasonal_anime': 'Seasonal Anime',
       'top_anime': 'Top Anime',
+      'browse_by_genre': 'Browse by Genre',
+      'anime': 'Anime',
+      'information': 'Information',
+      'genres': 'Genres',
+      'synopsis': 'Synopsis',
+      // Genre names
+      'action': 'Action',
+      'adventure': 'Adventure',
+      'comedy': 'Comedy',
+      'drama': 'Drama',
+      'fantasy': 'Fantasy',
+      'romance': 'Romance',
+      'sci_fi': 'Sci-Fi',
+      'thriller': 'Thriller',
+      'horror': 'Horror',
+      'mystery': 'Mystery',
+      'slice_of_life': 'Slice of Life',
+      'sports': 'Sports',
+      'supernatural': 'Supernatural',
+      'military': 'Military',
+      'school': 'School',
     },
     'bn': {
       'app_name': 'এনিমে ভার্স',
@@ -71,6 +92,27 @@ class AppLocalizations {
       'currently_airing': 'বর্তমানে প্রচারিত',
       'seasonal_anime': 'সিজনাল এনিমে',
       'top_anime': 'শীর্ষ এনিমে',
+      'browse_by_genre': 'ধরন অনুসারে ব্রাউজ করুন',
+      'anime': 'এনিমে',
+      'information': 'তথ্য',
+      'genres': 'ধরন',
+      'synopsis': 'সংক্ষিপ্ত বিবরণ',
+      // Genre names in Bengali
+      'action': 'অ্যাকশন',
+      'adventure': 'অ্যাডভেঞ্চার',
+      'comedy': 'কমেডি',
+      'drama': 'ড্রামা',
+      'fantasy': 'ফ্যান্টাসি',
+      'romance': 'রোম্যান্স',
+      'sci_fi': 'সাই-ফাই',
+      'thriller': 'থ্রিলার',
+      'horror': 'হরর',
+      'mystery': 'রহস্য',
+      'slice_of_life': 'স্লাইস অফ লাইফ',
+      'sports': 'ক্রীড়া',
+      'supernatural': 'অতিপ্রাকৃত',
+      'military': 'মিলিটারি',
+      'school': 'স্কুল',
     },
   };
 
@@ -78,5 +120,16 @@ class AppLocalizations {
     return translations[locale]?[key] ?? 
            translations['en']?[key] ?? 
            key; // Return the key itself if translation not found
+  }
+
+  // Helper method to convert genre name to translation key
+  static String getGenreKey(String genreName) {
+    return genreName.toLowerCase().replaceAll(' ', '_').replaceAll('-', '_');
+  }
+
+  // Helper method to translate genre name
+  static String translateGenre(String genreName, String locale) {
+    final key = getGenreKey(genreName);
+    return translate(key, locale);
   }
 }
