@@ -200,7 +200,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                           // Genre-based Anime
                           if (homeState.selectedGenres.isNotEmpty) ...[
                             Text(
-                              '${homeState.selectedGenres.first} Anime',
+                              '${AppLocalizations.translateGenre(homeState.selectedGenres.first, lang)} ${AppLocalizations.translate('anime', lang)}',
                               style: Theme.of(context)
                                   .textTheme
                                   .headlineSmall
@@ -209,7 +209,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                             const SizedBox(height: 16),
                             AnimeList(
                               animeList: homeState.genreAnime,
-                              title: '${homeState.selectedGenres.first} Anime',
+                              title: '${AppLocalizations.translateGenre(homeState.selectedGenres.first, lang)} ${AppLocalizations.translate('anime', lang)}',
                             ),
                             const SizedBox(height: 24),
                           ],

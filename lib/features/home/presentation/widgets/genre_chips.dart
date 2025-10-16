@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../../../core/localization/app_localization.dart';
+import '../../../../core/providers/locale_provider.dart';
 
-class GenreChips extends StatelessWidget {
+class GenreChips extends ConsumerWidget {
   final List<String> selectedGenres;
   final Function(String) onGenreSelected;
 
@@ -29,14 +32,17 @@ class GenreChips extends StatelessWidget {
   ];
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final locale = ref.watch(localeProvider);
+    final lang = locale.languageCode;
+    
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
           child: Text(
-            'Browse by Genre',
+            AppLocalizations.translate('browse_by_genre', lang),
             style: Theme.of(context).textTheme.titleLarge?.copyWith(
               fontWeight: FontWeight.bold,
             ),
@@ -55,7 +61,7 @@ class GenreChips extends StatelessWidget {
               return Container(
                 margin: const EdgeInsets.only(right: 8),
                 child: FilterChip(
-                  label: Text(genre),
+                  label: Text(AppLocalizations.translateGenre(genre, lang)),
                   selected: isSelected,
                   onSelected: (_) => onGenreSelected(genre),
                   selectedColor: Theme.of(context).primaryColor.withOpacity(0.2),
