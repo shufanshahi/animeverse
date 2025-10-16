@@ -8,6 +8,25 @@ class HomeRemoteDataSourceImpl implements HomeRemoteDataSource {
   final http.Client client;
   static const String baseUrl = 'https://api.jikan.moe/v4';
 
+  // Genre name to ID mapping based on Jikan API
+  static const Map<String, int> genreMap = {
+    'Action': 1,
+    'Adventure': 2,
+    'Comedy': 4,
+    'Drama': 8,
+    'Fantasy': 10,
+    'Romance': 22,
+    'Sci-Fi': 24,
+    'Thriller': 41,
+    'Horror': 14,
+    'Mystery': 7,
+    'Slice of Life': 36,
+    'Sports': 30,
+    'Supernatural': 37,
+    'Military': 38,
+    'School': 23,
+  };
+
   HomeRemoteDataSourceImpl({required this.client});
 
   @override
@@ -31,8 +50,15 @@ class HomeRemoteDataSourceImpl implements HomeRemoteDataSource {
     required String genre,
     int page = 1,
   }) async {
+    // Get genre ID from the genre name
+    final genreId = genreMap[genre];
+    
+    if (genreId == null) {
+      throw ServerException(message: 'Invalid genre: $genre');
+    }
+
     final response = await client.get(
-      Uri.parse('$baseUrl/anime?genres=$genre&page=$page'),
+      Uri.parse('$baseUrl/anime?genres=$genreId&page=$page&order_by=popularity&sort=asc'),
       headers: {'Accept': 'application/json'},
     );
 
