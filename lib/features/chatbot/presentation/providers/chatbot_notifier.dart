@@ -388,8 +388,8 @@ class ChatbotNotifier extends StateNotifier<ChatbotState> {
                 final originalStart = match.start - offset;
                 final originalEnd = match.end - offset;
                 
-                // Replace [ANIME:title] with just the title
-                final replacement = anime.title;
+                // Replace [ANIME:title] with markdown link format [title](anime://id)
+                final replacement = '[${anime.title}](anime://${anime.id})';
                 processedContent = processedContent.replaceRange(
                   originalStart, 
                   originalEnd, 

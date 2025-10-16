@@ -95,10 +95,7 @@ class MessageBubble extends StatelessWidget {
                           ? ClickableMessageText(
                               content: message.content,
                               clickableReferences: message.clickableAnimeReferences,
-                              style: TextStyle(
-                                color: theme.colorScheme.onSurface,
-                                fontSize: 14,
-                              ),
+                              theme: theme,
                             )
                           : MarkdownBody(
                               data: message.content,

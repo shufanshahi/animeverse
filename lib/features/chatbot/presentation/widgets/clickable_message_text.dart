@@ -1,70 +1,85 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:go_router/go_router.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../../domain/entities/entities.dart';
 
 class ClickableMessageText extends StatelessWidget {
   final String content;
   final List<ClickableAnimeReference>? clickableReferences;
-  final TextStyle style;
+  final ThemeData theme;
 
   const ClickableMessageText({
     super.key,
     required this.content,
     this.clickableReferences,
-    required this.style,
+    required this.theme,
   });
 
   @override
   Widget build(BuildContext context) {
-    if (clickableReferences == null || clickableReferences!.isEmpty) {
-      return Text(content, style: style);
-    }
-
-    final theme = Theme.of(context);
-    final spans = <TextSpan>[];
-    int currentIndex = 0;
-
-    // Sort clickable references by start index
-    final sortedReferences = List<ClickableAnimeReference>.from(clickableReferences!)
-      ..sort((a, b) => a.startIndex.compareTo(b.startIndex));
-
-    for (final reference in sortedReferences) {
-      // Add text before the clickable anime title
-      if (currentIndex < reference.startIndex) {
-        spans.add(TextSpan(
-          text: content.substring(currentIndex, reference.startIndex),
-          style: style,
-        ));
-      }
-
-      // Add the clickable anime title
-      spans.add(TextSpan(
-        text: reference.title,
-        style: style.copyWith(
+    return MarkdownBody(
+      data: content,
+      selectable: true,
+      onTapLink: (text, href, title) {
+        if (href != null) {
+          // Check if it's an anime link (anime://id format)
+          if (href.startsWith('anime://')) {
+            final animeId = href.substring(8); // Remove 'anime://' prefix
+            context.push('/anime/$animeId');
+          } else {
+            // Handle regular links
+            launchUrl(Uri.parse(href));
+          }
+        }
+      },
+      styleSheet: MarkdownStyleSheet(
+        p: TextStyle(
+          color: theme.colorScheme.onSurface,
+          fontSize: 14,
+        ),
+        code: TextStyle(
+          backgroundColor: theme.colorScheme.surfaceContainerHighest,
+          color: theme.colorScheme.onSurface,
+          fontSize: 13,
+        ),
+        codeblockDecoration: BoxDecoration(
+          color: theme.colorScheme.surfaceContainerHighest,
+          borderRadius: BorderRadius.circular(8),
+        ),
+        blockquote: TextStyle(
+          color: theme.colorScheme.onSurface.withValues(alpha: 0.7),
+          fontStyle: FontStyle.italic,
+        ),
+        h1: TextStyle(
+          color: theme.colorScheme.onSurface,
+          fontSize: 18,
+          fontWeight: FontWeight.bold,
+        ),
+        h2: TextStyle(
+          color: theme.colorScheme.onSurface,
+          fontSize: 16,
+          fontWeight: FontWeight.bold,
+        ),
+        h3: TextStyle(
+          color: theme.colorScheme.onSurface,
+          fontSize: 14,
+          fontWeight: FontWeight.bold,
+        ),
+        strong: TextStyle(
+          color: theme.colorScheme.onSurface,
+          fontWeight: FontWeight.bold,
+        ),
+        em: TextStyle(
+          color: theme.colorScheme.onSurface,
+          fontStyle: FontStyle.italic,
+        ),
+        a: TextStyle(
           color: theme.primaryColor,
           decoration: TextDecoration.underline,
           fontWeight: FontWeight.w600,
         ),
-        recognizer: TapGestureRecognizer()
-          ..onTap = () {
-            context.push('/anime/${reference.animeId}');
-          },
-      ));
-
-      currentIndex = reference.endIndex;
-    }
-
-    // Add remaining text after the last clickable reference
-    if (currentIndex < content.length) {
-      spans.add(TextSpan(
-        text: content.substring(currentIndex),
-        style: style,
-      ));
-    }
-
-    return RichText(
-      text: TextSpan(children: spans),
+      ),
     );
   }
 }

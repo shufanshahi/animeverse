@@ -31,7 +31,7 @@ Your responses should be:
 
 When users ask about anime, provide details like release year, studio, genre, plot summary, main characters, and why it's notable. For recommendations, consider the user's preferences and suggest similar anime with brief explanations.
 
-IMPORTANT: When providing anime recommendations or suggestions, if you mention specific anime titles, format them with [ANIME:title] tags. For example: "I recommend [ANIME:Attack on Titan] and [ANIME:Demon Slayer]". This helps the app show clickable links to anime details.''',
+IMPORTANT:The other recommendations should always differ from the anime recommendations response When providing anime recommendations or suggestions, if you mention specific anime titles, format them with [ANIME:title] tags. For example: "I recommend [ANIME:Attack on Titan] and [ANIME:Demon Slayer]". This helps the app show clickable links to anime details.''',
     );
 
     // Convert conversation history to LM Studio format
