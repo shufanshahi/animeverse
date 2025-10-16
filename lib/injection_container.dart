@@ -13,6 +13,12 @@ import 'features/home/data/datasources/datasources.dart';
 import 'features/home/data/repositories/repositories.dart';
 import 'features/home/domain/repositories/repositories.dart';
 import 'features/home/domain/usecases/usecases.dart';
+// Features - Chatbot
+import 'features/chatbot/data/datasources/datasources.dart';
+import 'features/chatbot/data/repositories/repositories.dart';
+import 'features/chatbot/data/services/services.dart';
+import 'features/chatbot/domain/repositories/repositories.dart' as chatbot_repo;
+import 'features/chatbot/domain/usecases/usecases.dart';
 // Features - AnimeWishlist
 import 'features/anime_wishlist/data/datasources/anime_wishlist_data_source.dart';
 import 'features/anime_wishlist/data/repositories/anime_wishlist_repository_impl.dart';
@@ -64,6 +70,20 @@ Future<void> init() async {
     ),
   );
 
+  //! Features - Chatbot
+  // Use cases
+  sl.registerLazySingleton(() => SendMessageUseCase(sl()));
+  sl.registerLazySingleton(() => CheckConnectionUseCase(sl()));
+  sl.registerLazySingleton(() => SearchAnimeUseCase(sl()));
+  sl.registerLazySingleton(() => GetTopAnimeUseCase(sl()));
+  sl.registerLazySingleton(() => GetRecommendationsUseCase(sl()));
+
+  // Repository
+  sl.registerLazySingleton<chatbot_repo.ChatbotRepository>(
+    () => ChatbotRepositoryImpl(
+      remoteDataSource: sl(),
+          ),
+  );
   //! Features - AnimeWishlist
   // Use cases
   sl.registerLazySingleton(() => AddToWishlist(sl()));
@@ -79,6 +99,17 @@ Future<void> init() async {
   );
 
   // Data sources
+  sl.registerLazySingleton<ChatbotRemoteDataSourceImpl>(
+    () => ChatbotRemoteDataSourceImpl(
+      lmStudioService: sl(),
+      jikanApiService: sl(),
+    ),
+  );
+
+  // Services
+  sl.registerLazySingleton(() => LMStudioService());
+  sl.registerLazySingleton(() => JikanApiService());
+
   sl.registerLazySingleton<AnimeWishlistDataSource>(
     () => AnimeWishlistDataSourceImpl(
       supabase: sl(),
