@@ -8,12 +8,14 @@ class ClickableMessageText extends StatelessWidget {
   final String content;
   final List<ClickableAnimeReference>? clickableReferences;
   final ThemeData theme;
+  final VoidCallback? onAnimeNavigate;
 
   const ClickableMessageText({
     super.key,
     required this.content,
     this.clickableReferences,
     required this.theme,
+    this.onAnimeNavigate,
   });
 
   @override
@@ -26,6 +28,8 @@ class ClickableMessageText extends StatelessWidget {
           // Check if it's an anime link (anime://id format)
           if (href.startsWith('anime://')) {
             final animeId = href.substring(8); // Remove 'anime://' prefix
+            // Close the chatbot overlay before navigating
+            onAnimeNavigate?.call();
             context.push('/anime/$animeId');
           } else {
             // Handle regular links

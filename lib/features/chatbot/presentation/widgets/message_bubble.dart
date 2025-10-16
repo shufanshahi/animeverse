@@ -6,10 +6,12 @@ import 'clickable_message_text.dart';
 
 class MessageBubble extends StatelessWidget {
   final MessageEntity message;
+  final VoidCallback? onAnimeNavigate;
 
   const MessageBubble({
     super.key,
     required this.message,
+    this.onAnimeNavigate,
   });
 
   @override
@@ -96,6 +98,7 @@ class MessageBubble extends StatelessWidget {
                               content: message.content,
                               clickableReferences: message.clickableAnimeReferences,
                               theme: theme,
+                              onAnimeNavigate: onAnimeNavigate,
                             )
                           : MarkdownBody(
                               data: message.content,
@@ -164,6 +167,7 @@ class MessageBubble extends StatelessWidget {
                         itemBuilder: (context, index) {
                           return AnimeSuggestionCard(
                             anime: message.animeSuggestions![index],
+                            onNavigate: onAnimeNavigate,
                           );
                         },
                       ),

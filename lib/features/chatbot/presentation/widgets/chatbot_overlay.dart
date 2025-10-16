@@ -218,6 +218,7 @@ class _ChatbotOverlayState extends ConsumerState<ChatbotOverlay>
                             itemBuilder: (context, index) {
                               return MessageBubble(
                                 message: chatbotState.messages[index],
+                                onAnimeNavigate: () => chatbotNotifier.closeChat(),
                               );
                             },
                           ),

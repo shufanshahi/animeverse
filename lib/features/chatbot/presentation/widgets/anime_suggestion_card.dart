@@ -6,10 +6,12 @@ import '../../domain/entities/entities.dart';
 
 class AnimeSuggestionCard extends ConsumerWidget {
   final AnimeSuggestionEntity anime;
+  final VoidCallback? onNavigate;
 
   const AnimeSuggestionCard({
     super.key,
     required this.anime,
+    this.onNavigate,
   });
 
   @override
@@ -18,6 +20,8 @@ class AnimeSuggestionCard extends ConsumerWidget {
 
     return GestureDetector(
       onTap: () {
+        // Close the chatbot overlay before navigating
+        onNavigate?.call();
         // Navigate to anime details page
         context.pushNamed('animeDetail', pathParameters: {'id': anime.id.toString()});
       },
