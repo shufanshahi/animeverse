@@ -6,18 +6,23 @@ class SearchBox extends StatelessWidget {
   final TextEditingController controller;
   final Function(String)? onSubmitted;
   final VoidCallback? onSearch;
+  final ValueChanged<String>? onChanged;
+  final bool autofocus;
 
   const SearchBox({
     Key? key,
     required this.controller,
     this.onSubmitted,
     this.onSearch,
+    this.onChanged,
+    this.autofocus = false,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return TextField(
       controller: controller,
+      autofocus: autofocus,
       decoration: InputDecoration(
         hintText: 'Search anime...',
         prefixIcon: const Icon(Icons.search),
@@ -28,6 +33,7 @@ class SearchBox extends StatelessWidget {
         ),
       ),
       onSubmitted: onSubmitted,
+      onChanged: onChanged,
       textInputAction: TextInputAction.search,
     );
   }

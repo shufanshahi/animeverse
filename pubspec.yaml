@@ -89,6 +89,8 @@ dependencies:
   
   # Markdown Support
   flutter_markdown: ^0.7.4+1
+  cloud_firestore: ^6.0.3
+  supabase_flutter: ^2.10.3
 
 dev_dependencies:
   flutter_test:

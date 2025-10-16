@@ -1,0 +1,21 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Wishlist collection rules
+    match /wishlists/{wishlistId} {
+      // Allow users to read and write only their own wishlist items
+      // Document ID format: {userId}_{animeId}
+      allow read, write: if request.auth != null && 
+                           request.auth.uid == resource.data.userId;
+      
+      // Allow creation if authenticated and userId matches
+      allow create: if request.auth != null && 
+                      request.auth.uid == request.resource.data.userId;
+      
+      // Allow delete if authenticated and userId matches
+      allow delete: if request.auth != null && 
+                      request.auth.uid == resource.data.userId;
+    }
+  }
+}

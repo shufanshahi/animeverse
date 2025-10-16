@@ -11,6 +11,7 @@ import '../../features/home/presentation/screens/home_screen.dart';
 import '../../features/main_screen.dart';
 import '../../features/animeDetails/presentation/screens/anime_detail_screen.dart';
 import '../../features/search_screen/presentation/screens/screens.dart';
+import '../../features/anime_wishlist/presentation/screens/anime_wishlist_screen.dart';
 
 final _rootNavigatorKey = GlobalKey<NavigatorState>();
 
@@ -22,6 +23,7 @@ class AppRouteName {
   static const home = 'home';
   static const animeDetail = 'animeDetail';
   static const search = 'search';
+  static const wishlist = 'wishlist';
 }
 
 final goRouterProvider = Provider<GoRouter>((ref) {
@@ -78,6 +80,11 @@ final goRouterProvider = Provider<GoRouter>((ref) {
           final q = state.uri.queryParameters['q'];
           return SearchScreen(initialQuery: q);
         },
+      ),
+      GoRoute(
+        path: '/wishlist',
+        name: AppRouteName.wishlist,
+        builder: (context, state) => const AnimeWishlistScreen(),
       ),
     ],
     redirect: (context, state) {
