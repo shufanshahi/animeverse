@@ -131,10 +131,15 @@ class ChatbotNotifier extends StateNotifier<ChatbotState> {
             .where((msg) => !msg.isLoading)
             .toList();
 
+        // Process [ANIME:title] tags and create clickable references
+        final processedResponse = await _processAnimeTagsInResponse(response);
+        final clickableReferences = processedResponse['clickableReferences'] as List<ClickableAnimeReference>?;
+        final cleanedContent = processedResponse['content'] as String;
+
         // Extract anime titles from the AI response and fetch suggestions
         List<AnimeSuggestionEntity>? animeSuggestions;
-        if (_isRecommendationRequest(content.trim()) || _containsAnimeTitles(response)) {
-          animeSuggestions = await _extractAndFetchAnimeFromResponse(response);
+        if (_isRecommendationRequest(content.trim()) || _containsAnimeTitles(cleanedContent)) {
+          animeSuggestions = await _extractAndFetchAnimeFromResponse(cleanedContent);
           if (animeSuggestions.isEmpty) {
             // Fallback to general search if no specific titles were found
             animeSuggestions = await _fetchAnimeSuggestions(content.trim());
@@ -143,10 +148,11 @@ class ChatbotNotifier extends StateNotifier<ChatbotState> {
 
         final assistantMessage = MessageEntity(
           id: _uuid.v4(),
-          content: response,
+          content: cleanedContent,
           type: MessageType.assistant,
           timestamp: DateTime.now(),
           animeSuggestions: animeSuggestions,
+          clickableAnimeReferences: clickableReferences,
         );
 
         state = state.copyWith(
@@ -345,6 +351,93 @@ class ChatbotNotifier extends StateNotifier<ChatbotState> {
       print('Error extracting anime from response: $e');
       return [];
     }
+  }
+
+  Future<Map<String, dynamic>> _processAnimeTagsInResponse(String response) async {
+    final animePattern = RegExp(r'\[ANIME:(.*?)\]');
+    final matches = animePattern.allMatches(response);
+    
+    if (matches.isEmpty) {
+      return {
+        'content': response,
+        'clickableReferences': null,
+      };
+    }
+
+    String processedContent = response;
+    List<ClickableAnimeReference> clickableReferences = [];
+    int offset = 0; // Track position changes due to replacements
+
+    for (final match in matches) {
+      final animeTitle = match.group(1);
+      if (animeTitle != null) {
+        try {
+          // Search for the anime to get its ID
+          final searchResult = await _searchAnimeUseCase(SearchAnimeParams(
+            query: animeTitle,
+            limit: 1,
+          ));
+
+          await searchResult.fold(
+            (failure) => Future.value(),
+            (animeList) async {
+              if (animeList.isNotEmpty) {
+                final anime = animeList.first;
+                
+                // Calculate positions accounting for previous replacements
+                final originalStart = match.start - offset;
+                final originalEnd = match.end - offset;
+                
+                // Replace [ANIME:title] with just the title
+                final replacement = anime.title;
+                processedContent = processedContent.replaceRange(
+                  originalStart, 
+                  originalEnd, 
+                  replacement
+                );
+                
+                // Create clickable reference
+                clickableReferences.add(ClickableAnimeReference(
+                  title: anime.title,
+                  animeId: anime.id,
+                  startIndex: originalStart,
+                  endIndex: originalStart + replacement.length,
+                ));
+                
+                // Update offset for next replacements
+                offset += match.group(0)!.length - replacement.length;
+              } else {
+                // Just remove the tags if anime not found
+                final originalStart = match.start - offset;
+                final originalEnd = match.end - offset;
+                processedContent = processedContent.replaceRange(
+                  originalStart, 
+                  originalEnd, 
+                  animeTitle
+                );
+                offset += match.group(0)!.length - animeTitle.length;
+              }
+            },
+          );
+        } catch (e) {
+          print('Error processing anime tag $animeTitle: $e');
+          // Just remove the tags if there's an error
+          final originalStart = match.start - offset;
+          final originalEnd = match.end - offset;
+          processedContent = processedContent.replaceRange(
+            originalStart, 
+            originalEnd, 
+            animeTitle
+          );
+          offset += match.group(0)!.length - animeTitle.length;
+        }
+      }
+    }
+
+    return {
+      'content': processedContent,
+      'clickableReferences': clickableReferences.isEmpty ? null : clickableReferences,
+    };
   }
 }
 

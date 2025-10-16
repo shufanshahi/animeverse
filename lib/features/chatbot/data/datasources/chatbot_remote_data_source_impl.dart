@@ -63,9 +63,8 @@ IMPORTANT: When providing anime recommendations or suggestions, if you mention s
         final content = response.choices.first.message.content;
         print('ChatbotRemoteDataSource: Returning content (${content.length} chars)');
         
-        // Check for anime suggestions in the response and replace with formatted suggestions
-        final processedContent = await _processAnimeReferences(content);
-        return processedContent;
+        // Return the original content - anime processing will be handled at the repository level
+        return content;
       } else {
         print('ChatbotRemoteDataSource: No choices in response');
         throw Exception('No response generated');
@@ -145,44 +144,5 @@ IMPORTANT: When providing anime recommendations or suggestions, if you mention s
     );
   }
 
-  Future<String> _processAnimeReferences(String content) async {
-    // Look for [ANIME:title] patterns in the response
-    final animePattern = RegExp(r'\[ANIME:(.*?)\]');
-    final matches = animePattern.allMatches(content);
-    
-    if (matches.isEmpty) {
-      return content;
-    }
 
-    String processedContent = content;
-    
-    for (final match in matches) {
-      final animeTitle = match.group(1);
-      if (animeTitle != null) {
-        try {
-          // Search for the anime to get its ID
-          final searchResults = await jikanApiService.searchAnime(
-            query: animeTitle,
-            limit: 1,
-          );
-          
-          if (searchResults.isNotEmpty) {
-            final anime = searchResults.first;
-            // Replace [ANIME:title] with a clickable format
-            final replacement = '**${anime.title}** (Click to view details)';
-            processedContent = processedContent.replaceAll(match.group(0)!, replacement);
-          } else {
-            // Just remove the tags if anime not found
-            processedContent = processedContent.replaceAll(match.group(0)!, animeTitle);
-          }
-        } catch (e) {
-          print('Error processing anime reference $animeTitle: $e');
-          // Just remove the tags if there's an error
-          processedContent = processedContent.replaceAll(match.group(0)!, animeTitle);
-        }
-      }
-    }
-    
-    return processedContent;
-  }
 }

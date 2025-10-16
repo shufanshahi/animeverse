@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import '../../domain/entities/entities.dart';
 import 'anime_suggestion_card.dart';
+import 'clickable_message_text.dart';
 
 class MessageBubble extends StatelessWidget {
   final MessageEntity message;
@@ -90,13 +91,22 @@ class MessageBubble extends StatelessWidget {
                             fontSize: 14,
                           ),
                         )
-                      : MarkdownBody(
-                          data: message.content,
-                          styleSheet: MarkdownStyleSheet(
-                            p: TextStyle(
-                              color: theme.colorScheme.onSurface,
-                              fontSize: 14,
-                            ),
+                      : (message.clickableAnimeReferences != null && message.clickableAnimeReferences!.isNotEmpty)
+                          ? ClickableMessageText(
+                              content: message.content,
+                              clickableReferences: message.clickableAnimeReferences,
+                              style: TextStyle(
+                                color: theme.colorScheme.onSurface,
+                                fontSize: 14,
+                              ),
+                            )
+                          : MarkdownBody(
+                              data: message.content,
+                              styleSheet: MarkdownStyleSheet(
+                                p: TextStyle(
+                                  color: theme.colorScheme.onSurface,
+                                  fontSize: 14,
+                                ),
                             code: TextStyle(
                               backgroundColor: theme.colorScheme.surfaceVariant,
                               color: theme.colorScheme.onSurfaceVariant,
