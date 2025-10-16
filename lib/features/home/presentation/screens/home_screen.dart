@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import '../../../../core/localization/app_localization.dart';
 import '../../../../core/providers/locale_provider.dart';
 import '../../../../core/providers/theme_provider.dart';
+import '../../../chatbot/presentation/presentation.dart';
 import '../providers/home_provider.dart';
 import '../widgets/widgets.dart';
 
@@ -132,7 +133,10 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
               )
             : null,
       ),
-      body: homeState.error != null
+      body: Stack(
+        children: [
+          // Main content
+          homeState.error != null
           ? Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -263,6 +267,11 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                     ),
                   ),
                 ),
+          // Chatbot overlay
+          const ChatbotOverlay(),
+        ],
+      ),
+      floatingActionButton: const ChatbotFloatingButton(),
     );
   }
 }
