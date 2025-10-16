@@ -2,16 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../features/animeDetails/presentation/screens/anime_detail_screen.dart';
+import '../../features/anime_wishlist/presentation/screens/anime_wishlist_screen.dart';
 import '../../features/auth/presentation/riverpod/auth_provider.dart';
+import '../../features/auth/presentation/screens/forgot_password_screen.dart';
 import '../../features/auth/presentation/screens/login_screen.dart';
 import '../../features/auth/presentation/screens/signup_screen.dart';
-import '../../features/auth/presentation/screens/forgot_password_screen.dart';
-import '../../features/home/presentation/screens/home_screen.dart';
-
 import '../../features/main_screen.dart';
-import '../../features/animeDetails/presentation/screens/anime_detail_screen.dart';
 import '../../features/search_screen/presentation/screens/screens.dart';
-import '../../features/anime_wishlist/presentation/screens/anime_wishlist_screen.dart';
 
 final _rootNavigatorKey = GlobalKey<NavigatorState>();
 
@@ -55,12 +53,7 @@ final goRouterProvider = Provider<GoRouter>((ref) {
         builder: (context, state) => const ForgotPasswordScreen(),
       ),
       GoRoute(
-        path: '/home',
-        name: AppRouteName.home,
-        builder: (context, state) => const HomeScreen(),
-      ),
-      GoRoute(
-        path: '/',
+        path: '/main',
         name: 'main',
         builder: (context, state) => const MainScreen(),
       ),
@@ -96,7 +89,7 @@ final goRouterProvider = Provider<GoRouter>((ref) {
         return atAuth ? null : '/login';
       }
       if (atAuth || state.matchedLocation == '/') {
-        return '/home';
+        return '/main';
       }
       return null;
     },
