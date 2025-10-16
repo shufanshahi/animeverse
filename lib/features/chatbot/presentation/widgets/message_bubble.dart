@@ -150,7 +150,7 @@ class MessageBubble extends StatelessWidget {
                   if (message.animeSuggestions != null && message.animeSuggestions!.isNotEmpty) ...[
                     const SizedBox(height: 12),
                     Text(
-                      'Suggested Anime:',
+                      'Similar Anime:',
                       style: TextStyle(
                         color: isUser ? Colors.white.withOpacity(0.9) : theme.colorScheme.onSurface,
                         fontSize: 12,

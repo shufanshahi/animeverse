@@ -73,7 +73,7 @@ class ChatbotNotifier extends StateNotifier<ChatbotState> {
     // Add loading message for assistant
     final loadingMessage = MessageEntity(
       id: _uuid.v4(),
-      content: 'Processing your request... This may take up to 2 minutes for complex questions.',
+      content: 'Processing your request...',
       type: MessageType.assistant,
       timestamp: DateTime.now(),
       isLoading: true,
