@@ -14,9 +14,8 @@ class SearchScreen extends ConsumerStatefulWidget {
 class _SearchScreenState extends ConsumerState<SearchScreen> {
   final TextEditingController _controller = TextEditingController();
 
-  void _onSearch() {
-    final query = _controller.text.trim();
-    ref.read(searchStateProvider.notifier).search(query);
+  void _triggerSearch() {
+    ref.read(searchStateProvider.notifier).search(_controller.text);
   }
 
   @override
@@ -24,8 +23,7 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
     super.initState();
     if ((widget.initialQuery ?? '').isNotEmpty) {
       _controller.text = widget.initialQuery!;
-      // Run search on first frame to avoid setState during build
-      WidgetsBinding.instance.addPostFrameCallback((_) => _onSearch());
+      WidgetsBinding.instance.addPostFrameCallback((_) => _triggerSearch());
     }
   }
 
@@ -38,6 +36,7 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
   @override
   Widget build(BuildContext context) {
     final searchState = ref.watch(searchStateProvider);
+    final notifier = ref.read(searchStateProvider.notifier);
 
     return Scaffold(
       appBar: AppBar(
@@ -49,8 +48,10 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
           children: [
             SearchBox(
               controller: _controller,
-              onSubmitted: (_) => _onSearch(),
-              onSearch: _onSearch,
+              onSubmitted: (_) => _triggerSearch(),
+              onSearch: _triggerSearch,
+              onChanged: notifier.onQueryChanged, // live updates with debounce
+              autofocus: true,
             ),
             const SizedBox(height: 16),
             Expanded(

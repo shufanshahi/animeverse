@@ -1,0 +1,16 @@
+import 'package:equatable/equatable.dart';
+
+class WishlistItem extends Equatable {
+  final int animeId;
+  final String title;
+  final String imageUrl;
+
+  const WishlistItem({
+    required this.animeId,
+    required this.title,
+    required this.imageUrl,
+  });
+
+  @override
+  List<Object?> get props => [animeId, title, imageUrl];
+}

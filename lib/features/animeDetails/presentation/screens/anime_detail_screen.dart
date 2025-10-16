@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../anime_wishlist/domain/entities/anime_wishlist.dart';
+import '../../../anime_wishlist/presentation/providers/anime_wishlist_provider.dart';
+import '../../../auth/presentation/riverpod/auth_provider.dart';
 import '../../domain/entities/anime_detail.dart';
 import '../../domain/usecases/get_anime_detail.dart';
 import '../providers/anime_detail_provider.dart';
@@ -35,13 +38,57 @@ class _AnimeDetailScreenState extends ConsumerState<AnimeDetailScreen> {
       if (mounted) {
         ref.read(animeDetailProvider.notifier)
             .getAnimeDetail(GetAnimeDetailParams(id: widget.animeId));
+        // Check if this anime is in wishlist
+        ref.read(wishlistProvider.notifier).checkWishlistStatus(widget.animeId);
       }
     });
+  }
+
+  Future<void> _toggleWishlist(AnimeDetail anime) async {
+    final auth = ref.read(authProvider);
+    final userEmail = auth.user?.email;
+
+    if (userEmail == null || userEmail.isEmpty) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Please log in to add to wishlist')),
+        );
+      }
+      return;
+    }
+
+    final wishlistItem = AnimeWishlist(
+      id: '${userEmail}_${anime.malId}',
+      userId: userEmail, // Using email as userId
+      animeId: anime.malId,
+      title: anime.title,
+      imageUrl: anime.images['jpg']?.imageUrl,
+      score: anime.score,
+      type: anime.type,
+      episodes: anime.episodes,
+      addedAt: DateTime.now(),
+    );
+
+    final success = await ref.read(wishlistProvider.notifier).toggleWishlist(wishlistItem);
+
+    if (mounted && success) {
+      final isInWishlist = ref.read(wishlistProvider.notifier).isInWishlist(anime.malId);
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(isInWishlist ? 'Added to wishlist' : 'Removed from wishlist'),
+          duration: const Duration(seconds: 2),
+        ),
+      );
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     final state = ref.watch(animeDetailProvider);
+    final wishlistState = ref.watch(wishlistProvider);
+    final isInWishlist = state.animeDetail != null 
+        ? wishlistState.wishlistStatus[state.animeDetail!.malId] ?? false
+        : false;
 
     return Scaffold(
       appBar: AppBar(
@@ -52,6 +99,17 @@ class _AnimeDetailScreenState extends ConsumerState<AnimeDetailScreen> {
                 onPressed: () => context.pop(),
               )
             : null,
+        actions: [
+          if (state.animeDetail != null)
+            IconButton(
+              icon: Icon(
+                isInWishlist ? Icons.bookmark : Icons.bookmark_border,
+              ),
+              color: isInWishlist ? Theme.of(context).primaryColor : null,
+              tooltip: isInWishlist ? 'Remove from wishlist' : 'Add to wishlist',
+              onPressed: () => _toggleWishlist(state.animeDetail!),
+            ),
+        ],
       ),
       body: SafeArea(
         child: state.isLoading

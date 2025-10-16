@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-
 import '../../../../core/localization/app_localization.dart';
 import '../../../../core/providers/locale_provider.dart';
 import '../../../../core/providers/theme_provider.dart';
@@ -69,6 +68,12 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
               )
             : null,
         actions: [
+          // Wishlist button
+          IconButton(
+            icon: const Icon(Icons.bookmark_border),
+            tooltip: 'Wishlist',
+            onPressed: () => context.push('/wishlist'),
+          ),
           // Search toggle
           IconButton(
             icon: const Icon(Icons.search),
