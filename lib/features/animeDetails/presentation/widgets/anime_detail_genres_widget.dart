@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../../../core/localization/app_localization.dart';
+import '../../../../core/providers/locale_provider.dart';
 import '../../domain/entities/anime_detail.dart';
 
-class AnimeDetailGenresWidget extends StatelessWidget {
+class AnimeDetailGenresWidget extends ConsumerWidget {
   final List<AnimeGenre> genres;
 
   const AnimeDetailGenresWidget({
@@ -10,7 +13,10 @@ class AnimeDetailGenresWidget extends StatelessWidget {
   }) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final locale = ref.watch(localeProvider);
+    final lang = locale.languageCode;
+    
     if (genres.isEmpty) {
       return const SizedBox.shrink();
     }
@@ -23,7 +29,7 @@ class AnimeDetailGenresWidget extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Genres',
+              AppLocalizations.translate('genres', lang),
               style: Theme.of(context).textTheme.headlineSmall?.copyWith(
                     fontWeight: FontWeight.bold,
                   ),

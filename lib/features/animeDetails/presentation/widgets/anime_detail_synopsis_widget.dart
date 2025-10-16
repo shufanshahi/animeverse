@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../../../core/localization/app_localization.dart';
+import '../../../../core/providers/locale_provider.dart';
 
-class AnimeDetailSynopsisWidget extends StatelessWidget {
+class AnimeDetailSynopsisWidget extends ConsumerWidget {
   final String synopsis;
 
   const AnimeDetailSynopsisWidget({
@@ -9,7 +12,10 @@ class AnimeDetailSynopsisWidget extends StatelessWidget {
   }) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final locale = ref.watch(localeProvider);
+    final lang = locale.languageCode;
+    
     return Card(
       elevation: 4,
       child: Padding(
@@ -18,7 +24,7 @@ class AnimeDetailSynopsisWidget extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Synopsis',
+              AppLocalizations.translate('synopsis', lang),
               style: Theme.of(context).textTheme.headlineSmall?.copyWith(
                     fontWeight: FontWeight.bold,
                   ),
