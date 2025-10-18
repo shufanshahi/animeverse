@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:uuid/uuid.dart';
 import '../../../../core/error/failure.dart';
@@ -13,6 +14,7 @@ class ChatbotNotifier extends StateNotifier<ChatbotState> {
   final SearchAnimeUseCase _searchAnimeUseCase;
   final GetTopAnimeUseCase _getTopAnimeUseCase;
   final Uuid _uuid = const Uuid();
+  Timer? _errorTimer;
 
   ChatbotNotifier({
     required SendMessageUseCase sendMessageUseCase,
@@ -27,17 +29,25 @@ class ChatbotNotifier extends StateNotifier<ChatbotState> {
     _initializeConnection();
   }
 
+  @override
+  void dispose() {
+    _errorTimer?.cancel();
+    super.dispose();
+  }
+
   Future<void> _initializeConnection() async {
     final result = await _checkConnectionUseCase(const NoParams());
     result.fold(
-      (failure) => state = state.copyWith(
-        isConnected: false,
-        error: 'Failed to connect to LM Studio',
-      ),
-      (isConnected) => state = state.copyWith(
-        isConnected: isConnected,
-        error: isConnected ? null : '⚠️ LM Studio server is not running on localhost:1234',
-      ),
+      (failure) {
+        state = state.copyWith(isConnected: false);
+        _setErrorWithTimer('Failed to connect to LM Studio');
+      },
+      (isConnected) {
+        state = state.copyWith(isConnected: isConnected, clearError: isConnected);
+        if (!isConnected) {
+          _setErrorWithTimer('⚠️ LM Studio server is not running on localhost:1234');
+        }
+      },
     );
   }
 
@@ -67,7 +77,7 @@ class ChatbotNotifier extends StateNotifier<ChatbotState> {
     state = state.copyWith(
       messages: [...state.messages, userMessage],
       isLoading: true,
-      error: null,
+      clearError: true,
     );
 
     // Add loading message for assistant
@@ -122,8 +132,8 @@ class ChatbotNotifier extends StateNotifier<ChatbotState> {
         state = state.copyWith(
           messages: messagesWithoutLoading,
           isLoading: false,
-          error: errorMessage,
         );
+        _setErrorWithTimer(errorMessage);
       },
       (response) async {
         // Replace loading message with actual response
@@ -158,7 +168,7 @@ class ChatbotNotifier extends StateNotifier<ChatbotState> {
         state = state.copyWith(
           messages: [...messagesWithoutLoading, assistantMessage],
           isLoading: false,
-          error: null,
+          clearError: true,
         );
       },
     );
@@ -167,14 +177,16 @@ class ChatbotNotifier extends StateNotifier<ChatbotState> {
   Future<void> checkConnection() async {
     final result = await _checkConnectionUseCase(const NoParams());
     result.fold(
-      (failure) => state = state.copyWith(
-        isConnected: false,
-        error: 'Failed to connect to LM Studio',
-      ),
-      (isConnected) => state = state.copyWith(
-        isConnected: isConnected,
-        error: isConnected ? null : '⚠️ LM Studio server is not running on localhost:1234',
-      ),
+      (failure) {
+        state = state.copyWith(isConnected: false);
+        _setErrorWithTimer('Failed to connect to LM Studio');
+      },
+      (isConnected) {
+        state = state.copyWith(isConnected: isConnected, clearError: isConnected);
+        if (!isConnected) {
+          _setErrorWithTimer('⚠️ LM Studio server is not running on localhost:1234');
+        }
+      },
     );
   }
 
@@ -183,7 +195,20 @@ class ChatbotNotifier extends StateNotifier<ChatbotState> {
   }
 
   void clearError() {
-    state = state.copyWith(error: null);
+    _errorTimer?.cancel();
+    state = state.copyWith(clearError: true);
+  }
+
+  void _setErrorWithTimer(String errorMessage) {
+    _errorTimer?.cancel();
+    state = state.copyWith(error: errorMessage);
+    
+    // Auto-dismiss error after 5 seconds
+    _errorTimer = Timer(const Duration(seconds: 5), () {
+      if (mounted) {
+        state = state.copyWith(clearError: true);
+      }
+    });
   }
 
   bool _isRecommendationRequest(String message) {

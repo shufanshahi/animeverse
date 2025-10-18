@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import '../../../../l10n/app_localizations.dart';
 import '../../domain/entities/profile_entity.dart';
 import 'profile_avatar_generator.dart';
 
@@ -62,8 +63,8 @@ class _ProfileFormState extends State<ProfileForm> {
       // Check if user is authenticated before saving
       if (widget.profile.userId.isEmpty) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Please sign in to save your profile'),
+          SnackBar(
+            content: Text(AppLocalizations.of(context)!.pleaseSignInToSave),
             backgroundColor: Colors.orange,
           ),
         );
@@ -107,7 +108,9 @@ class _ProfileFormState extends State<ProfileForm> {
                         ),
                   const SizedBox(height: 16),
                   Text(
-                    widget.profile.firstName.isEmpty ? 'Create Profile' : 'Edit Profile',
+                    widget.profile.firstName.isEmpty 
+                        ? AppLocalizations.of(context)!.createProfile 
+                        : AppLocalizations.of(context)!.editProfile,
                     style: Theme.of(context).textTheme.headlineMedium?.copyWith(
                       fontWeight: FontWeight.bold,
                     ),
@@ -131,7 +134,7 @@ class _ProfileFormState extends State<ProfileForm> {
                     const SizedBox(width: 8),
                     Expanded(
                       child: Text(
-                        'You can fill out your profile information, but you\'ll need to sign in to save it.',
+                        AppLocalizations.of(context)!.signInToSave,
                         style: TextStyle(color: Colors.orange.shade700),
                       ),
                     ),
@@ -161,7 +164,7 @@ class _ProfileFormState extends State<ProfileForm> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Personal Information',
+              AppLocalizations.of(context)!.personalInformation,
               style: Theme.of(context).textTheme.titleMedium?.copyWith(
                 fontWeight: FontWeight.bold,
               ),
@@ -170,21 +173,21 @@ class _ProfileFormState extends State<ProfileForm> {
             TextFormField(
               controller: _emailController,
               decoration: InputDecoration(
-                labelText: 'Email Address',
+                labelText: AppLocalizations.of(context)!.emailAddress,
                 hintText: widget.profile.userId.isEmpty 
-                    ? 'Enter your email address' 
+                    ? AppLocalizations.of(context)!.enterYourEmail
                     : null,
                 prefixIcon: const Icon(Icons.email),
                 border: const OutlineInputBorder(),
               ),
               validator: (value) {
                 if (value == null || value.trim().isEmpty) {
-                  return 'Email address is required';
+                  return AppLocalizations.of(context)!.emailRequired;
                 }
                 // Basic email validation
                 final emailRegex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
                 if (!emailRegex.hasMatch(value.trim())) {
-                  return 'Please enter a valid email address';
+                  return AppLocalizations.of(context)!.enterValidEmail;
                 }
                 return null;
               },
@@ -196,15 +199,15 @@ class _ProfileFormState extends State<ProfileForm> {
                 Expanded(
                   child: TextFormField(
                     controller: _firstNameController,
-                    decoration: const InputDecoration(
-                      labelText: 'First Name',
-                      hintText: 'Enter your first name',
-                      prefixIcon: Icon(Icons.person),
-                      border: OutlineInputBorder(),
+                    decoration: InputDecoration(
+                      labelText: AppLocalizations.of(context)!.firstName,
+                      hintText: AppLocalizations.of(context)!.enterFirstName,
+                      prefixIcon: const Icon(Icons.person),
+                      border: const OutlineInputBorder(),
                     ),
                     validator: (value) {
                       if (value == null || value.trim().isEmpty) {
-                        return 'First name is required';
+                        return AppLocalizations.of(context)!.firstNameRequired;
                       }
                       return null;
                     },
@@ -215,15 +218,15 @@ class _ProfileFormState extends State<ProfileForm> {
                 Expanded(
                   child: TextFormField(
                     controller: _lastNameController,
-                    decoration: const InputDecoration(
-                      labelText: 'Last Name',
-                      hintText: 'Enter your last name',
-                      prefixIcon: Icon(Icons.person_outline),
-                      border: OutlineInputBorder(),
+                    decoration: InputDecoration(
+                      labelText: AppLocalizations.of(context)!.lastName,
+                      hintText: AppLocalizations.of(context)!.enterLastName,
+                      prefixIcon: const Icon(Icons.person_outline),
+                      border: const OutlineInputBorder(),
                     ),
                     validator: (value) {
                       if (value == null || value.trim().isEmpty) {
-                        return 'Last name is required';
+                        return AppLocalizations.of(context)!.lastNameRequired;
                       }
                       return null;
                     },
@@ -247,7 +250,7 @@ class _ProfileFormState extends State<ProfileForm> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Address Information',
+              AppLocalizations.of(context)!.addressInformation,
               style: Theme.of(context).textTheme.titleMedium?.copyWith(
                 fontWeight: FontWeight.bold,
               ),
@@ -255,14 +258,14 @@ class _ProfileFormState extends State<ProfileForm> {
             const SizedBox(height: 16),
             TextFormField(
               controller: _streetController,
-              decoration: const InputDecoration(
-                labelText: 'Street Address',
-                prefixIcon: Icon(Icons.home),
-                border: OutlineInputBorder(),
+              decoration: InputDecoration(
+                labelText: AppLocalizations.of(context)!.streetAddress,
+                prefixIcon: const Icon(Icons.home),
+                border: const OutlineInputBorder(),
               ),
               validator: (value) {
                 if (value == null || value.trim().isEmpty) {
-                  return 'Street address is required';
+                  return AppLocalizations.of(context)!.streetRequired;
                 }
                 return null;
               },
@@ -274,14 +277,14 @@ class _ProfileFormState extends State<ProfileForm> {
                 Expanded(
                   child: TextFormField(
                     controller: _stateController,
-                    decoration: const InputDecoration(
-                      labelText: 'State',
-                      prefixIcon: Icon(Icons.location_city),
-                      border: OutlineInputBorder(),
+                    decoration: InputDecoration(
+                      labelText: AppLocalizations.of(context)!.state,
+                      prefixIcon: const Icon(Icons.location_city),
+                      border: const OutlineInputBorder(),
                     ),
                     validator: (value) {
                       if (value == null || value.trim().isEmpty) {
-                        return 'State is required';
+                        return AppLocalizations.of(context)!.stateRequired;
                       }
                       return null;
                     },
@@ -292,17 +295,17 @@ class _ProfileFormState extends State<ProfileForm> {
                 Expanded(
                   child: TextFormField(
                     controller: _zipController,
-                    decoration: const InputDecoration(
-                      labelText: 'ZIP Code',
-                      prefixIcon: Icon(Icons.mail),
-                      border: OutlineInputBorder(),
+                    decoration: InputDecoration(
+                      labelText: AppLocalizations.of(context)!.zipCode,
+                      prefixIcon: const Icon(Icons.mail),
+                      border: const OutlineInputBorder(),
                     ),
                     validator: (value) {
                       if (value == null || value.trim().isEmpty) {
-                        return 'ZIP code is required';
+                        return AppLocalizations.of(context)!.zipRequired;
                       }
                       if (value.trim().length < 5) {
-                        return 'ZIP code must be at least 5 characters';
+                        return AppLocalizations.of(context)!.zipMinLength;
                       }
                       return null;
                     },
@@ -326,7 +329,7 @@ class _ProfileFormState extends State<ProfileForm> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Contact Information',
+              AppLocalizations.of(context)!.contactInformation,
               style: Theme.of(context).textTheme.titleMedium?.copyWith(
                 fontWeight: FontWeight.bold,
               ),
@@ -334,20 +337,20 @@ class _ProfileFormState extends State<ProfileForm> {
             const SizedBox(height: 16),
             TextFormField(
               controller: _phoneController,
-              decoration: const InputDecoration(
-                labelText: 'Phone Number',
-                prefixIcon: Icon(Icons.phone),
-                border: OutlineInputBorder(),
-                hintText: '(123) 456-7890',
+              decoration: InputDecoration(
+                labelText: AppLocalizations.of(context)!.phoneNumber,
+                prefixIcon: const Icon(Icons.phone),
+                border: const OutlineInputBorder(),
+                hintText: AppLocalizations.of(context)!.phoneHint,
               ),
               validator: (value) {
                 if (value == null || value.trim().isEmpty) {
-                  return 'Phone number is required';
+                  return AppLocalizations.of(context)!.phoneRequired;
                 }
                 // Basic phone validation
                 final phoneRegex = RegExp(r'^\+?[\d\s\-\(\)]+$');
                 if (!phoneRegex.hasMatch(value.trim())) {
-                  return 'Please enter a valid phone number';
+                  return AppLocalizations.of(context)!.enterValidPhone;
                 }
                 return null;
               },
@@ -369,7 +372,7 @@ class _ProfileFormState extends State<ProfileForm> {
           Expanded(
             child: OutlinedButton(
               onPressed: widget.onCancel,
-              child: const Text('Cancel'),
+              child: Text(AppLocalizations.of(context)!.cancel),
             ),
           ),
           const SizedBox(width: 16),
@@ -377,7 +380,9 @@ class _ProfileFormState extends State<ProfileForm> {
         Expanded(
           child: ElevatedButton(
             onPressed: _handleSave,
-            child: Text(widget.profile.firstName.isEmpty ? 'Create Profile' : 'Save Changes'),
+            child: Text(widget.profile.firstName.isEmpty 
+                ? AppLocalizations.of(context)!.createProfile 
+                : AppLocalizations.of(context)!.saveChanges),
           ),
         ),
       ],
