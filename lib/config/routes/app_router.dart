@@ -9,6 +9,7 @@ import '../../features/auth/presentation/screens/forgot_password_screen.dart';
 import '../../features/auth/presentation/screens/login_screen.dart';
 import '../../features/auth/presentation/screens/signup_screen.dart';
 import '../../features/main_screen.dart';
+import '../../features/profile/presentation/screens/profile_screen.dart';
 import '../../features/search_screen/presentation/screens/screens.dart';
 
 final _rootNavigatorKey = GlobalKey<NavigatorState>();
@@ -22,6 +23,7 @@ class AppRouteName {
   static const animeDetail = 'animeDetail';
   static const search = 'search';
   static const wishlist = 'wishlist';
+  static const profile = 'profile';
 }
 
 final goRouterProvider = Provider<GoRouter>((ref) {
@@ -79,6 +81,11 @@ final goRouterProvider = Provider<GoRouter>((ref) {
         name: AppRouteName.wishlist,
         builder: (context, state) => const AnimeWishlistScreen(),
       ),
+      GoRoute(
+        path: '/profile',
+        name: AppRouteName.profile,
+        builder: (context, state) => const ProfileScreen(),
+      ),
     ],
     redirect: (context, state) {
       final atAuth = state.matchedLocation == '/login' ||
@@ -97,7 +104,7 @@ final goRouterProvider = Provider<GoRouter>((ref) {
 });
 
 class _SplashGate extends ConsumerWidget {
-  const _SplashGate({super.key});
+  const _SplashGate();
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return const Scaffold(

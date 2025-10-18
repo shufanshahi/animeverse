@@ -27,6 +27,14 @@ import 'features/anime_wishlist/domain/usecases/add_to_wishlist.dart';
 import 'features/anime_wishlist/domain/usecases/get_user_wishlist.dart';
 import 'features/anime_wishlist/domain/usecases/is_in_wishlist.dart';
 import 'features/anime_wishlist/domain/usecases/remove_from_wishlist.dart';
+// Features - Profile
+import 'features/profile/data/datasources/profile_remote_datasource_impl.dart';
+import 'features/profile/data/repositories/profile_repository_impl.dart';
+import 'features/profile/domain/repositories/profile_repository.dart';
+import 'features/profile/domain/usecases/get_profile_usecase.dart';
+import 'features/profile/domain/usecases/get_profile_by_email_usecase.dart';
+import 'features/profile/domain/usecases/create_profile_usecase.dart';
+import 'features/profile/domain/usecases/update_profile_usecase.dart';
 
 final sl = GetIt.instance;
 
@@ -113,6 +121,27 @@ Future<void> init() async {
   sl.registerLazySingleton<AnimeWishlistDataSource>(
     () => AnimeWishlistDataSourceImpl(
       supabase: sl(),
+    ),
+  );
+
+  //! Features - Profile
+  // Use cases
+  sl.registerLazySingleton(() => GetProfileUseCase(sl()));
+  sl.registerLazySingleton(() => GetProfileByEmailUseCase(sl()));
+  sl.registerLazySingleton(() => CreateProfileUseCase(sl()));
+  sl.registerLazySingleton(() => UpdateProfileUseCase(sl()));
+
+  // Repository
+  sl.registerLazySingleton<ProfileRepository>(
+    () => ProfileRepositoryImpl(
+      remoteDataSource: sl(),
+    ),
+  );
+
+  // Data sources
+  sl.registerLazySingleton<ProfileRemoteDataSourceImpl>(
+    () => ProfileRemoteDataSourceImpl(
+      supabaseClient: sl(),
     ),
   );
 
