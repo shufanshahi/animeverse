@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../domain/entities/profile_entity.dart';
+import 'profile_avatar_generator.dart';
 
 class ProfileDisplay extends StatelessWidget {
   final ProfileEntity profile;
@@ -34,17 +35,10 @@ class ProfileDisplay extends StatelessWidget {
           children: [
             Row(
               children: [
-                CircleAvatar(
-                  radius: 30,
-                  backgroundColor: Theme.of(context).colorScheme.primary,
-                  child: Text(
-                    profile.firstName.isNotEmpty ? profile.firstName[0].toUpperCase() : '?',
-                    style: TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                      color: Theme.of(context).colorScheme.onPrimary,
-                    ),
-                  ),
+                // Random profile avatar based on email
+                ProfileAvatarGenerator.generateConsistentAvatar(
+                  email: profile.email,
+                  size: 60,
                 ),
                 const SizedBox(width: 16),
                 Expanded(

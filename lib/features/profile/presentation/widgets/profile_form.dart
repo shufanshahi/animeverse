@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../../domain/entities/profile_entity.dart';
+import 'profile_avatar_generator.dart';
 
 class ProfileForm extends StatefulWidget {
   final ProfileEntity profile;
@@ -91,12 +92,29 @@ class _ProfileFormState extends State<ProfileForm> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Text(
-              widget.profile.firstName.isEmpty ? 'Create Profile' : 'Edit Profile',
-              style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                fontWeight: FontWeight.bold,
+            // Profile Avatar Section
+            Center(
+              child: Column(
+                children: [
+                  // Show random avatar based on email or truly random if no email
+                  widget.profile.email.isNotEmpty
+                      ? ProfileAvatarGenerator.generateConsistentAvatar(
+                          email: widget.profile.email,
+                          size: 80,
+                        )
+                      : ProfileAvatarGenerator.generateTrulyRandomAvatar(
+                          size: 80,
+                        ),
+                  const SizedBox(height: 16),
+                  Text(
+                    widget.profile.firstName.isEmpty ? 'Create Profile' : 'Edit Profile',
+                    style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                      fontWeight: FontWeight.bold,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                ],
               ),
-              textAlign: TextAlign.center,
             ),
             if (widget.profile.userId.isEmpty)
               Container(

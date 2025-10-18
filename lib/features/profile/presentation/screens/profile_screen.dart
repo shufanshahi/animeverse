@@ -5,6 +5,7 @@ import '../../domain/entities/profile_entity.dart';
 import '../providers/profile_provider.dart';
 import '../widgets/profile_form.dart';
 import '../widgets/profile_display.dart';
+import '../widgets/profile_avatar_generator.dart';
 import 'supabase_test_screen.dart';
 import '../../../../injection_container.dart';
 
@@ -58,18 +59,18 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         actions: [
           // Debug button for testing Supabase
-          IconButton(
-            icon: const Icon(Icons.bug_report),
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const SupabaseTestScreen(),
-                ),
-              );
-            },
-            tooltip: 'Test Supabase Connection',
-          ),
+          // IconButton(
+          //   icon: const Icon(Icons.bug_report),
+          //   onPressed: () {
+          //     Navigator.push(
+          //       context,
+          //       MaterialPageRoute(
+          //         builder: (context) => const SupabaseTestScreen(),
+          //       ),
+          //     );
+          //   },
+          //   tooltip: 'Test Supabase Connection',
+          // ),
           if (profileState.profile != null && !profileState.isEditing)
             IconButton(
               icon: const Icon(Icons.edit),
@@ -83,8 +84,35 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
 
   Widget _buildBody(BuildContext context, ProfileState state, ProfileNotifier notifier) {
     if (state.isLoading) {
-      return const Center(
-        child: CircularProgressIndicator(),
+      return Scaffold(
+        appBar: AppBar(
+          title: Text('Profile'),
+          actions: [
+            IconButton(
+              icon: Icon(Icons.bug_report),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => SupabaseTestScreen()),
+                );
+              },
+            ),
+          ],
+        ),
+        body: Column(
+          children: [
+            SizedBox(height: 20),
+            // Show avatar while loading
+            ProfileAvatarGenerator.generateConsistentAvatar(
+              email: FirebaseAuth.instance.currentUser?.email ?? '',
+              size: 80,
+            ),
+            SizedBox(height: 20),
+            CircularProgressIndicator(),
+            SizedBox(height: 10),
+            Text('Loading profile...'),
+          ],
+        ),
       );
     }
 
