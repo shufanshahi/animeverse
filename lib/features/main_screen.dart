@@ -5,8 +5,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../core/providers/bottom_nav_provider.dart';
 import 'anime_wishlist/presentation/screens/anime_wishlist_screen.dart';
 import 'home/presentation/screens/home_screen.dart';
-import 'profile/presentation/screens/screens.dart';
-import 'shop/presentation/screens/shop_screen.dart';
+import 'profile/presentation/screens/profile_screen.dart';
 
 class MainScreen extends ConsumerWidget {
   const MainScreen({super.key});
