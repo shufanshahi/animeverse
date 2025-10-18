@@ -225,4 +225,122 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get retryButton => 'Retry';
+
+  @override
+  String get createProfile => 'Create Profile';
+
+  @override
+  String get editProfile => 'Edit Profile';
+
+  @override
+  String get signInToSave =>
+      'You can fill out your profile information, but you\'ll need to sign in to save it.';
+
+  @override
+  String get pleaseSignInToSave => 'Please sign in to save your profile';
+
+  @override
+  String get personalInformation => 'Personal Information';
+
+  @override
+  String get emailAddress => 'Email Address';
+
+  @override
+  String get enterYourEmail => 'Enter your email address';
+
+  @override
+  String get emailRequired => 'Email address is required';
+
+  @override
+  String get enterValidEmail => 'Please enter a valid email address';
+
+  @override
+  String get firstName => 'First Name';
+
+  @override
+  String get enterFirstName => 'Enter your first name';
+
+  @override
+  String get firstNameRequired => 'First name is required';
+
+  @override
+  String get lastName => 'Last Name';
+
+  @override
+  String get enterLastName => 'Enter your last name';
+
+  @override
+  String get lastNameRequired => 'Last name is required';
+
+  @override
+  String get addressInformation => 'Address Information';
+
+  @override
+  String get streetAddress => 'Street Address';
+
+  @override
+  String get streetRequired => 'Street address is required';
+
+  @override
+  String get state => 'State';
+
+  @override
+  String get stateRequired => 'State is required';
+
+  @override
+  String get zipCode => 'ZIP Code';
+
+  @override
+  String get zipRequired => 'ZIP code is required';
+
+  @override
+  String get zipMinLength => 'ZIP code must be at least 5 characters';
+
+  @override
+  String get contactInformation => 'Contact Information';
+
+  @override
+  String get phoneNumber => 'Phone Number';
+
+  @override
+  String get phoneHint => '(123) 456-7890';
+
+  @override
+  String get phoneRequired => 'Phone number is required';
+
+  @override
+  String get enterValidPhone => 'Please enter a valid phone number';
+
+  @override
+  String get cancel => 'Cancel';
+
+  @override
+  String get saveChanges => 'Save Changes';
+
+  @override
+  String get profileWelcomeBack => 'Welcome back!';
+
+  @override
+  String get profilePersonalInformation => 'Personal Information';
+
+  @override
+  String get profileFullName => 'Full Name';
+
+  @override
+  String get profileEmailAddress => 'Email Address';
+
+  @override
+  String get profileStreetAddress => 'Street Address';
+
+  @override
+  String get profileState => 'State';
+
+  @override
+  String get profileZipCode => 'ZIP Code';
+
+  @override
+  String get profilePhone => 'Phone';
+
+  @override
+  String get profileNotProvided => 'Not provided';
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../../../l10n/app_localizations.dart';
 import '../../domain/entities/profile_entity.dart';
 import 'profile_avatar_generator.dart';
 
@@ -46,11 +47,12 @@ class ProfileDisplay extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Welcome back!',
-                        style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
+              AppLocalizations.of(context)!.profileWelcomeBack,
+              style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                fontWeight: FontWeight.bold,
+                color: Theme.of(context).colorScheme.onSurface,
+              ),
+            ),
                       Text(
                         profile.fullName,
                         style: Theme.of(context).textTheme.titleLarge?.copyWith(
@@ -77,18 +79,19 @@ class ProfileDisplay extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Personal Information',
-              style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                fontWeight: FontWeight.bold,
-              ),
-            ),
+          AppLocalizations.of(context)!.profilePersonalInformation,
+          style: Theme.of(context).textTheme.titleLarge?.copyWith(
+            fontWeight: FontWeight.bold,
+            color: Theme.of(context).colorScheme.onSurface,
+          ),
+        ),
             const SizedBox(height: 16),
-            _buildInfoRow(context, Icons.person, 'Full Name', profile.fullName),
-            _buildInfoRow(context, Icons.email, 'Email Address', profile.email),
-            _buildInfoRow(context, Icons.home, 'Street Address', profile.street),
-            _buildInfoRow(context, Icons.location_city, 'State', profile.state),
-            _buildInfoRow(context, Icons.mail, 'ZIP Code', profile.zip),
-            _buildInfoRow(context, Icons.phone, 'Phone', profile.phone),
+            _buildInfoRow(context, Icons.person, AppLocalizations.of(context)!.profileFullName, profile.fullName),
+            _buildInfoRow(context, Icons.email, AppLocalizations.of(context)!.profileEmailAddress, profile.email),
+            _buildInfoRow(context, Icons.home, AppLocalizations.of(context)!.profileStreetAddress, profile.street),
+            _buildInfoRow(context, Icons.location_city, AppLocalizations.of(context)!.profileState, profile.state),
+            _buildInfoRow(context, Icons.mail, AppLocalizations.of(context)!.profileZipCode, profile.zip),
+            _buildInfoRow(context, Icons.phone, AppLocalizations.of(context)!.profilePhone, profile.phone),
           ],
         ),
       ),
@@ -120,7 +123,7 @@ class ProfileDisplay extends StatelessWidget {
                 ),
                 const SizedBox(height: 2),
                 Text(
-                  value.isEmpty ? 'Not provided' : value,
+                  value.isEmpty ? AppLocalizations.of(context)!.profileNotProvided : value,
                   style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                     color: value.isEmpty 
                         ? Theme.of(context).colorScheme.onSurfaceVariant

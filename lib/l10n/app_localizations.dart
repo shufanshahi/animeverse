@@ -505,6 +505,240 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Retry'**
   String get retryButton;
+
+  /// Create profile header text
+  ///
+  /// In en, this message translates to:
+  /// **'Create Profile'**
+  String get createProfile;
+
+  /// Edit profile header text
+  ///
+  /// In en, this message translates to:
+  /// **'Edit Profile'**
+  String get editProfile;
+
+  /// Sign in to save profile warning
+  ///
+  /// In en, this message translates to:
+  /// **'You can fill out your profile information, but you\'ll need to sign in to save it.'**
+  String get signInToSave;
+
+  /// Sign in required snackbar message
+  ///
+  /// In en, this message translates to:
+  /// **'Please sign in to save your profile'**
+  String get pleaseSignInToSave;
+
+  /// Personal information section title
+  ///
+  /// In en, this message translates to:
+  /// **'Personal Information'**
+  String get personalInformation;
+
+  /// Email address field label
+  ///
+  /// In en, this message translates to:
+  /// **'Email Address'**
+  String get emailAddress;
+
+  /// Email address field hint
+  ///
+  /// In en, this message translates to:
+  /// **'Enter your email address'**
+  String get enterYourEmail;
+
+  /// Email required validation message
+  ///
+  /// In en, this message translates to:
+  /// **'Email address is required'**
+  String get emailRequired;
+
+  /// Valid email validation message
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter a valid email address'**
+  String get enterValidEmail;
+
+  /// First name field label
+  ///
+  /// In en, this message translates to:
+  /// **'First Name'**
+  String get firstName;
+
+  /// First name field hint
+  ///
+  /// In en, this message translates to:
+  /// **'Enter your first name'**
+  String get enterFirstName;
+
+  /// First name required validation message
+  ///
+  /// In en, this message translates to:
+  /// **'First name is required'**
+  String get firstNameRequired;
+
+  /// Last name field label
+  ///
+  /// In en, this message translates to:
+  /// **'Last Name'**
+  String get lastName;
+
+  /// Last name field hint
+  ///
+  /// In en, this message translates to:
+  /// **'Enter your last name'**
+  String get enterLastName;
+
+  /// Last name required validation message
+  ///
+  /// In en, this message translates to:
+  /// **'Last name is required'**
+  String get lastNameRequired;
+
+  /// Address information section title
+  ///
+  /// In en, this message translates to:
+  /// **'Address Information'**
+  String get addressInformation;
+
+  /// Street address field label
+  ///
+  /// In en, this message translates to:
+  /// **'Street Address'**
+  String get streetAddress;
+
+  /// Street address required validation message
+  ///
+  /// In en, this message translates to:
+  /// **'Street address is required'**
+  String get streetRequired;
+
+  /// State field label
+  ///
+  /// In en, this message translates to:
+  /// **'State'**
+  String get state;
+
+  /// State required validation message
+  ///
+  /// In en, this message translates to:
+  /// **'State is required'**
+  String get stateRequired;
+
+  /// ZIP code field label
+  ///
+  /// In en, this message translates to:
+  /// **'ZIP Code'**
+  String get zipCode;
+
+  /// ZIP code required validation message
+  ///
+  /// In en, this message translates to:
+  /// **'ZIP code is required'**
+  String get zipRequired;
+
+  /// ZIP code minimum length validation message
+  ///
+  /// In en, this message translates to:
+  /// **'ZIP code must be at least 5 characters'**
+  String get zipMinLength;
+
+  /// Contact information section title
+  ///
+  /// In en, this message translates to:
+  /// **'Contact Information'**
+  String get contactInformation;
+
+  /// Phone number field label
+  ///
+  /// In en, this message translates to:
+  /// **'Phone Number'**
+  String get phoneNumber;
+
+  /// Phone number field hint
+  ///
+  /// In en, this message translates to:
+  /// **'(123) 456-7890'**
+  String get phoneHint;
+
+  /// Phone number required validation message
+  ///
+  /// In en, this message translates to:
+  /// **'Phone number is required'**
+  String get phoneRequired;
+
+  /// Valid phone validation message
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter a valid phone number'**
+  String get enterValidPhone;
+
+  /// Cancel button text
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get cancel;
+
+  /// Save changes button text
+  ///
+  /// In en, this message translates to:
+  /// **'Save Changes'**
+  String get saveChanges;
+
+  /// Welcome message in profile display
+  ///
+  /// In en, this message translates to:
+  /// **'Welcome back!'**
+  String get profileWelcomeBack;
+
+  /// Personal information section title
+  ///
+  /// In en, this message translates to:
+  /// **'Personal Information'**
+  String get profilePersonalInformation;
+
+  /// Full name field label
+  ///
+  /// In en, this message translates to:
+  /// **'Full Name'**
+  String get profileFullName;
+
+  /// Email address field label
+  ///
+  /// In en, this message translates to:
+  /// **'Email Address'**
+  String get profileEmailAddress;
+
+  /// Street address field label
+  ///
+  /// In en, this message translates to:
+  /// **'Street Address'**
+  String get profileStreetAddress;
+
+  /// State field label
+  ///
+  /// In en, this message translates to:
+  /// **'State'**
+  String get profileState;
+
+  /// ZIP code field label
+  ///
+  /// In en, this message translates to:
+  /// **'ZIP Code'**
+  String get profileZipCode;
+
+  /// Phone field label
+  ///
+  /// In en, this message translates to:
+  /// **'Phone'**
+  String get profilePhone;
+
+  /// Text shown when a field value is empty
+  ///
+  /// In en, this message translates to:
+  /// **'Not provided'**
+  String get profileNotProvided;
 }
 
 class _AppLocalizationsDelegate

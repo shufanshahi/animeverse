@@ -225,4 +225,123 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String get retryButton => 'আবার চেষ্টা করুন';
+
+  @override
+  String get createProfile => 'প্রোফাইল তৈরি করুন';
+
+  @override
+  String get editProfile => 'প্রোফাইল সম্পাদনা করুন';
+
+  @override
+  String get signInToSave =>
+      'আপনি আপনার প্রোফাইল তথ্য পূরণ করতে পারেন, তবে এটি সংরক্ষণ করতে আপনাকে সাইন ইন করতে হবে।';
+
+  @override
+  String get pleaseSignInToSave =>
+      'আপনার প্রোফাইল সংরক্ষণ করতে অনুগ্রহ করে সাইন ইন করুন';
+
+  @override
+  String get personalInformation => 'ব্যক্তিগত তথ্য';
+
+  @override
+  String get emailAddress => 'ইমেইল ঠিকানা';
+
+  @override
+  String get enterYourEmail => 'আপনার ইমেইল ঠিকানা লিখুন';
+
+  @override
+  String get emailRequired => 'ইমেইল ঠিকানা প্রয়োজন';
+
+  @override
+  String get enterValidEmail => 'অনুগ্রহ করে একটি বৈধ ইমেইল ঠিকানা লিখুন';
+
+  @override
+  String get firstName => 'প্রথম নাম';
+
+  @override
+  String get enterFirstName => 'আপনার প্রথম নাম লিখুন';
+
+  @override
+  String get firstNameRequired => 'প্রথম নাম প্রয়োজন';
+
+  @override
+  String get lastName => 'শেষ নাম';
+
+  @override
+  String get enterLastName => 'আপনার শেষ নাম লিখুন';
+
+  @override
+  String get lastNameRequired => 'শেষ নাম প্রয়োজন';
+
+  @override
+  String get addressInformation => 'ঠিকানার তথ্য';
+
+  @override
+  String get streetAddress => 'রাস্তার ঠিকানা';
+
+  @override
+  String get streetRequired => 'রাস্তার ঠিকানা প্রয়োজন';
+
+  @override
+  String get state => 'রাজ্য/প্রদেশ';
+
+  @override
+  String get stateRequired => 'রাজ্য/প্রদেশ প্রয়োজন';
+
+  @override
+  String get zipCode => 'পোস্টাল কোড';
+
+  @override
+  String get zipRequired => 'পোস্টাল কোড প্রয়োজন';
+
+  @override
+  String get zipMinLength => 'পোস্টাল কোড কমপক্ষে ৫ অক্ষরের হতে হবে';
+
+  @override
+  String get contactInformation => 'যোগাযোগের তথ্য';
+
+  @override
+  String get phoneNumber => 'ফোন নম্বর';
+
+  @override
+  String get phoneHint => '(০১৭) ১২৩-৪৫৬৭';
+
+  @override
+  String get phoneRequired => 'ফোন নম্বর প্রয়োজন';
+
+  @override
+  String get enterValidPhone => 'অনুগ্রহ করে একটি বৈধ ফোন নম্বর লিখুন';
+
+  @override
+  String get cancel => 'বাতিল';
+
+  @override
+  String get saveChanges => 'পরিবর্তন সংরক্ষণ করুন';
+
+  @override
+  String get profileWelcomeBack => 'স্বাগতম!';
+
+  @override
+  String get profilePersonalInformation => 'ব্যক্তিগত তথ্য';
+
+  @override
+  String get profileFullName => 'পূর্ণ নাম';
+
+  @override
+  String get profileEmailAddress => 'ইমেইল ঠিকানা';
+
+  @override
+  String get profileStreetAddress => 'রাস্তার ঠিকানা';
+
+  @override
+  String get profileState => 'রাজ্য/প্রদেশ';
+
+  @override
+  String get profileZipCode => 'জিপ কোড';
+
+  @override
+  String get profilePhone => 'ফোন';
+
+  @override
+  String get profileNotProvided => 'প্রদান করা হয়নি';
 }
