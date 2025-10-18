@@ -57,5 +57,16 @@
   "requestTimeout": "⏱️ অনুরোধের সময় শেষ। মডেল একটি জটিল প্রতিক্রিয়া প্রক্রিয়া করছে হতে পারে। একটি সহজ প্রশ্ন চেষ্টা করুন বা আপনার মডেল প্রতিক্রিয়াশীল কিনা পরীক্ষা করুন।",
   "responseTimeout": "⏱️ প্রতিক্রিয়া খুব বেশি সময় নিয়েছে। আপনার প্রশ্নকে ছোট অংশে ভাগ করে চেষ্টা করুন বা একটি দ্রুত মডেল ব্যবহার করুন।",
   "lmStudioNotRunning": "⚠️ LM Studio সার্ভার localhost:1234 এ চলছে না",
-  "failedToConnect": "LM Studio এর সাথে সংযোগ করতে ব্যর্থ"
+  "failedToConnect": "LM Studio এর সাথে সংযোগ করতে ব্যর্থ",
+  "myWishlist": "আমার ইচ্ছালিস্ট",
+  "somethingWentWrong": "কিছু ভুল হয়েছে",
+  "tryAgain": "আবার চেষ্টা করুন",
+  "yourWishlistIsEmpty": "আপনার ইচ্ছালিস্ট খালি",
+  "addAnimeToWatchLater": "পরে দেখার জন্য অ্যানিমে যোগ করুন",
+  "exploreAnime": "অ্যানিমে অন্বেষণ করুন",
+  "episodesCount": "{count} পর্ব",
+  "removedFromWishlist": "ইচ্ছালিস্ট থেকে সরানো হয়েছে",
+  "loadingProfile": "প্রোফাইল লোড হচ্ছে...",
+  "retryButton": "আবার চেষ্টা করুন",
+  "language": "ভাষা"
 }

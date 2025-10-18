@@ -4,6 +4,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../core/providers/bottom_nav_provider.dart';
+import '../../../../core/providers/locale_provider.dart';
+import '../../../../core/providers/theme_provider.dart';
+import '../../../../l10n/app_localizations.dart';
 import '../providers/anime_wishlist_provider.dart';
 
 class AnimeWishlistScreen extends ConsumerWidget {
@@ -12,11 +15,30 @@ class AnimeWishlistScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final wishlistState = ref.watch(wishlistProvider);
+    final themeMode = ref.watch(themeProvider);
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('My Wishlist'),
+        title: Text(AppLocalizations.of(context)!.myWishlist),
         automaticallyImplyLeading: false,
+        actions: [
+          // Language Switcher
+          IconButton(
+            icon: const Icon(Icons.language),
+            onPressed: () => ref.read(localeProvider.notifier).toggleLanguage(),
+            tooltip: AppLocalizations.of(context)!.language,
+          ),
+          // Theme Switcher
+          IconButton(
+            icon: Icon(
+              themeMode == ThemeMode.dark ? Icons.light_mode : Icons.dark_mode,
+            ),
+            onPressed: () => ref.read(themeProvider.notifier).toggleTheme(),
+            tooltip: themeMode == ThemeMode.dark 
+                ? AppLocalizations.of(context)!.lightMode
+                : AppLocalizations.of(context)!.darkMode,
+          ),
+        ],
       ),
       body: wishlistState.isLoading
           ? const Center(child: CircularProgressIndicator())
@@ -52,7 +74,7 @@ class AnimeWishlistScreen extends ConsumerWidget {
           ),
           const SizedBox(height: 16),
           Text(
-            'Something went wrong',
+            AppLocalizations.of(context)!.somethingWentWrong,
             style: Theme.of(context).textTheme.headlineSmall,
           ),
           const SizedBox(height: 8),
@@ -66,7 +88,7 @@ class AnimeWishlistScreen extends ConsumerWidget {
           const SizedBox(height: 24),
           ElevatedButton(
             onPressed: () => ref.read(wishlistProvider.notifier).loadWishlist(),
-            child: const Text('Try Again'),
+            child: Text(AppLocalizations.of(context)!.tryAgain),
           ),
         ],
       ),
@@ -85,12 +107,12 @@ class AnimeWishlistScreen extends ConsumerWidget {
           ),
           const SizedBox(height: 16),
           Text(
-            'Your wishlist is empty',
+            AppLocalizations.of(context)!.yourWishlistIsEmpty,
             style: Theme.of(context).textTheme.headlineSmall,
           ),
           const SizedBox(height: 8),
           Text(
-            'Add anime to watch later',
+            AppLocalizations.of(context)!.addAnimeToWatchLater,
             style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                   color: Colors.grey[600],
                 ),
@@ -101,7 +123,7 @@ class AnimeWishlistScreen extends ConsumerWidget {
               ref.read(bottomNavProvider.notifier).setIndex(0);
             },
             icon: const Icon(Icons.home),
-            label: const Text('Browse Anime'),
+            label: Text(AppLocalizations.of(context)!.exploreAnime),
           ),
         ],
       ),
@@ -181,7 +203,7 @@ class AnimeWishlistScreen extends ConsumerWidget {
                           ),
                           const SizedBox(width: 4),
                           Text(
-                            '${anime.episodes} episodes',
+                            AppLocalizations.of(context)!.episodesCount(anime.episodes!),
                             style: Theme.of(context).textTheme.bodySmall?.copyWith(
                                   color: Colors.grey[600],
                                 ),
@@ -220,9 +242,9 @@ class AnimeWishlistScreen extends ConsumerWidget {
                   
                   if (success && context.mounted) {
                     ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text('Removed from wishlist'),
-                        duration: Duration(seconds: 2),
+                      SnackBar(
+                        content: Text(AppLocalizations.of(context)!.removedFromWishlist),
+                        duration: const Duration(seconds: 2),
                       ),
                     );
                   }

@@ -193,4 +193,36 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String get failedToConnect => 'LM Studio এর সাথে সংযোগ করতে ব্যর্থ';
+
+  @override
+  String get myWishlist => 'আমার ইচ্ছালিস্ট';
+
+  @override
+  String get somethingWentWrong => 'কিছু ভুল হয়েছে';
+
+  @override
+  String get tryAgain => 'আবার চেষ্টা করুন';
+
+  @override
+  String get yourWishlistIsEmpty => 'আপনার ইচ্ছালিস্ট খালি';
+
+  @override
+  String get addAnimeToWatchLater => 'পরে দেখার জন্য অ্যানিমে যোগ করুন';
+
+  @override
+  String get exploreAnime => 'অ্যানিমে অন্বেষণ করুন';
+
+  @override
+  String episodesCount(int count) {
+    return '$count পর্ব';
+  }
+
+  @override
+  String get removedFromWishlist => 'ইচ্ছালিস্ট থেকে সরানো হয়েছে';
+
+  @override
+  String get loadingProfile => 'প্রোফাইল লোড হচ্ছে...';
+
+  @override
+  String get retryButton => 'আবার চেষ্টা করুন';
 }

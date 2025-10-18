@@ -193,4 +193,36 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get failedToConnect => 'Failed to connect to LM Studio';
+
+  @override
+  String get myWishlist => 'My Wishlist';
+
+  @override
+  String get somethingWentWrong => 'Something went wrong';
+
+  @override
+  String get tryAgain => 'Try Again';
+
+  @override
+  String get yourWishlistIsEmpty => 'Your wishlist is empty';
+
+  @override
+  String get addAnimeToWatchLater => 'Add anime to watch later';
+
+  @override
+  String get exploreAnime => 'Explore Anime';
+
+  @override
+  String episodesCount(int count) {
+    return '$count episodes';
+  }
+
+  @override
+  String get removedFromWishlist => 'Removed from wishlist';
+
+  @override
+  String get loadingProfile => 'Loading profile...';
+
+  @override
+  String get retryButton => 'Retry';
 }

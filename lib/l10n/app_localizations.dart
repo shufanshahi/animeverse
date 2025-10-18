@@ -445,6 +445,66 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Failed to connect to LM Studio'**
   String get failedToConnect;
+
+  /// Wishlist screen title
+  ///
+  /// In en, this message translates to:
+  /// **'My Wishlist'**
+  String get myWishlist;
+
+  /// Generic error message
+  ///
+  /// In en, this message translates to:
+  /// **'Something went wrong'**
+  String get somethingWentWrong;
+
+  /// Retry button text
+  ///
+  /// In en, this message translates to:
+  /// **'Try Again'**
+  String get tryAgain;
+
+  /// Empty wishlist message
+  ///
+  /// In en, this message translates to:
+  /// **'Your wishlist is empty'**
+  String get yourWishlistIsEmpty;
+
+  /// Empty wishlist description
+  ///
+  /// In en, this message translates to:
+  /// **'Add anime to watch later'**
+  String get addAnimeToWatchLater;
+
+  /// Explore anime button text
+  ///
+  /// In en, this message translates to:
+  /// **'Explore Anime'**
+  String get exploreAnime;
+
+  /// Episodes count text
+  ///
+  /// In en, this message translates to:
+  /// **'{count} episodes'**
+  String episodesCount(int count);
+
+  /// Snackbar message when item removed from wishlist
+  ///
+  /// In en, this message translates to:
+  /// **'Removed from wishlist'**
+  String get removedFromWishlist;
+
+  /// Loading profile message
+  ///
+  /// In en, this message translates to:
+  /// **'Loading profile...'**
+  String get loadingProfile;
+
+  /// Retry button text
+  ///
+  /// In en, this message translates to:
+  /// **'Retry'**
+  String get retryButton;
 }
 
 class _AppLocalizationsDelegate
