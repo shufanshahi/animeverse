@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import '../../../../core/providers/locale_provider.dart';
+import '../../../../core/providers/theme_provider.dart';
+import '../../../../l10n/app_localizations.dart';
 import '../../domain/entities/profile_entity.dart';
 import '../providers/profile_provider.dart';
 import '../widgets/profile_form.dart';
@@ -52,10 +55,11 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
   Widget build(BuildContext context) {
     final profileState = ref.watch(profileProvider);
     final profileNotifier = ref.read(profileProvider.notifier);
+    final themeMode = ref.watch(themeProvider);
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Profile'),
+        title: Text(AppLocalizations.of(context)!.profile),
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         actions: [
           // Debug button for testing Supabase
@@ -76,6 +80,22 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
               icon: const Icon(Icons.edit),
               onPressed: () => profileNotifier.toggleEditing(),
             ),
+          // Language Switcher
+          IconButton(
+            icon: const Icon(Icons.language),
+            onPressed: () => ref.read(localeProvider.notifier).toggleLanguage(),
+            tooltip: AppLocalizations.of(context)!.language,
+          ),
+          // Theme Switcher
+          IconButton(
+            icon: Icon(
+              themeMode == ThemeMode.dark ? Icons.light_mode : Icons.dark_mode,
+            ),
+            onPressed: () => ref.read(themeProvider.notifier).toggleTheme(),
+            tooltip: themeMode == ThemeMode.dark 
+                ? AppLocalizations.of(context)!.lightMode
+                : AppLocalizations.of(context)!.darkMode,
+          ),
         ],
       ),
       body: _buildBody(context, profileState, profileNotifier),
@@ -86,7 +106,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
     if (state.isLoading) {
       return Scaffold(
         appBar: AppBar(
-          title: Text('Profile'),
+          title: Text(AppLocalizations.of(context)!.profile),
           actions: [
             IconButton(
               icon: Icon(Icons.bug_report),
@@ -110,7 +130,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
             SizedBox(height: 20),
             CircularProgressIndicator(),
             SizedBox(height: 10),
-            Text('Loading profile...'),
+            Text(AppLocalizations.of(context)!.loadingProfile),
           ],
         ),
       );
@@ -142,7 +162,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                   notifier.getProfileByEmail(currentUser.email!);
                 }
               },
-              child: const Text('Retry'),
+              child: Text(AppLocalizations.of(context)!.retryButton),
             ),
           ],
         ),

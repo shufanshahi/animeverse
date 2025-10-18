@@ -349,6 +349,396 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Anime Title {number}'**
   String animeTitle(int number);
+
+  /// Chatbot header title
+  ///
+  /// In en, this message translates to:
+  /// **'Anime Assistant'**
+  String get animeAssistant;
+
+  /// Chat input placeholder when connected
+  ///
+  /// In en, this message translates to:
+  /// **'Ask about anime...'**
+  String get askAboutAnime;
+
+  /// Chat input placeholder when not connected
+  ///
+  /// In en, this message translates to:
+  /// **'LM Studio not connected'**
+  String get lmStudioNotConnected;
+
+  /// Empty chat welcome message
+  ///
+  /// In en, this message translates to:
+  /// **'Ask me anything about anime!'**
+  String get askMeAnything;
+
+  /// Chatbot capabilities description
+  ///
+  /// In en, this message translates to:
+  /// **'I can help with recommendations,\ncharacter info, and more!'**
+  String get chatbotDescription;
+
+  /// Loading indicator text
+  ///
+  /// In en, this message translates to:
+  /// **'Thinking...'**
+  String get thinking;
+
+  /// Anime suggestions section header
+  ///
+  /// In en, this message translates to:
+  /// **'Similar Anime:'**
+  String get similarAnime;
+
+  /// Generic error message
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to get response.'**
+  String get failedToGetResponse;
+
+  /// Error when no model is loaded
+  ///
+  /// In en, this message translates to:
+  /// **'🤖 No model loaded in LM Studio. Please load a model first!'**
+  String get noModelLoaded;
+
+  /// CORS error message
+  ///
+  /// In en, this message translates to:
+  /// **'🌐 CORS error detected. Please run: flutter run -d chrome --web-browser-flag \"--disable-web-security\"'**
+  String get corsError;
+
+  /// Connection error message
+  ///
+  /// In en, this message translates to:
+  /// **'🔌 Cannot connect to LM Studio. Make sure it\'s running on localhost:1234'**
+  String get connectionRefused;
+
+  /// Server running but no model error
+  ///
+  /// In en, this message translates to:
+  /// **'⚠️ LM Studio server is running but no model is loaded. Please load a model!'**
+  String get serverRunningNoModel;
+
+  /// Timeout error message
+  ///
+  /// In en, this message translates to:
+  /// **'⏱️ Request timed out. The model might be processing a complex response. Try a simpler question or check if your model is responsive.'**
+  String get requestTimeout;
+
+  /// Response timeout error message
+  ///
+  /// In en, this message translates to:
+  /// **'⏱️ Response took too long. Try breaking down your question into smaller parts or use a faster model.'**
+  String get responseTimeout;
+
+  /// LM Studio not running error
+  ///
+  /// In en, this message translates to:
+  /// **'⚠️ LM Studio server is not running on localhost:1234'**
+  String get lmStudioNotRunning;
+
+  /// Connection failure message
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to connect to LM Studio'**
+  String get failedToConnect;
+
+  /// Wishlist screen title
+  ///
+  /// In en, this message translates to:
+  /// **'My Wishlist'**
+  String get myWishlist;
+
+  /// Generic error message
+  ///
+  /// In en, this message translates to:
+  /// **'Something went wrong'**
+  String get somethingWentWrong;
+
+  /// Retry button text
+  ///
+  /// In en, this message translates to:
+  /// **'Try Again'**
+  String get tryAgain;
+
+  /// Empty wishlist message
+  ///
+  /// In en, this message translates to:
+  /// **'Your wishlist is empty'**
+  String get yourWishlistIsEmpty;
+
+  /// Empty wishlist description
+  ///
+  /// In en, this message translates to:
+  /// **'Add anime to watch later'**
+  String get addAnimeToWatchLater;
+
+  /// Explore anime button text
+  ///
+  /// In en, this message translates to:
+  /// **'Explore Anime'**
+  String get exploreAnime;
+
+  /// Episodes count text
+  ///
+  /// In en, this message translates to:
+  /// **'{count} episodes'**
+  String episodesCount(int count);
+
+  /// Snackbar message when item removed from wishlist
+  ///
+  /// In en, this message translates to:
+  /// **'Removed from wishlist'**
+  String get removedFromWishlist;
+
+  /// Loading profile message
+  ///
+  /// In en, this message translates to:
+  /// **'Loading profile...'**
+  String get loadingProfile;
+
+  /// Retry button text
+  ///
+  /// In en, this message translates to:
+  /// **'Retry'**
+  String get retryButton;
+
+  /// Create profile header text
+  ///
+  /// In en, this message translates to:
+  /// **'Create Profile'**
+  String get createProfile;
+
+  /// Edit profile header text
+  ///
+  /// In en, this message translates to:
+  /// **'Edit Profile'**
+  String get editProfile;
+
+  /// Sign in to save profile warning
+  ///
+  /// In en, this message translates to:
+  /// **'You can fill out your profile information, but you\'ll need to sign in to save it.'**
+  String get signInToSave;
+
+  /// Sign in required snackbar message
+  ///
+  /// In en, this message translates to:
+  /// **'Please sign in to save your profile'**
+  String get pleaseSignInToSave;
+
+  /// Personal information section title
+  ///
+  /// In en, this message translates to:
+  /// **'Personal Information'**
+  String get personalInformation;
+
+  /// Email address field label
+  ///
+  /// In en, this message translates to:
+  /// **'Email Address'**
+  String get emailAddress;
+
+  /// Email address field hint
+  ///
+  /// In en, this message translates to:
+  /// **'Enter your email address'**
+  String get enterYourEmail;
+
+  /// Email required validation message
+  ///
+  /// In en, this message translates to:
+  /// **'Email address is required'**
+  String get emailRequired;
+
+  /// Valid email validation message
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter a valid email address'**
+  String get enterValidEmail;
+
+  /// First name field label
+  ///
+  /// In en, this message translates to:
+  /// **'First Name'**
+  String get firstName;
+
+  /// First name field hint
+  ///
+  /// In en, this message translates to:
+  /// **'Enter your first name'**
+  String get enterFirstName;
+
+  /// First name required validation message
+  ///
+  /// In en, this message translates to:
+  /// **'First name is required'**
+  String get firstNameRequired;
+
+  /// Last name field label
+  ///
+  /// In en, this message translates to:
+  /// **'Last Name'**
+  String get lastName;
+
+  /// Last name field hint
+  ///
+  /// In en, this message translates to:
+  /// **'Enter your last name'**
+  String get enterLastName;
+
+  /// Last name required validation message
+  ///
+  /// In en, this message translates to:
+  /// **'Last name is required'**
+  String get lastNameRequired;
+
+  /// Address information section title
+  ///
+  /// In en, this message translates to:
+  /// **'Address Information'**
+  String get addressInformation;
+
+  /// Street address field label
+  ///
+  /// In en, this message translates to:
+  /// **'Street Address'**
+  String get streetAddress;
+
+  /// Street address required validation message
+  ///
+  /// In en, this message translates to:
+  /// **'Street address is required'**
+  String get streetRequired;
+
+  /// State field label
+  ///
+  /// In en, this message translates to:
+  /// **'State'**
+  String get state;
+
+  /// State required validation message
+  ///
+  /// In en, this message translates to:
+  /// **'State is required'**
+  String get stateRequired;
+
+  /// ZIP code field label
+  ///
+  /// In en, this message translates to:
+  /// **'ZIP Code'**
+  String get zipCode;
+
+  /// ZIP code required validation message
+  ///
+  /// In en, this message translates to:
+  /// **'ZIP code is required'**
+  String get zipRequired;
+
+  /// ZIP code minimum length validation message
+  ///
+  /// In en, this message translates to:
+  /// **'ZIP code must be at least 5 characters'**
+  String get zipMinLength;
+
+  /// Contact information section title
+  ///
+  /// In en, this message translates to:
+  /// **'Contact Information'**
+  String get contactInformation;
+
+  /// Phone number field label
+  ///
+  /// In en, this message translates to:
+  /// **'Phone Number'**
+  String get phoneNumber;
+
+  /// Phone number field hint
+  ///
+  /// In en, this message translates to:
+  /// **'(123) 456-7890'**
+  String get phoneHint;
+
+  /// Phone number required validation message
+  ///
+  /// In en, this message translates to:
+  /// **'Phone number is required'**
+  String get phoneRequired;
+
+  /// Valid phone validation message
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter a valid phone number'**
+  String get enterValidPhone;
+
+  /// Cancel button text
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get cancel;
+
+  /// Save changes button text
+  ///
+  /// In en, this message translates to:
+  /// **'Save Changes'**
+  String get saveChanges;
+
+  /// Welcome message in profile display
+  ///
+  /// In en, this message translates to:
+  /// **'Welcome back!'**
+  String get profileWelcomeBack;
+
+  /// Personal information section title
+  ///
+  /// In en, this message translates to:
+  /// **'Personal Information'**
+  String get profilePersonalInformation;
+
+  /// Full name field label
+  ///
+  /// In en, this message translates to:
+  /// **'Full Name'**
+  String get profileFullName;
+
+  /// Email address field label
+  ///
+  /// In en, this message translates to:
+  /// **'Email Address'**
+  String get profileEmailAddress;
+
+  /// Street address field label
+  ///
+  /// In en, this message translates to:
+  /// **'Street Address'**
+  String get profileStreetAddress;
+
+  /// State field label
+  ///
+  /// In en, this message translates to:
+  /// **'State'**
+  String get profileState;
+
+  /// ZIP code field label
+  ///
+  /// In en, this message translates to:
+  /// **'ZIP Code'**
+  String get profileZipCode;
+
+  /// Phone field label
+  ///
+  /// In en, this message translates to:
+  /// **'Phone'**
+  String get profilePhone;
+
+  /// Text shown when a field value is empty
+  ///
+  /// In en, this message translates to:
+  /// **'Not provided'**
+  String get profileNotProvided;
 }
 
 class _AppLocalizationsDelegate

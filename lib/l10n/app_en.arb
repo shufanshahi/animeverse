@@ -179,5 +179,275 @@
         "example": "1"
       }
     }
+  },
+  "animeAssistant": "Anime Assistant",
+  "@animeAssistant": {
+    "description": "Chatbot header title"
+  },
+  "askAboutAnime": "Ask about anime...",
+  "@askAboutAnime": {
+    "description": "Chat input placeholder when connected"
+  },
+  "lmStudioNotConnected": "LM Studio not connected",
+  "@lmStudioNotConnected": {
+    "description": "Chat input placeholder when not connected"
+  },
+  "askMeAnything": "Ask me anything about anime!",
+  "@askMeAnything": {
+    "description": "Empty chat welcome message"
+  },
+  "chatbotDescription": "I can help with recommendations,\ncharacter info, and more!",
+  "@chatbotDescription": {
+    "description": "Chatbot capabilities description"
+  },
+  "thinking": "Thinking...",
+  "@thinking": {
+    "description": "Loading indicator text"
+  },
+  "similarAnime": "Similar Anime:",
+  "@similarAnime": {
+    "description": "Anime suggestions section header"
+  },
+  "failedToGetResponse": "Failed to get response.",
+  "@failedToGetResponse": {
+    "description": "Generic error message"
+  },
+  "noModelLoaded": "🤖 No model loaded in LM Studio. Please load a model first!",
+  "@noModelLoaded": {
+    "description": "Error when no model is loaded"
+  },
+  "corsError": "🌐 CORS error detected. Please run: flutter run -d chrome --web-browser-flag \"--disable-web-security\"",
+  "@corsError": {
+    "description": "CORS error message"
+  },
+  "connectionRefused": "🔌 Cannot connect to LM Studio. Make sure it's running on localhost:1234",
+  "@connectionRefused": {
+    "description": "Connection error message"
+  },
+  "serverRunningNoModel": "⚠️ LM Studio server is running but no model is loaded. Please load a model!",
+  "@serverRunningNoModel": {
+    "description": "Server running but no model error"
+  },
+  "requestTimeout": "⏱️ Request timed out. The model might be processing a complex response. Try a simpler question or check if your model is responsive.",
+  "@requestTimeout": {
+    "description": "Timeout error message"
+  },
+  "responseTimeout": "⏱️ Response took too long. Try breaking down your question into smaller parts or use a faster model.",
+  "@responseTimeout": {
+    "description": "Response timeout error message"
+  },
+  "lmStudioNotRunning": "⚠️ LM Studio server is not running on localhost:1234",
+  "@lmStudioNotRunning": {
+    "description": "LM Studio not running error"
+  },
+  "failedToConnect": "Failed to connect to LM Studio",
+  "@failedToConnect": {
+    "description": "Connection failure message"
+  },
+  "myWishlist": "My Wishlist",
+  "@myWishlist": {
+    "description": "Wishlist screen title"
+  },
+  "somethingWentWrong": "Something went wrong",
+  "@somethingWentWrong": {
+    "description": "Generic error message"
+  },
+  "tryAgain": "Try Again",
+  "@tryAgain": {
+    "description": "Retry button text"
+  },
+  "yourWishlistIsEmpty": "Your wishlist is empty",
+  "@yourWishlistIsEmpty": {
+    "description": "Empty wishlist message"
+  },
+  "addAnimeToWatchLater": "Add anime to watch later",
+  "@addAnimeToWatchLater": {
+    "description": "Empty wishlist description"
+  },
+  "exploreAnime": "Explore Anime",
+  "@exploreAnime": {
+    "description": "Explore anime button text"
+  },
+  "episodesCount": "{count} episodes",
+  "@episodesCount": {
+    "description": "Episodes count text",
+    "placeholders": {
+      "count": {
+        "type": "int",
+        "example": "12"
+      }
+    }
+  },
+  "removedFromWishlist": "Removed from wishlist",
+  "@removedFromWishlist": {
+    "description": "Snackbar message when item removed from wishlist"
+  },
+  "loadingProfile": "Loading profile...",
+  "@loadingProfile": {
+    "description": "Loading profile message"
+  },
+  "retryButton": "Retry",
+  "@retryButton": {
+    "description": "Retry button text"
+  },
+  "language": "Language",
+  "@language": {
+    "description": "Language label"
+  },
+  "createProfile": "Create Profile",
+  "@createProfile": {
+    "description": "Create profile header text"
+  },
+  "editProfile": "Edit Profile",
+  "@editProfile": {
+    "description": "Edit profile header text"
+  },
+  "signInToSave": "You can fill out your profile information, but you'll need to sign in to save it.",
+  "@signInToSave": {
+    "description": "Sign in to save profile warning"
+  },
+  "pleaseSignInToSave": "Please sign in to save your profile",
+  "@pleaseSignInToSave": {
+    "description": "Sign in required snackbar message"
+  },
+  "personalInformation": "Personal Information",
+  "@personalInformation": {
+    "description": "Personal information section title"
+  },
+  "emailAddress": "Email Address",
+  "@emailAddress": {
+    "description": "Email address field label"
+  },
+  "enterYourEmail": "Enter your email address",
+  "@enterYourEmail": {
+    "description": "Email address field hint"
+  },
+  "emailRequired": "Email address is required",
+  "@emailRequired": {
+    "description": "Email required validation message"
+  },
+  "enterValidEmail": "Please enter a valid email address",
+  "@enterValidEmail": {
+    "description": "Valid email validation message"
+  },
+  "firstName": "First Name",
+  "@firstName": {
+    "description": "First name field label"
+  },
+  "enterFirstName": "Enter your first name",
+  "@enterFirstName": {
+    "description": "First name field hint"
+  },
+  "firstNameRequired": "First name is required",
+  "@firstNameRequired": {
+    "description": "First name required validation message"
+  },
+  "lastName": "Last Name",
+  "@lastName": {
+    "description": "Last name field label"
+  },
+  "enterLastName": "Enter your last name",
+  "@enterLastName": {
+    "description": "Last name field hint"
+  },
+  "lastNameRequired": "Last name is required",
+  "@lastNameRequired": {
+    "description": "Last name required validation message"
+  },
+  "addressInformation": "Address Information",
+  "@addressInformation": {
+    "description": "Address information section title"
+  },
+  "streetAddress": "Street Address",
+  "@streetAddress": {
+    "description": "Street address field label"
+  },
+  "streetRequired": "Street address is required",
+  "@streetRequired": {
+    "description": "Street address required validation message"
+  },
+  "state": "State",
+  "@state": {
+    "description": "State field label"
+  },
+  "stateRequired": "State is required",
+  "@stateRequired": {
+    "description": "State required validation message"
+  },
+  "zipCode": "ZIP Code",
+  "@zipCode": {
+    "description": "ZIP code field label"
+  },
+  "zipRequired": "ZIP code is required",
+  "@zipRequired": {
+    "description": "ZIP code required validation message"
+  },
+  "zipMinLength": "ZIP code must be at least 5 characters",
+  "@zipMinLength": {
+    "description": "ZIP code minimum length validation message"
+  },
+  "contactInformation": "Contact Information",
+  "@contactInformation": {
+    "description": "Contact information section title"
+  },
+  "phoneNumber": "Phone Number",
+  "@phoneNumber": {
+    "description": "Phone number field label"
+  },
+  "phoneHint": "(123) 456-7890",
+  "@phoneHint": {
+    "description": "Phone number field hint"
+  },
+  "phoneRequired": "Phone number is required",
+  "@phoneRequired": {
+    "description": "Phone number required validation message"
+  },
+  "enterValidPhone": "Please enter a valid phone number",
+  "@enterValidPhone": {
+    "description": "Valid phone validation message"
+  },
+  "cancel": "Cancel",
+  "@cancel": {
+    "description": "Cancel button text"
+  },
+  "saveChanges": "Save Changes",
+  "@saveChanges": {
+    "description": "Save changes button text"
+  },
+  "profileWelcomeBack": "Welcome back!",
+  "@profileWelcomeBack": {
+    "description": "Welcome message in profile display"
+  },
+  "profilePersonalInformation": "Personal Information",
+  "@profilePersonalInformation": {
+    "description": "Personal information section title"
+  },
+  "profileFullName": "Full Name",
+  "@profileFullName": {
+    "description": "Full name field label"
+  },
+  "profileEmailAddress": "Email Address",
+  "@profileEmailAddress": {
+    "description": "Email address field label"
+  },
+  "profileStreetAddress": "Street Address",
+  "@profileStreetAddress": {
+    "description": "Street address field label"
+  },
+  "profileState": "State",
+  "@profileState": {
+    "description": "State field label"
+  },
+  "profileZipCode": "ZIP Code",
+  "@profileZipCode": {
+    "description": "ZIP code field label"
+  },
+  "profilePhone": "Phone",
+  "@profilePhone": {
+    "description": "Phone field label"
+  },
+  "profileNotProvided": "Not provided",
+  "@profileNotProvided": {
+    "description": "Text shown when a field value is empty"
   }
 }

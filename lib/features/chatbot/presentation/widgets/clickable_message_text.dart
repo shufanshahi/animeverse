@@ -79,8 +79,9 @@ class ClickableMessageText extends StatelessWidget {
           fontStyle: FontStyle.italic,
         ),
         a: TextStyle(
-          color: theme.primaryColor,
+          color: theme.colorScheme.primary,
           decoration: TextDecoration.underline,
+          decorationColor: theme.colorScheme.primary,
           fontWeight: FontWeight.w600,
         ),
       ),
