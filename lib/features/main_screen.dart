@@ -4,7 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../core/providers/bottom_nav_provider.dart';
 import 'chatbot/presentation/screens/chatbot_screen.dart';
 import 'home/presentation/screens/home_screen.dart';
-import 'profile/presentation/screens/profile_screen.dart';
+import 'profile/presentation/screens/screens.dart';
 import 'shop/presentation/screens/shop_screen.dart';
 
 class MainScreen extends ConsumerWidget {
