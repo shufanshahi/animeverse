@@ -137,4 +137,60 @@ class AppLocalizationsEn extends AppLocalizations {
   String animeTitle(int number) {
     return 'Anime Title $number';
   }
+
+  @override
+  String get animeAssistant => 'Anime Assistant';
+
+  @override
+  String get askAboutAnime => 'Ask about anime...';
+
+  @override
+  String get lmStudioNotConnected => 'LM Studio not connected';
+
+  @override
+  String get askMeAnything => 'Ask me anything about anime!';
+
+  @override
+  String get chatbotDescription =>
+      'I can help with recommendations,\ncharacter info, and more!';
+
+  @override
+  String get thinking => 'Thinking...';
+
+  @override
+  String get similarAnime => 'Similar Anime:';
+
+  @override
+  String get failedToGetResponse => 'Failed to get response.';
+
+  @override
+  String get noModelLoaded =>
+      '🤖 No model loaded in LM Studio. Please load a model first!';
+
+  @override
+  String get corsError =>
+      '🌐 CORS error detected. Please run: flutter run -d chrome --web-browser-flag \"--disable-web-security\"';
+
+  @override
+  String get connectionRefused =>
+      '🔌 Cannot connect to LM Studio. Make sure it\'s running on localhost:1234';
+
+  @override
+  String get serverRunningNoModel =>
+      '⚠️ LM Studio server is running but no model is loaded. Please load a model!';
+
+  @override
+  String get requestTimeout =>
+      '⏱️ Request timed out. The model might be processing a complex response. Try a simpler question or check if your model is responsive.';
+
+  @override
+  String get responseTimeout =>
+      '⏱️ Response took too long. Try breaking down your question into smaller parts or use a faster model.';
+
+  @override
+  String get lmStudioNotRunning =>
+      '⚠️ LM Studio server is not running on localhost:1234';
+
+  @override
+  String get failedToConnect => 'Failed to connect to LM Studio';
 }

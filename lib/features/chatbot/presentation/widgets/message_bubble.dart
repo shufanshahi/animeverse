@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
+import '../../../../l10n/app_localizations.dart';
 import '../../domain/entities/entities.dart';
 import 'anime_suggestion_card.dart';
 import 'clickable_message_text.dart';
@@ -59,7 +60,7 @@ class MessageBubble extends StatelessWidget {
                       ),
                       const SizedBox(width: 8),
                       Text(
-                        'Thinking...',
+                        AppLocalizations.of(context)!.thinking,
                         style: TextStyle(
                           color: theme.colorScheme.onSurface,
                           fontSize: 14,
@@ -150,7 +151,7 @@ class MessageBubble extends StatelessWidget {
                   if (message.animeSuggestions != null && message.animeSuggestions!.isNotEmpty) ...[
                     const SizedBox(height: 12),
                     Text(
-                      'Similar Anime:',
+                      AppLocalizations.of(context)!.similarAnime,
                       style: TextStyle(
                         color: isUser ? Colors.white.withOpacity(0.9) : theme.colorScheme.onSurface,
                         fontSize: 12,

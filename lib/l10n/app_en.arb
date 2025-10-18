@@ -179,5 +179,69 @@
         "example": "1"
       }
     }
+  },
+  "animeAssistant": "Anime Assistant",
+  "@animeAssistant": {
+    "description": "Chatbot header title"
+  },
+  "askAboutAnime": "Ask about anime...",
+  "@askAboutAnime": {
+    "description": "Chat input placeholder when connected"
+  },
+  "lmStudioNotConnected": "LM Studio not connected",
+  "@lmStudioNotConnected": {
+    "description": "Chat input placeholder when not connected"
+  },
+  "askMeAnything": "Ask me anything about anime!",
+  "@askMeAnything": {
+    "description": "Empty chat welcome message"
+  },
+  "chatbotDescription": "I can help with recommendations,\ncharacter info, and more!",
+  "@chatbotDescription": {
+    "description": "Chatbot capabilities description"
+  },
+  "thinking": "Thinking...",
+  "@thinking": {
+    "description": "Loading indicator text"
+  },
+  "similarAnime": "Similar Anime:",
+  "@similarAnime": {
+    "description": "Anime suggestions section header"
+  },
+  "failedToGetResponse": "Failed to get response.",
+  "@failedToGetResponse": {
+    "description": "Generic error message"
+  },
+  "noModelLoaded": "🤖 No model loaded in LM Studio. Please load a model first!",
+  "@noModelLoaded": {
+    "description": "Error when no model is loaded"
+  },
+  "corsError": "🌐 CORS error detected. Please run: flutter run -d chrome --web-browser-flag \"--disable-web-security\"",
+  "@corsError": {
+    "description": "CORS error message"
+  },
+  "connectionRefused": "🔌 Cannot connect to LM Studio. Make sure it's running on localhost:1234",
+  "@connectionRefused": {
+    "description": "Connection error message"
+  },
+  "serverRunningNoModel": "⚠️ LM Studio server is running but no model is loaded. Please load a model!",
+  "@serverRunningNoModel": {
+    "description": "Server running but no model error"
+  },
+  "requestTimeout": "⏱️ Request timed out. The model might be processing a complex response. Try a simpler question or check if your model is responsive.",
+  "@requestTimeout": {
+    "description": "Timeout error message"
+  },
+  "responseTimeout": "⏱️ Response took too long. Try breaking down your question into smaller parts or use a faster model.",
+  "@responseTimeout": {
+    "description": "Response timeout error message"
+  },
+  "lmStudioNotRunning": "⚠️ LM Studio server is not running on localhost:1234",
+  "@lmStudioNotRunning": {
+    "description": "LM Studio not running error"
+  },
+  "failedToConnect": "Failed to connect to LM Studio",
+  "@failedToConnect": {
+    "description": "Connection failure message"
   }
 }

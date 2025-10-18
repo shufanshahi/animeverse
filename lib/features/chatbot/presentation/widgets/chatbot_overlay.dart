@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../../../l10n/app_localizations.dart';
 import '../providers/providers.dart';
 import '../providers/chatbot_notifier.dart';
 import '../state/chatbot_state.dart';
@@ -147,10 +148,10 @@ class _ChatbotOverlayState extends ConsumerState<ChatbotOverlay>
                           size: 20,
                         ),
                         const SizedBox(width: 8),
-                        const Expanded(
+                        Expanded(
                           child: Text(
-                            'Anime Assistant',
-                            style: TextStyle(
+                            AppLocalizations.of(context)!.animeAssistant,
+                            style: const TextStyle(
                               color: Colors.white,
                               fontWeight: FontWeight.bold,
                               fontSize: 16,
@@ -193,7 +194,7 @@ class _ChatbotOverlayState extends ConsumerState<ChatbotOverlay>
                                 ),
                                 const SizedBox(height: 16),
                                 Text(
-                                  'Ask me anything about anime!',
+                                  AppLocalizations.of(context)!.askMeAnything,
                                   style: TextStyle(
                                     color: Theme.of(context).colorScheme.outline,
                                     fontSize: 16,
@@ -201,7 +202,7 @@ class _ChatbotOverlayState extends ConsumerState<ChatbotOverlay>
                                 ),
                                 const SizedBox(height: 8),
                                 Text(
-                                  'I can help with recommendations,\ncharacter info, and more!',
+                                  AppLocalizations.of(context)!.chatbotDescription,
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
                                     color: Theme.of(context).colorScheme.outline,
@@ -279,8 +280,8 @@ class _ChatbotOverlayState extends ConsumerState<ChatbotOverlay>
                             controller: _messageController,
                             decoration: InputDecoration(
                               hintText: chatbotState.isConnected
-                                  ? 'Ask about anime...'
-                                  : 'LM Studio not connected',
+                                  ? AppLocalizations.of(context)!.askAboutAnime
+                                  : AppLocalizations.of(context)!.lmStudioNotConnected,
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(20),
                                 borderSide: BorderSide(

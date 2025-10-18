@@ -22,12 +22,13 @@ class ChatbotState extends Equatable {
     bool? isConnected,
     String? error,
     bool? isChatOpen,
+    bool clearError = false,
   }) {
     return ChatbotState(
       messages: messages ?? this.messages,
       isLoading: isLoading ?? this.isLoading,
       isConnected: isConnected ?? this.isConnected,
-      error: error ?? this.error,
+      error: clearError ? null : (error ?? this.error),
       isChatOpen: isChatOpen ?? this.isChatOpen,
     );
   }

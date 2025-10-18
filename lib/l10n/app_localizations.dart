@@ -349,6 +349,102 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Anime Title {number}'**
   String animeTitle(int number);
+
+  /// Chatbot header title
+  ///
+  /// In en, this message translates to:
+  /// **'Anime Assistant'**
+  String get animeAssistant;
+
+  /// Chat input placeholder when connected
+  ///
+  /// In en, this message translates to:
+  /// **'Ask about anime...'**
+  String get askAboutAnime;
+
+  /// Chat input placeholder when not connected
+  ///
+  /// In en, this message translates to:
+  /// **'LM Studio not connected'**
+  String get lmStudioNotConnected;
+
+  /// Empty chat welcome message
+  ///
+  /// In en, this message translates to:
+  /// **'Ask me anything about anime!'**
+  String get askMeAnything;
+
+  /// Chatbot capabilities description
+  ///
+  /// In en, this message translates to:
+  /// **'I can help with recommendations,\ncharacter info, and more!'**
+  String get chatbotDescription;
+
+  /// Loading indicator text
+  ///
+  /// In en, this message translates to:
+  /// **'Thinking...'**
+  String get thinking;
+
+  /// Anime suggestions section header
+  ///
+  /// In en, this message translates to:
+  /// **'Similar Anime:'**
+  String get similarAnime;
+
+  /// Generic error message
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to get response.'**
+  String get failedToGetResponse;
+
+  /// Error when no model is loaded
+  ///
+  /// In en, this message translates to:
+  /// **'🤖 No model loaded in LM Studio. Please load a model first!'**
+  String get noModelLoaded;
+
+  /// CORS error message
+  ///
+  /// In en, this message translates to:
+  /// **'🌐 CORS error detected. Please run: flutter run -d chrome --web-browser-flag \"--disable-web-security\"'**
+  String get corsError;
+
+  /// Connection error message
+  ///
+  /// In en, this message translates to:
+  /// **'🔌 Cannot connect to LM Studio. Make sure it\'s running on localhost:1234'**
+  String get connectionRefused;
+
+  /// Server running but no model error
+  ///
+  /// In en, this message translates to:
+  /// **'⚠️ LM Studio server is running but no model is loaded. Please load a model!'**
+  String get serverRunningNoModel;
+
+  /// Timeout error message
+  ///
+  /// In en, this message translates to:
+  /// **'⏱️ Request timed out. The model might be processing a complex response. Try a simpler question or check if your model is responsive.'**
+  String get requestTimeout;
+
+  /// Response timeout error message
+  ///
+  /// In en, this message translates to:
+  /// **'⏱️ Response took too long. Try breaking down your question into smaller parts or use a faster model.'**
+  String get responseTimeout;
+
+  /// LM Studio not running error
+  ///
+  /// In en, this message translates to:
+  /// **'⚠️ LM Studio server is not running on localhost:1234'**
+  String get lmStudioNotRunning;
+
+  /// Connection failure message
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to connect to LM Studio'**
+  String get failedToConnect;
 }
 
 class _AppLocalizationsDelegate
