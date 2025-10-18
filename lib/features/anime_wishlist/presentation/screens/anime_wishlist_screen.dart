@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../../core/providers/bottom_nav_provider.dart';
 import '../providers/anime_wishlist_provider.dart';
 
 class AnimeWishlistScreen extends ConsumerWidget {
@@ -15,17 +16,14 @@ class AnimeWishlistScreen extends ConsumerWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('My Wishlist'),
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          onPressed: () => context.pop(),
-        ),
+        automaticallyImplyLeading: false,
       ),
       body: wishlistState.isLoading
           ? const Center(child: CircularProgressIndicator())
           : wishlistState.error != null
               ? _buildError(context, ref, wishlistState.error!)
               : wishlistState.wishlist.isEmpty
-                  ? _buildEmptyState(context)
+                  ? _buildEmptyState(context, ref)
                   : RefreshIndicator(
                       onRefresh: () async {
                         await ref.read(wishlistProvider.notifier).loadWishlist();
@@ -75,7 +73,7 @@ class AnimeWishlistScreen extends ConsumerWidget {
     );
   }
 
-  Widget _buildEmptyState(BuildContext context) {
+  Widget _buildEmptyState(BuildContext context, WidgetRef ref) {
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -99,7 +97,9 @@ class AnimeWishlistScreen extends ConsumerWidget {
           ),
           const SizedBox(height: 24),
           ElevatedButton.icon(
-            onPressed: () => context.pop(),
+            onPressed: () {
+              ref.read(bottomNavProvider.notifier).setIndex(0);
+            },
             icon: const Icon(Icons.home),
             label: const Text('Browse Anime'),
           ),
