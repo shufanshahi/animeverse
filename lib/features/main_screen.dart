@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../core/providers/bottom_nav_provider.dart';
-import 'chatbot/presentation/screens/chatbot_screen.dart';
+import 'anime_wishlist/presentation/screens/anime_wishlist_screen.dart';
 import 'home/presentation/screens/home_screen.dart';
 import 'profile/presentation/screens/screens.dart';
 import 'shop/presentation/screens/shop_screen.dart';
@@ -13,6 +14,13 @@ class MainScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final currentIndex = ref.watch(bottomNavProvider);
+
+    // List of screens for IndexedStack
+    final screens = const [
+      HomeScreen(),
+      AnimeWishlistScreen(),
+      ProfileScreen(),
+    ];
 
     return WillPopScope(
       onWillPop: () async {
@@ -25,12 +33,7 @@ class MainScreen extends ConsumerWidget {
       child: Scaffold(
         body: IndexedStack(
           index: currentIndex,
-          children: const [
-            HomeScreen(),
-            ProfileScreen(),
-            ShopScreen(),
-            ChatbotScreen(),
-          ],
+          children: screens,
         ),
         bottomNavigationBar: Material(
           elevation: 8,
@@ -39,43 +42,47 @@ class MainScreen extends ConsumerWidget {
             decoration: BoxDecoration(
               border: Border(
                 top: BorderSide(
-                  color: Theme.of(context).dividerColor,
-                  width: 0.5,
+                  color: Theme.of(context).dividerColor.withValues(alpha: 0.3),
+                  width: 0.8,
                 ),
               ),
             ),
-          child: BottomNavigationBar(
-            backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-            currentIndex: currentIndex,
-            selectedItemColor: Theme.of(context).colorScheme.primary,
-            unselectedItemColor: Theme.of(context).colorScheme.onSurface.withOpacity(0.6),
-            type: BottomNavigationBarType.fixed,
-            onTap: (index) => ref.read(bottomNavProvider.notifier).setIndex(index),
-            items: const [
-              BottomNavigationBarItem(
-                icon: Icon(Icons.home_outlined),
-                activeIcon: Icon(Icons.home),
-                label: 'Home',
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.person_outline),
-                activeIcon: Icon(Icons.person),
-                label: 'Profile',
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.shopping_bag_outlined),
-                activeIcon: Icon(Icons.shopping_bag),
-                label: 'Shop',
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.chat_bubble_outline),
-                activeIcon: Icon(Icons.chat_bubble),
-                label: 'Chatbot',
-              ),
-            ],
+            child: BottomNavigationBar(
+              backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+              currentIndex: currentIndex,
+              selectedItemColor: Theme.of(context).colorScheme.primary,
+              unselectedItemColor: Theme.of(context)
+                  .colorScheme
+                  .onSurface
+                  .withValues(alpha: 0.6),
+              type: BottomNavigationBarType.fixed,
+              elevation: 0,
+              onTap: (index) =>
+                  ref.read(bottomNavProvider.notifier).setIndex(index),
+              items: const [
+                BottomNavigationBarItem(
+                  icon: FaIcon(FontAwesomeIcons.house, size: 20),
+                  activeIcon:
+                  FaIcon(FontAwesomeIcons.solidHouse, size: 20),
+                  label: 'Home',
+                ),
+                BottomNavigationBarItem(
+                  icon: FaIcon(FontAwesomeIcons.bookmark, size: 20),
+                  activeIcon:
+                  FaIcon(FontAwesomeIcons.solidBookmark, size: 20),
+                  label: 'Wishlist',
+                ),
+                BottomNavigationBarItem(
+                  icon: FaIcon(FontAwesomeIcons.user, size: 20),
+                  activeIcon:
+                  FaIcon(FontAwesomeIcons.solidUser, size: 20),
+                  label: 'Profile',
+                ),
+              ],
+            ),
           ),
         ),
       ),
-    ));
+    );
   }
 }

@@ -50,6 +50,16 @@ class HomeState {
   final List<String> selectedGenres;
   final bool isLoading;
   final String? error;
+  
+  // Pagination state for each section
+  final int airingPage;
+  final int seasonalPage;
+  final int topPage;
+  final int genrePage;
+  final bool isLoadingMoreAiring;
+  final bool isLoadingMoreSeasonal;
+  final bool isLoadingMoreTop;
+  final bool isLoadingMoreGenre;
 
   HomeState({
     this.airingAnime = const [],
@@ -59,6 +69,14 @@ class HomeState {
     this.selectedGenres = const [],
     this.isLoading = false,
     this.error,
+    this.airingPage = 1,
+    this.seasonalPage = 1,
+    this.topPage = 1,
+    this.genrePage = 1,
+    this.isLoadingMoreAiring = false,
+    this.isLoadingMoreSeasonal = false,
+    this.isLoadingMoreTop = false,
+    this.isLoadingMoreGenre = false,
   });
 
   HomeState copyWith({
@@ -69,6 +87,14 @@ class HomeState {
     List<String>? selectedGenres,
     bool? isLoading,
     String? error,
+    int? airingPage,
+    int? seasonalPage,
+    int? topPage,
+    int? genrePage,
+    bool? isLoadingMoreAiring,
+    bool? isLoadingMoreSeasonal,
+    bool? isLoadingMoreTop,
+    bool? isLoadingMoreGenre,
   }) {
     return HomeState(
       airingAnime: airingAnime ?? this.airingAnime,
@@ -78,6 +104,14 @@ class HomeState {
       selectedGenres: selectedGenres ?? this.selectedGenres,
       isLoading: isLoading ?? this.isLoading,
       error: error,
+      airingPage: airingPage ?? this.airingPage,
+      seasonalPage: seasonalPage ?? this.seasonalPage,
+      topPage: topPage ?? this.topPage,
+      genrePage: genrePage ?? this.genrePage,
+      isLoadingMoreAiring: isLoadingMoreAiring ?? this.isLoadingMoreAiring,
+      isLoadingMoreSeasonal: isLoadingMoreSeasonal ?? this.isLoadingMoreSeasonal,
+      isLoadingMoreTop: isLoadingMoreTop ?? this.isLoadingMoreTop,
+      isLoadingMoreGenre: isLoadingMoreGenre ?? this.isLoadingMoreGenre,
     );
   }
 }
@@ -200,7 +234,104 @@ class HomeNotifier extends StateNotifier<HomeState> {
     state = state.copyWith(
       selectedGenres: [],
       genreAnime: [],
+      genrePage: 1,
     );
+  }
+
+  // Load more methods for each section
+  Future<void> loadMoreAiringAnime() async {
+    if (state.isLoadingMoreAiring) return;
+    
+    state = state.copyWith(isLoadingMoreAiring: true);
+    
+    try {
+      final nextPage = state.airingPage + 1;
+      final result = await _getAiringAnime(GetAiringAnimeParams(page: nextPage));
+      
+      result.fold(
+        (failure) => state = state.copyWith(isLoadingMoreAiring: false),
+        (animeList) => state = state.copyWith(
+          airingAnime: [...state.airingAnime, ...animeList],
+          airingPage: nextPage,
+          isLoadingMoreAiring: false,
+        ),
+      );
+    } catch (e) {
+      state = state.copyWith(isLoadingMoreAiring: false);
+    }
+  }
+
+  Future<void> loadMoreSeasonalAnime() async {
+    if (state.isLoadingMoreSeasonal) return;
+    
+    state = state.copyWith(isLoadingMoreSeasonal: true);
+    
+    try {
+      final nextPage = state.seasonalPage + 1;
+      final result = await _getSeasonalAnime(GetSeasonalAnimeParams(
+        year: DateTime.now().year.toString(),
+        season: _getCurrentSeason(),
+        page: nextPage,
+      ));
+      
+      result.fold(
+        (failure) => state = state.copyWith(isLoadingMoreSeasonal: false),
+        (animeList) => state = state.copyWith(
+          seasonalAnime: [...state.seasonalAnime, ...animeList],
+          seasonalPage: nextPage,
+          isLoadingMoreSeasonal: false,
+        ),
+      );
+    } catch (e) {
+      state = state.copyWith(isLoadingMoreSeasonal: false);
+    }
+  }
+
+  Future<void> loadMoreTopAnime() async {
+    if (state.isLoadingMoreTop) return;
+    
+    state = state.copyWith(isLoadingMoreTop: true);
+    
+    try {
+      final nextPage = state.topPage + 1;
+      final result = await _getTopAnime(GetTopAnimeParams(page: nextPage));
+      
+      result.fold(
+        (failure) => state = state.copyWith(isLoadingMoreTop: false),
+        (animeList) => state = state.copyWith(
+          topAnime: [...state.topAnime, ...animeList],
+          topPage: nextPage,
+          isLoadingMoreTop: false,
+        ),
+      );
+    } catch (e) {
+      state = state.copyWith(isLoadingMoreTop: false);
+    }
+  }
+
+  Future<void> loadMoreGenreAnime() async {
+    if (state.isLoadingMoreGenre || state.selectedGenres.isEmpty) return;
+    
+    state = state.copyWith(isLoadingMoreGenre: true);
+    
+    try {
+      final nextPage = state.genrePage + 1;
+      final result = await _getAnimeByGenre(GetAnimeByGenreParams(
+        genre: state.selectedGenres.first,
+        page: nextPage,
+      ));
+      
+      result.fold(
+        (failure) => state = state.copyWith(isLoadingMoreGenre: false),
+        (animeList) => state = state.copyWith(
+          genreAnime: [...state.genreAnime, ...animeList],
+          genrePage: nextPage,
+          isLoadingMoreGenre: false,
+        ),
+      );
+    } catch (e) {
+      state = state.copyWith(isLoadingMoreGenre: false);
+    }
   }
 }
 
