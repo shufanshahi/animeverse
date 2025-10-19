@@ -140,6 +140,12 @@ abstract class AppLocalizations {
   /// **'Search'**
   String get search;
 
+  /// Shop screen title and tab label
+  ///
+  /// In en, this message translates to:
+  /// **'Shop'**
+  String get shop;
+
   /// Watchlist tab label
   ///
   /// In en, this message translates to:

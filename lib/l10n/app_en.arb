@@ -28,6 +28,10 @@
   "@search": {
     "description": "Search tab label"
   },
+  "shop": "Shop",
+  "@shop": {
+    "description": "Shop screen title and tab label"
+  },
   "watchlist": "Watchlist",
   "@watchlist": {
     "description": "Watchlist tab label"
