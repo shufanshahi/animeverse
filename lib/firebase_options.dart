@@ -3,6 +3,7 @@
 import 'package:firebase_core/firebase_core.dart' show FirebaseOptions;
 import 'package:flutter/foundation.dart'
     show defaultTargetPlatform, kIsWeb, TargetPlatform;
+import 'core/config/env_config.dart';
 
 /// Default [FirebaseOptions] for use with your Firebase apps.
 ///
@@ -40,49 +41,49 @@ class DefaultFirebaseOptions {
     }
   }
 
-  static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyB04njs_kPbY7p12GcOyVEcYdhdarJ8MZo',
-    appId: '1:47097517765:web:e92521d0b0e086198542ac',
-    messagingSenderId: '47097517765',
-    projectId: 'anime-verse-836c7',
-    authDomain: 'anime-verse-836c7.firebaseapp.com',
-    storageBucket: 'anime-verse-836c7.firebasestorage.app',
+  static FirebaseOptions get web => FirebaseOptions(
+    apiKey: EnvConfig.firebaseApiKey,
+    appId: EnvConfig.firebaseAppId,
+    messagingSenderId: EnvConfig.firebaseMessagingSenderId,
+    projectId: EnvConfig.firebaseProjectId,
+    authDomain: EnvConfig.firebaseAuthDomain,
+    storageBucket: EnvConfig.firebaseStorageBucket,
     measurementId: 'G-BEEHEL5JS7',
   );
 
-  static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyCBjsxLujkK58N01vT1-7LseiUb4T6iIiI',
-    appId: '1:47097517765:android:6fe1b6ec71747fc08542ac',
-    messagingSenderId: '47097517765',
-    projectId: 'anime-verse-836c7',
-    storageBucket: 'anime-verse-836c7.firebasestorage.app',
+  static FirebaseOptions get android => FirebaseOptions(
+    apiKey: EnvConfig.firebaseAndroidApiKey,
+    appId: EnvConfig.firebaseAndroidAppId,
+    messagingSenderId: EnvConfig.firebaseMessagingSenderId,
+    projectId: EnvConfig.firebaseProjectId,
+    storageBucket: EnvConfig.firebaseStorageBucket,
   );
 
-  static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyAsdINfKwTMN2L-AqcZpn7NWEJDUCcty5w',
-    appId: '1:47097517765:ios:8939582724c1d9568542ac',
-    messagingSenderId: '47097517765',
-    projectId: 'anime-verse-836c7',
-    storageBucket: 'anime-verse-836c7.firebasestorage.app',
-    iosBundleId: 'com.example.animeverse',
+  static FirebaseOptions get ios => FirebaseOptions(
+    apiKey: EnvConfig.firebaseIosApiKey,
+    appId: EnvConfig.firebaseIosAppId,
+    messagingSenderId: EnvConfig.firebaseMessagingSenderId,
+    projectId: EnvConfig.firebaseProjectId,
+    storageBucket: EnvConfig.firebaseStorageBucket,
+    iosBundleId: EnvConfig.firebaseIosBundleId,
   );
 
-  static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyAsdINfKwTMN2L-AqcZpn7NWEJDUCcty5w',
-    appId: '1:47097517765:ios:5c44614d9dcb31e18542ac',
-    messagingSenderId: '47097517765',
-    projectId: 'anime-verse-836c7',
-    storageBucket: 'anime-verse-836c7.firebasestorage.app',
-    iosBundleId: 'com.example.animeverse.RunnerTests',
+  static FirebaseOptions get macos => FirebaseOptions(
+    apiKey: EnvConfig.firebaseIosApiKey,
+    appId: EnvConfig.firebaseMacosAppId,
+    messagingSenderId: EnvConfig.firebaseMessagingSenderId,
+    projectId: EnvConfig.firebaseProjectId,
+    storageBucket: EnvConfig.firebaseStorageBucket,
+    iosBundleId: EnvConfig.firebaseMacosBundleId,
   );
 
-  static const FirebaseOptions windows = FirebaseOptions(
-    apiKey: 'AIzaSyB04njs_kPbY7p12GcOyVEcYdhdarJ8MZo',
-    appId: '1:47097517765:web:6ce38a964091dba48542ac',
-    messagingSenderId: '47097517765',
-    projectId: 'anime-verse-836c7',
-    authDomain: 'anime-verse-836c7.firebaseapp.com',
-    storageBucket: 'anime-verse-836c7.firebasestorage.app',
-    measurementId: 'G-MXPLSHYN2X',
+  static FirebaseOptions get windows => FirebaseOptions(
+    apiKey: EnvConfig.firebaseApiKey,
+    appId: EnvConfig.firebaseWindowsAppId,
+    messagingSenderId: EnvConfig.firebaseMessagingSenderId,
+    projectId: EnvConfig.firebaseProjectId,
+    authDomain: EnvConfig.firebaseAuthDomain,
+    storageBucket: EnvConfig.firebaseStorageBucket,
+    measurementId: EnvConfig.firebaseWindowsMeasurementId,
   );
 }
