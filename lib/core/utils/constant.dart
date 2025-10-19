@@ -1,12 +1,12 @@
 // Banner List for Product Advertisements
 const List<Map<String, dynamic>> bannerList = [
   {
-    'imagePath': 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQDOGER4PVwVl_UvV4XyXorwVMRAinaBuWxrg&s',
+    'imagePath': 'https://img.drz.lazcdn.com/static/bd/p/faf4e2988d1ba43735a4503ea55d16cd.jpg_720x720q80.jpg',
     'title': 'Demon Slayer Collection',
     'description': 'Up to 30% off on all Demon Slayer merchandise!',
   },
   {
-    'imagePath': 'https://us.gashapon.jp/images/item/dp/img_aot_attack_on_titan_the_final_season_capsule_figure_collection.jpg',
+    'imagePath': 'https://m.media-amazon.com/images/I/71Xcr49pshL._UF894,1000_QL80_.jpg',
     'title': 'Attack on Titan Special',
     'description': 'Limited edition Survey Corps gear available now!',
   },
@@ -27,7 +27,7 @@ const List<Map<String, dynamic>> productList = [
   {
     "id": 1,
     "name": "Demon Slayer Tanjiro Figure",
-    "imagePath": "https://images.unsplash.com/photo-1558679928-be7b25f25022?q=80&w=1974&auto=format&fit=crop",
+    "imagePath": "https://m.media-amazon.com/images/I/71cucdq4axL.jpg",
     "oldPrice": "BDT 8,999.00",
     "newPrice": "BDT 6,999.00",
     "discount": "22%",
@@ -36,7 +36,7 @@ const List<Map<String, dynamic>> productList = [
   {
     "id": 2,
     "name": "Attack on Titan Survey Corps Jacket",
-    "imagePath": "https://images.unsplash.com/photo-1581850518616-bcb8077a2336?q=80&w=1969&auto=format&fit=crop",
+    "imagePath": "https://i.ebayimg.com/images/g/NyMAAOSwWk1eCYeF/s-l1200.jpg",
     "oldPrice": "BDT 7,999.00",
     "newPrice": "BDT 5,999.00",
     "discount": "25%",
@@ -45,7 +45,7 @@ const List<Map<String, dynamic>> productList = [
   {
     "id": 3,
     "name": "One Piece Manga Box Set",
-    "imagePath": "https://images.unsplash.com/photo-1611676120674-ee5577e0b9c0?q=80&w=1974&auto=format&fit=crop",
+    "imagePath": "https://m.media-amazon.com/images/I/91J5Oynn0WL._AC_UF1000,1000_QL80_.jpg",
     "oldPrice": "BDT 19,999.00",
     "newPrice": "BDT 15,999.00",
     "discount": "20%",
@@ -54,7 +54,7 @@ const List<Map<String, dynamic>> productList = [
   {
     "id": 4,
     "name": "My Hero Academia All Might LED Lamp",
-    "imagePath": "https://images.unsplash.com/photo-1563381013529-1c922c80ac8d?q=80&w=1974&auto=format&fit=crop",
+    "imagePath": "https://img.joomcdn.net/2cd251b00ca1720cd6f8b93b5863cc87f1ed42b7_original.jpeg",
     "oldPrice": "BDT 4,999.00",
     "newPrice": "BDT 3,999.00",
     "discount": "20%",
@@ -63,34 +63,10 @@ const List<Map<String, dynamic>> productList = [
   {
     "id": 5,
     "name": "Naruto Shippuden Kunai Set",
-    "imagePath": "https://images.unsplash.com/photo-1614851099175-e5b30eb6f696?q=80&w=1974&auto=format&fit=crop",
+    "imagePath": "https://anime-figures-shop.co.uk/cdn/shop/files/kunai-by-3-naruto-shippuden-188.webp?v=1742216305&width=1445",
     "oldPrice": "BDT 3,499.00",
     "newPrice": "BDT 2,999.00",
     "discount": "14%",
     "description": "High-quality replica kunai set from Naruto Shippuden, perfect for display or cosplay. Includes display stand and certificate of authenticity."
-  },
-  {
-    "id": 6,
-    "name": "Sundarban Honey 1kg",
-    "imagePath": "assets/products/card6.webp",
-    "oldPrice": "",
-    "newPrice": "BDT 2,500.00",
-    "discount": "",
-  },
-  {
-    "id": 7,
-    "name": "Honey Special Combo Pack (4 types Honey)",
-    "imagePath": "assets/products/card7.webp",
-    "oldPrice": "BDT 1,950.00",
-    "newPrice": "BDT 1,650.00",
-    "discount": "",
-  },
-  {
-    "id": 8,
-    "name": "Lichu Flower Honey 1kg",
-    "imagePath": "assets/products/card8.webp",
-    "oldPrice": "BDT 1,200.00",
-    "newPrice": "BDT 1,000.00",
-    "discount": "",
   },
 ];

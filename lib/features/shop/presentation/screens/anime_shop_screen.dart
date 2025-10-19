@@ -1,7 +1,9 @@
+import 'package:animeverse/config/routes/app_router.dart';
 import 'package:animeverse/features/shop/presentation/widgets/banner_carousel.dart';
 import 'package:animeverse/features/shop/providers/shop_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 class AnimeShopScreen extends ConsumerWidget {
   const AnimeShopScreen({super.key});
@@ -171,7 +173,7 @@ class CartFAB extends StatelessWidget {
       children: [
         FloatingActionButton(
           onPressed: () {
-            // TODO: Navigate to cart screen
+            context.pushNamed(AppRouteName.cart);
           },
           child: const Icon(Icons.shopping_cart),
         ),

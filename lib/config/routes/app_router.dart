@@ -11,6 +11,7 @@ import '../../features/auth/presentation/screens/signup_screen.dart';
 import '../../features/main_screen.dart';
 import '../../features/profile/presentation/screens/profile_screen.dart';
 import '../../features/search_screen/presentation/screens/screens.dart';
+import '../../features/shop/presentation/screens/cart_screen.dart';
 
 final _rootNavigatorKey = GlobalKey<NavigatorState>();
 
@@ -24,6 +25,7 @@ class AppRouteName {
   static const search = 'search';
   static const wishlist = 'wishlist';
   static const profile = 'profile';
+  static const cart = 'cart';
 }
 
 final goRouterProvider = Provider<GoRouter>((ref) {
@@ -85,6 +87,11 @@ final goRouterProvider = Provider<GoRouter>((ref) {
         path: '/profile',
         name: AppRouteName.profile,
         builder: (context, state) => const ProfileScreen(),
+      ),
+      GoRoute(
+        path: '/cart',
+        name: AppRouteName.cart,
+        builder: (context, state) => const CartScreen(),
       ),
     ],
     redirect: (context, state) {
