@@ -15,6 +15,7 @@ import '../../features/social_chat/presentation/screens/user_search_screen.dart'
 import '../../features/social_chat/presentation/screens/friend_requests_screen.dart';
 import '../../features/social_chat/presentation/screens/friends_list_screen.dart';
 import '../../features/shop/presentation/screens/cart_screen.dart';
+import '../../features/splash/presentation/screens/splash_screen.dart';
 
 final _rootNavigatorKey = GlobalKey<NavigatorState>();
 
@@ -46,7 +47,7 @@ final goRouterProvider = Provider<GoRouter>((ref) {
       GoRoute(
         path: '/',
         name: AppRouteName.splash,
-        builder: (context, state) => const _SplashGate(),
+        builder: (context, state) => const SplashScreen(),
       ),
       GoRoute(
         path: '/login',
@@ -117,27 +118,24 @@ final goRouterProvider = Provider<GoRouter>((ref) {
       ),
     ],
     redirect: (context, state) {
+      final atSplash = state.matchedLocation == '/';
       final atAuth = state.matchedLocation == '/login' ||
           state.matchedLocation == '/signup' ||
           state.matchedLocation == '/forgot-password';
 
+      // Always allow splash screen
+      if (atSplash) {
+        return null;
+      }
+
+      // Redirect logic after splash
       if (!isLoggedIn) {
         return atAuth ? null : '/login';
       }
-      if (atAuth || state.matchedLocation == '/') {
+      if (atAuth) {
         return '/main';
       }
       return null;
     },
   );
 });
-
-class _SplashGate extends ConsumerWidget {
-  const _SplashGate();
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    return const Scaffold(
-      body: Center(child: CircularProgressIndicator()),
-    );
-  }
-}
