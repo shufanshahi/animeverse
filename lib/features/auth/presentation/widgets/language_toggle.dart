@@ -6,7 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../core/providers/locale_provider.dart';
 
 class LanguageToggle extends ConsumerWidget {
-  const LanguageToggle({Key? key}) : super(key: key);
+  const LanguageToggle({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

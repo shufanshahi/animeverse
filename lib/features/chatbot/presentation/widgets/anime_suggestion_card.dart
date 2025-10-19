@@ -60,14 +60,14 @@ class AnimeSuggestionCard extends ConsumerWidget {
                 fit: BoxFit.cover,
                 placeholder: (context, url) => Container(
                   height: 80,
-                  color: theme.colorScheme.surfaceVariant,
+                  color: theme.colorScheme.surfaceContainerHighest,
                   child: const Center(
                     child: CircularProgressIndicator(strokeWidth: 2),
                   ),
                 ),
                 errorWidget: (context, url, error) => Container(
                   height: 80,
-                  color: theme.colorScheme.surfaceVariant,
+                  color: theme.colorScheme.surfaceContainerHighest,
                   child: Icon(
                     Icons.broken_image,
                     color: theme.colorScheme.onSurfaceVariant,
@@ -109,7 +109,7 @@ class AnimeSuggestionCard extends ConsumerWidget {
                         ),
                         const SizedBox(width: 1),
                         Text(
-                          '${anime.score!.toStringAsFixed(1)}',
+                          anime.score!.toStringAsFixed(1),
                           style: TextStyle(
                             color: theme.colorScheme.onSurface.withOpacity(0.7),
                             fontSize: 9, // Smaller text

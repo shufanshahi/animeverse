@@ -62,7 +62,7 @@ class AuthRepositoryImpl implements AuthRepository {
   @override
   Future<Either<String, UserEntity?>> getCurrentUser() async {
     try {
-      final user = await remoteDataSource.getCurrentUser();
+      final user = remoteDataSource.getCurrentUser();
       if (user == null) return const Right(null);
       return Right(UserEntity(
         uid: user.uid,

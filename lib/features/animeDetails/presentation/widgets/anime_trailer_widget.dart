@@ -7,9 +7,9 @@ class AnimeTrailerWidget extends StatefulWidget {
   final AnimeTrailer trailer;
 
   const AnimeTrailerWidget({
-    Key? key,
+    super.key,
     required this.trailer,
-  }) : super(key: key);
+  });
 
   @override
   State<AnimeTrailerWidget> createState() => _AnimeTrailerWidgetState();

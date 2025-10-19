@@ -10,7 +10,7 @@ import '../../../../l10n/app_localizations.dart';
 import '../providers/anime_wishlist_provider.dart';
 
 class AnimeWishlistScreen extends ConsumerWidget {
-  const AnimeWishlistScreen({Key? key}) : super(key: key);
+  const AnimeWishlistScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

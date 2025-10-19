@@ -7,9 +7,9 @@ class AnimeStreamingWidget extends StatelessWidget {
   final List<AnimeStreaming> streaming;
 
   const AnimeStreamingWidget({
-    Key? key,
+    super.key,
     required this.streaming,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
