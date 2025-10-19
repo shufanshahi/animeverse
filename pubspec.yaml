@@ -94,6 +94,11 @@ dependencies:
   cloud_firestore: ^6.0.3
   supabase_flutter: ^2.10.3
 
+  # Add these packages for comment functionality
+  image_picker: ^1.1.2
+  image_picker_for_web: ^3.0.4
+  timeago: ^3.7.0
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

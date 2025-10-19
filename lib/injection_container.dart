@@ -35,6 +35,14 @@ import 'features/profile/domain/usecases/get_profile_usecase.dart';
 import 'features/profile/domain/usecases/get_profile_by_email_usecase.dart';
 import 'features/profile/domain/usecases/create_profile_usecase.dart';
 import 'features/profile/domain/usecases/update_profile_usecase.dart';
+// Features - Comments
+import 'features/comments/data/datasources/comment_remote_datasource.dart';
+import 'features/comments/data/repositories/comment_repository_impl.dart';
+import 'features/comments/domain/repositories/comment_repository.dart';
+import 'features/comments/domain/usecases/get_comments_usecase.dart';
+import 'features/comments/domain/usecases/create_comment_usecase.dart';
+import 'features/comments/domain/usecases/update_comment_usecase.dart';
+import 'features/comments/domain/usecases/delete_comment_usecase.dart';
 
 final sl = GetIt.instance;
 
@@ -143,6 +151,23 @@ Future<void> init() async {
     () => ProfileRemoteDataSourceImpl(
       supabaseClient: sl(),
     ),
+  );
+
+  //! Features - Comments
+  // Use Cases
+  sl.registerLazySingleton(() => GetCommentsUseCase(sl()));
+  sl.registerLazySingleton(() => CreateCommentUseCase(sl()));
+  sl.registerLazySingleton(() => UpdateCommentUseCase(sl()));
+  sl.registerLazySingleton(() => DeleteCommentUseCase(sl()));
+
+  // Repository
+  sl.registerLazySingleton<CommentRepository>(
+    () => CommentRepositoryImpl(remoteDataSource: sl()),
+  );
+
+  // Data Source
+  sl.registerLazySingleton<CommentRemoteDataSource>(
+    () => CommentRemoteDataSourceImpl(supabaseClient: sl()),
   );
 
   //! Core

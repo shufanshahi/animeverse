@@ -6,6 +6,7 @@ import 'package:go_router/go_router.dart';
 import '../../../anime_wishlist/domain/entities/anime_wishlist.dart';
 import '../../../anime_wishlist/presentation/providers/anime_wishlist_provider.dart';
 import '../../../auth/presentation/riverpod/auth_provider.dart';
+import '../../../comments/presentation/widgets/comment_section_widget.dart';
 import '../../domain/entities/anime_detail.dart';
 import '../../domain/usecases/get_anime_detail.dart';
 import '../providers/anime_detail_provider.dart';
@@ -199,6 +200,10 @@ class _AnimeDetailScreenState extends ConsumerState<AnimeDetailScreen> {
               ],
             ),
           ),
+          // Comment Section
+          const Divider(height: 32, thickness: 2),
+          CommentSectionWidget(animeId: anime.malId),
+          const SizedBox(height: 32),
         ],
       ),
     );
