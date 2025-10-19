@@ -49,6 +49,9 @@ dependencies:
   flutter_bloc: ^8.1.6
   provider: ^6.1.2
   
+  # UI Enhancements
+  carousel_slider: ^5.1.1
+  
   # Networking
   http: ^1.5.0
   dio: ^5.9.0
@@ -84,7 +87,6 @@ dependencies:
   
   # YouTube Player
   youtube_player_flutter: ^9.0.3
-  carousel_slider: ^5.1.1
   
   # UUID Generation
   uuid: ^4.5.1
@@ -97,7 +99,7 @@ dependencies:
   # Add these packages for comment functionality
   image_picker: ^1.1.2
   image_picker_for_web: ^3.0.4
-  timeago: ^3.7.0
+  timeago: ^3.7.1
 
 dev_dependencies:
   flutter_test:

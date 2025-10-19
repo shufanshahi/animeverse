@@ -6,6 +6,7 @@ import '../core/providers/bottom_nav_provider.dart';
 import 'anime_wishlist/presentation/screens/anime_wishlist_screen.dart';
 import 'home/presentation/screens/home_screen.dart';
 import 'profile/presentation/screens/profile_screen.dart';
+import 'shop/presentation/screens/anime_shop_screen.dart';
 
 class MainScreen extends ConsumerWidget {
   const MainScreen({super.key});
@@ -18,6 +19,7 @@ class MainScreen extends ConsumerWidget {
     final screens = const [
       HomeScreen(),
       AnimeWishlistScreen(),
+      AnimeShopScreen(),
       ProfileScreen(),
     ];
 
@@ -61,20 +63,22 @@ class MainScreen extends ConsumerWidget {
               items: const [
                 BottomNavigationBarItem(
                   icon: FaIcon(FontAwesomeIcons.house, size: 20),
-                  activeIcon:
-                  FaIcon(FontAwesomeIcons.solidHouse, size: 20),
+                  activeIcon: FaIcon(FontAwesomeIcons.solidHouse, size: 20),
                   label: 'Home',
                 ),
                 BottomNavigationBarItem(
                   icon: FaIcon(FontAwesomeIcons.bookmark, size: 20),
-                  activeIcon:
-                  FaIcon(FontAwesomeIcons.solidBookmark, size: 20),
+                  activeIcon: FaIcon(FontAwesomeIcons.solidBookmark, size: 20),
                   label: 'Wishlist',
                 ),
                 BottomNavigationBarItem(
+                  icon: FaIcon(FontAwesomeIcons.store, size: 20),
+                  activeIcon: FaIcon(FontAwesomeIcons.shop, size: 20),
+                  label: 'Shop',
+                ),
+                BottomNavigationBarItem(
                   icon: FaIcon(FontAwesomeIcons.user, size: 20),
-                  activeIcon:
-                  FaIcon(FontAwesomeIcons.solidUser, size: 20),
+                  activeIcon: FaIcon(FontAwesomeIcons.solidUser, size: 20),
                   label: 'Profile',
                 ),
               ],

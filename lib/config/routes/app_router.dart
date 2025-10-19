@@ -14,6 +14,7 @@ import '../../features/search_screen/presentation/screens/screens.dart';
 import '../../features/social_chat/presentation/screens/user_search_screen.dart';
 import '../../features/social_chat/presentation/screens/friend_requests_screen.dart';
 import '../../features/social_chat/presentation/screens/friends_list_screen.dart';
+import '../../features/shop/presentation/screens/cart_screen.dart';
 
 final _rootNavigatorKey = GlobalKey<NavigatorState>();
 
@@ -31,6 +32,7 @@ class AppRouteName {
   static const friendRequests = 'friendRequests';
   static const friends = 'friends';
   static const chat = 'chat';
+  static const cart = 'cart';
 }
 
 final goRouterProvider = Provider<GoRouter>((ref) {
@@ -107,6 +109,11 @@ final goRouterProvider = Provider<GoRouter>((ref) {
         path: '/friends',
         name: AppRouteName.friends,
         builder: (context, state) => const FriendsListScreen(),
+      ),
+      GoRoute(
+        path: '/cart',
+        name: AppRouteName.cart,
+        builder: (context, state) => const CartScreen(),
       ),
     ],
     redirect: (context, state) {
