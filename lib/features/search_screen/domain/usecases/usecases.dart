@@ -1,5 +1,4 @@
 import '../domain.dart';
-import '../repositories/repositories.dart';
 
 class SearchAnimeUseCase {
   final SearchRepository repository;

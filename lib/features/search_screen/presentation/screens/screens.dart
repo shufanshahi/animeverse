@@ -5,7 +5,7 @@ import '../widgets/widgets.dart';
 
 class SearchScreen extends ConsumerStatefulWidget {
   final String? initialQuery;
-  const SearchScreen({Key? key, this.initialQuery}) : super(key: key);
+  const SearchScreen({super.key, this.initialQuery});
 
   @override
   ConsumerState<SearchScreen> createState() => _SearchScreenState();

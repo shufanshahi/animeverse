@@ -4,6 +4,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../config/routes/app_router.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:go_router/go_router.dart';
 import '../../../../core/providers/locale_provider.dart';
 import '../../../../core/providers/theme_provider.dart';
 import '../../../../injection_container.dart';
@@ -15,6 +17,7 @@ import '../widgets/profile_avatar_generator.dart';
 import '../widgets/profile_display.dart';
 import '../widgets/profile_form.dart';
 import 'supabase_test_screen.dart';
+import '../../../../injection_container.dart';
 
 class ProfileScreen extends ConsumerStatefulWidget {
   const ProfileScreen({super.key});
@@ -117,35 +120,20 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
 
   Widget _buildBody(BuildContext context, ProfileState state, ProfileNotifier notifier) {
     if (state.isLoading) {
-      return Scaffold(
-        appBar: AppBar(
-          title: Text(AppLocalizations.of(context)!.profile),
-          actions: [
-            IconButton(
-              icon: Icon(Icons.bug_report),
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => SupabaseTestScreen()),
-                );
-              },
-            ),
-          ],
-        ),
-        body: Column(
-          children: [
-            SizedBox(height: 20),
-            // Show avatar while loading
-            ProfileAvatarGenerator.generateConsistentAvatar(
-              email: FirebaseAuth.instance.currentUser?.email ?? '',
-              size: 80,
-            ),
-            SizedBox(height: 20),
-            CircularProgressIndicator(),
-            SizedBox(height: 10),
-            Text(AppLocalizations.of(context)!.loadingProfile),
-          ],
-        ),
+      return Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          const SizedBox(height: 20),
+          // Show avatar while loading
+          ProfileAvatarGenerator.generateConsistentAvatar(
+            email: FirebaseAuth.instance.currentUser?.email ?? '',
+            size: 80,
+          ),
+          const SizedBox(height: 20),
+          const CircularProgressIndicator(),
+          const SizedBox(height: 10),
+          Text(AppLocalizations.of(context)!.loadingProfile),
+        ],
       );
     }
 
@@ -194,7 +182,89 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
       );
     }
 
-    return ProfileDisplay(profile: state.profile!);
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          ProfileDisplay(profile: state.profile!),
+          _buildSocialChatSection(context),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildSocialChatSection(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          const Divider(height: 32),
+          Text(
+            'Social & Chat',
+            style: Theme.of(context).textTheme.titleLarge?.copyWith(
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          const SizedBox(height: 16),
+          _buildSocialChatCard(
+            context: context,
+            icon: Icons.search,
+            title: 'Search Users',
+            subtitle: 'Find and add friends',
+            onTap: () => context.push('/search-users'),
+          ),
+          const SizedBox(height: 12),
+          _buildSocialChatCard(
+            context: context,
+            icon: Icons.person_add,
+            title: 'Friend Requests',
+            subtitle: 'View pending requests',
+            onTap: () => context.push('/friend-requests'),
+          ),
+          const SizedBox(height: 12),
+          _buildSocialChatCard(
+            context: context,
+            icon: Icons.people,
+            title: 'Friends',
+            subtitle: 'Chat with your friends',
+            onTap: () => context.push('/friends'),
+          ),
+          const SizedBox(height: 20),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildSocialChatCard({
+    required BuildContext context,
+    required IconData icon,
+    required String title,
+    required String subtitle,
+    required VoidCallback onTap,
+  }) {
+    return Card(
+      elevation: 2,
+      child: ListTile(
+        leading: CircleAvatar(
+          backgroundColor: Theme.of(context).colorScheme.primaryContainer,
+          child: Icon(
+            icon,
+            color: Theme.of(context).colorScheme.onPrimaryContainer,
+          ),
+        ),
+        title: Text(
+          title,
+          style: const TextStyle(fontWeight: FontWeight.bold),
+        ),
+        subtitle: Text(subtitle),
+        trailing: Icon(
+          Icons.arrow_forward_ios,
+          size: 16,
+          color: Theme.of(context).colorScheme.primary,
+        ),
+        onTap: onTap,
+      ),
+    );
   }
 
   Widget _buildCreateProfileForm(BuildContext context, ProfileNotifier notifier) {

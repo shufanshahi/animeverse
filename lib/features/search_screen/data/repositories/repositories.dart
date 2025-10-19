@@ -1,6 +1,4 @@
-import '../../domain/repositories/repositories.dart';
 import '../../domain/domain.dart';
-import '../datasources/datasources.dart';
 
 class SearchRepositoryImpl implements SearchRepository {
   final SearchDatasource datasource;

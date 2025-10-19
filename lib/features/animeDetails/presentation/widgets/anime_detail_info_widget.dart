@@ -8,9 +8,9 @@ class AnimeDetailInfoWidget extends ConsumerWidget {
   final AnimeDetail anime;
 
   const AnimeDetailInfoWidget({
-    Key? key,
+    super.key,
     required this.anime,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

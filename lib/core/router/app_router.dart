@@ -6,6 +6,9 @@ import '../../features/auth/presentation/screens/forgot_password_screen.dart';
 import '../../features/auth/presentation/screens/login_screen.dart';
 import '../../features/auth/presentation/screens/signup_screen.dart';
 import '../../features/main_screen.dart';
+import '../../features/social_chat/presentation/screens/user_search_screen.dart';
+import '../../features/social_chat/presentation/screens/friend_requests_screen.dart';
+import '../../features/social_chat/presentation/screens/friends_list_screen.dart';
 
 final routerProvider = Provider<GoRouter>((ref) {
   final authState = ref.watch(authProvider);
@@ -45,6 +48,19 @@ final routerProvider = Provider<GoRouter>((ref) {
       GoRoute(
         path: '/',
         builder: (context, state) => const MainScreen(),
+      ),
+      // Social Chat Routes
+      GoRoute(
+        path: '/search-users',
+        builder: (context, state) => const UserSearchScreen(),
+      ),
+      GoRoute(
+        path: '/friend-requests',
+        builder: (context, state) => const FriendRequestsScreen(),
+      ),
+      GoRoute(
+        path: '/friends',
+        builder: (context, state) => const FriendsListScreen(),
       ),
     ],
   );

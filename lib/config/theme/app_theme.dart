@@ -17,8 +17,6 @@ class AppTheme {
       colorScheme: const ColorScheme.dark(
         primary: AppColors.darkAccent,
         onPrimary: AppColors.darkBackground,
-        background: AppColors.darkBackground,
-        onBackground: AppColors.darkTextPrimary,
         surface: AppColors.darkCard,
         onSurface: AppColors.darkTextPrimary,
         error: AppColors.darkError,
@@ -120,8 +118,6 @@ class AppTheme {
       colorScheme: const ColorScheme.light(
         primary: AppColors.lightAccent,
         onPrimary: AppColors.lightBackground,
-        background: AppColors.lightBackground,
-        onBackground: AppColors.lightTextPrimary,
         surface: AppColors.lightCard,
         onSurface: AppColors.lightTextPrimary,
         error: AppColors.lightError,

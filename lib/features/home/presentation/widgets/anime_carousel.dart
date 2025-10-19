@@ -9,10 +9,10 @@ class AnimeCarousel extends StatelessWidget {
   final String title;
 
   const AnimeCarousel({
-    Key? key,
+    super.key,
     required this.animeList,
     required this.title,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

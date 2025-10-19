@@ -28,7 +28,7 @@ class CommentRemoteDataSourceImpl implements CommentRemoteDataSource {
 
       print('📦 Comments response: $response');
 
-      if (response == null || response.isEmpty) {
+      if (response.isEmpty) {
         print('📭 No comments found for anime ID: $animeId');
         return [];
       }
