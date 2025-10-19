@@ -1,16 +1,20 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:go_router/go_router.dart';
+
+import '../../../../config/routes/app_router.dart';
 import '../../../../core/providers/locale_provider.dart';
 import '../../../../core/providers/theme_provider.dart';
+import '../../../../injection_container.dart';
 import '../../../../l10n/app_localizations.dart';
+import '../../../auth/presentation/riverpod/auth_provider.dart';
 import '../../domain/entities/profile_entity.dart';
 import '../providers/profile_provider.dart';
-import '../widgets/profile_form.dart';
-import '../widgets/profile_display.dart';
 import '../widgets/profile_avatar_generator.dart';
+import '../widgets/profile_display.dart';
+import '../widgets/profile_form.dart';
 import 'supabase_test_screen.dart';
-import '../../../../injection_container.dart';
 
 class ProfileScreen extends ConsumerStatefulWidget {
   const ProfileScreen({super.key});
@@ -62,6 +66,15 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
         title: Text(AppLocalizations.of(context)!.profile),
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         actions: [
+          // Logout Button
+          IconButton(
+            icon: const Icon(Icons.logout),
+            onPressed: () {
+              ref.read(authProvider.notifier).logout();
+              context.pushReplacementNamed(AppRouteName.login);
+            },
+            tooltip: 'Logout',
+          ),
           // Debug button for testing Supabase
           // IconButton(
           //   icon: const Icon(Icons.bug_report),
