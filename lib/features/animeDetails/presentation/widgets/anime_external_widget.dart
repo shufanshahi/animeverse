@@ -7,9 +7,9 @@ class AnimeExternalWidget extends StatelessWidget {
   final List<AnimeExternal> external;
 
   const AnimeExternalWidget({
-    Key? key,
+    super.key,
     required this.external,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

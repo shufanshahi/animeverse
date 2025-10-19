@@ -43,7 +43,7 @@ class LMStudioService {
       );
 
       print('LM Studio Response Status: ${response.statusCode}');
-      print('LM Studio Response Body (first 200 chars): ${response.body.length > 200 ? response.body.substring(0, 200) + '...' : response.body}');
+      print('LM Studio Response Body (first 200 chars): ${response.body.length > 200 ? '${response.body.substring(0, 200)}...' : response.body}');
 
       if (response.statusCode == 200) {
         try {

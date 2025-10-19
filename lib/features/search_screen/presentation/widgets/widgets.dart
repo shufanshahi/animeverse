@@ -10,13 +10,13 @@ class SearchBox extends StatelessWidget {
   final bool autofocus;
 
   const SearchBox({
-    Key? key,
+    super.key,
     required this.controller,
     this.onSubmitted,
     this.onSearch,
     this.onChanged,
     this.autofocus = false,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +42,7 @@ class SearchBox extends StatelessWidget {
 class AnimeCard extends StatelessWidget {
   final Anime anime;
 
-  const AnimeCard({Key? key, required this.anime}) : super(key: key);
+  const AnimeCard({super.key, required this.anime});
 
   @override
   Widget build(BuildContext context) {

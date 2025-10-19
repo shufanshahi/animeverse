@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import '../../domain/datasources/datasources.dart';
 import '../../domain/domain.dart';
 
 class JikanSearchDatasource implements SearchDatasource {

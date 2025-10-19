@@ -7,9 +7,9 @@ class AnimeCard extends StatelessWidget {
   final AnimeEntity anime;
 
   const AnimeCard({
-    Key? key,
+    super.key,
     required this.anime,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

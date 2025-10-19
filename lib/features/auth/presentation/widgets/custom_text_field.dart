@@ -10,13 +10,13 @@ class CustomTextField extends StatefulWidget {
   final TextInputType keyboardType;
 
   const CustomTextField({
-    Key? key,
+    super.key,
     required this.hint,
     required this.icon,
     this.isPassword = false,
     required this.controller,
     this.keyboardType = TextInputType.text, required String label,
-  }) : super(key: key);
+  });
 
   @override
   State<CustomTextField> createState() => _CustomTextFieldState();

@@ -23,9 +23,9 @@ class AnimeDetailScreen extends ConsumerStatefulWidget {
   final int animeId;
 
   const AnimeDetailScreen({
-    Key? key,
+    super.key,
     required this.animeId,
-  }) : super(key: key);
+  });
 
   @override
   ConsumerState<AnimeDetailScreen> createState() => _AnimeDetailScreenState();

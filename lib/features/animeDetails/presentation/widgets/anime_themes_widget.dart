@@ -6,9 +6,9 @@ class AnimeThemesWidget extends StatelessWidget {
   final AnimeTheme? theme;
 
   const AnimeThemesWidget({
-    Key? key,
+    super.key,
     required this.theme,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

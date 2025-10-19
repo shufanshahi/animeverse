@@ -7,9 +7,9 @@ class AnimeRelationsWidget extends StatelessWidget {
   final List<AnimeRelation> relations;
 
   const AnimeRelationsWidget({
-    Key? key,
+    super.key,
     required this.relations,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

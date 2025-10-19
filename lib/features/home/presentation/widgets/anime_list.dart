@@ -10,13 +10,13 @@ class AnimeList extends StatefulWidget {
   final int maxDisplayCount;
 
   const AnimeList({
-    Key? key,
+    super.key,
     required this.animeList,
     required this.title,
     this.isLoadingMore = false,
     this.onLoadMore,
     this.maxDisplayCount = 20,
-  }) : super(key: key);
+  });
 
   @override
   State<AnimeList> createState() => _AnimeListState();

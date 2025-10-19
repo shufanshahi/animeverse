@@ -8,10 +8,10 @@ class GenreChips extends ConsumerStatefulWidget {
   final Function(String) onGenreSelected;
 
   const GenreChips({
-    Key? key,
+    super.key,
     required this.selectedGenres,
     required this.onGenreSelected,
-  }) : super(key: key);
+  });
 
   @override
   ConsumerState<GenreChips> createState() => _GenreChipsState();

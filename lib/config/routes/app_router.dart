@@ -11,6 +11,9 @@ import '../../features/auth/presentation/screens/signup_screen.dart';
 import '../../features/main_screen.dart';
 import '../../features/profile/presentation/screens/profile_screen.dart';
 import '../../features/search_screen/presentation/screens/screens.dart';
+import '../../features/social_chat/presentation/screens/user_search_screen.dart';
+import '../../features/social_chat/presentation/screens/friend_requests_screen.dart';
+import '../../features/social_chat/presentation/screens/friends_list_screen.dart';
 
 final _rootNavigatorKey = GlobalKey<NavigatorState>();
 
@@ -24,6 +27,10 @@ class AppRouteName {
   static const search = 'search';
   static const wishlist = 'wishlist';
   static const profile = 'profile';
+  static const searchUsers = 'searchUsers';
+  static const friendRequests = 'friendRequests';
+  static const friends = 'friends';
+  static const chat = 'chat';
 }
 
 final goRouterProvider = Provider<GoRouter>((ref) {
@@ -85,6 +92,21 @@ final goRouterProvider = Provider<GoRouter>((ref) {
         path: '/profile',
         name: AppRouteName.profile,
         builder: (context, state) => const ProfileScreen(),
+      ),
+      GoRoute(
+        path: '/search-users',
+        name: AppRouteName.searchUsers,
+        builder: (context, state) => const UserSearchScreen(),
+      ),
+      GoRoute(
+        path: '/friend-requests',
+        name: AppRouteName.friendRequests,
+        builder: (context, state) => const FriendRequestsScreen(),
+      ),
+      GoRoute(
+        path: '/friends',
+        name: AppRouteName.friends,
+        builder: (context, state) => const FriendsListScreen(),
       ),
     ],
     redirect: (context, state) {

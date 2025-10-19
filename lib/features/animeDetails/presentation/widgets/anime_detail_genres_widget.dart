@@ -8,9 +8,9 @@ class AnimeDetailGenresWidget extends ConsumerWidget {
   final List<AnimeGenre> genres;
 
   const AnimeDetailGenresWidget({
-    Key? key,
+    super.key,
     required this.genres,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

@@ -109,12 +109,12 @@ class MessageBubble extends StatelessWidget {
                                   fontSize: 14,
                                 ),
                             code: TextStyle(
-                              backgroundColor: theme.colorScheme.surfaceVariant,
+                              backgroundColor: theme.colorScheme.surfaceContainerHighest,
                               color: theme.colorScheme.onSurfaceVariant,
                               fontSize: 13,
                             ),
                             codeblockDecoration: BoxDecoration(
-                              color: theme.colorScheme.surfaceVariant,
+                              color: theme.colorScheme.surfaceContainerHighest,
                               borderRadius: BorderRadius.circular(8),
                             ),
                             blockquote: TextStyle(
