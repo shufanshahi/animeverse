@@ -5,6 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../../core/providers/locale_provider.dart';
+import '../../../../core/providers/theme_provider.dart';
+import '../../../../l10n/app_localizations.dart';
+
 class AnimeShopScreen extends ConsumerWidget {
   const AnimeShopScreen({super.key});
 
@@ -12,8 +16,32 @@ class AnimeShopScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final products = ref.watch(productListProvider);
     final cart = ref.watch(cartItemsProvider);
+    final themeMode = ref.watch(themeProvider);
+    final appLocalizations = AppLocalizations.of(context)!;
 
     return Scaffold(
+      appBar: AppBar(
+        title: Text(appLocalizations.shop),
+        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+        actions: [
+          // Language Switcher
+          IconButton(
+            icon: const Icon(Icons.language),
+            onPressed: () => ref.read(localeProvider.notifier).toggleLanguage(),
+            tooltip: appLocalizations.language,
+          ),
+          // Theme Switcher
+          IconButton(
+            icon: Icon(
+              themeMode == ThemeMode.dark ? Icons.light_mode : Icons.dark_mode,
+            ),
+            onPressed: () => ref.read(themeProvider.notifier).toggleTheme(),
+            tooltip: themeMode == ThemeMode.dark 
+                ? appLocalizations.lightMode
+                : appLocalizations.darkMode,
+          ),
+        ],
+      ),
       body: CustomScrollView(
         slivers: [
           const SliverToBoxAdapter(

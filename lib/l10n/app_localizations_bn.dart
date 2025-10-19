@@ -30,6 +30,9 @@ class AppLocalizationsBn extends AppLocalizations {
   String get search => 'খুঁজুন';
 
   @override
+  String get shop => 'দোকান';
+
+  @override
   String get watchlist => 'ওয়াচলিস্ট';
 
   @override

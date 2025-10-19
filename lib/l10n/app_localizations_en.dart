@@ -30,6 +30,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get search => 'Search';
 
   @override
+  String get shop => 'Shop';
+
+  @override
   String get watchlist => 'Watchlist';
 
   @override
